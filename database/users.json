@@ -1196,5 +1196,28 @@
       "gender": "Nữ",
       "other": {}
     }
+  },
+  {
+    "uid": "61570526043721",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "سيہٰۧ۬آدة آلـحہٰۧ۬آكـہمہٰۧ۬ هٰہٰۧ۬٭ﹾ ﮧۦٰ﴾",
+      "firstName": "سيہٰۧ۬آدة آلـحہٰۧ۬آكـہمہٰۧ۬ هٰہٰۧ۬٭ﹾ ﮧۦٰ﴾",
+      "vanity": "4z6h37byo8",
+      "avatar": "https://graph.facebook.com/61570526043721/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "friend",
+      "profileUrl": "https://www.facebook.com/4z6h37byo8",
+      "isFriend": true,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
   }
 ]

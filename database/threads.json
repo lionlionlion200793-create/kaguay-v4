@@ -519,5 +519,28 @@
         "time": null
       }
     }
+  },
+  {
+    "threadID": "726467670433125",
+    "data": {
+      "name": null,
+      "threadThumbnail": null,
+      "members": 2,
+      "adminIDs": [
+        "61570526043721"
+      ],
+      "emoji": null,
+      "prefix": null,
+      "approvalMode": false,
+      "anti": {
+        "nameBox": false,
+        "imageBox": false
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      }
+    }
   }
 ]

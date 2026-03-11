@@ -38,7 +38,7 @@ export class CommandHandler {
         if (!command) return;
 
         // Execute command
-        return command.execute({ ...this.arguments, args });
+        return await command.execute({ ...this.arguments, args });
       }
 
       // Check if bot is enabled
@@ -102,7 +102,7 @@ export class CommandHandler {
       }
 
       // Execute command
-      command.execute({ ...this.arguments, args });
+      await command.execute({ ...this.arguments, args });
     } catch (error) {
       console.log(error);
     }
