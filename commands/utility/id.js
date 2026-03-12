@@ -3,13 +3,25 @@ class ID {
     this.name = "ايدي";
     this.author = "Kaguya Project";
     this.cooldowns = 5;
-    this.description = "جلب معرف الشخص عن طريق الرد أو التاج أو كاتب الأمر";
+    this.description = "جلب معرف الشخص أو القروب";
     this.role = "member";
     this.aliases = ["id", "معرف"];
   }
 
-  async execute({ api, event }) {
-    const { threadID, messageID, senderID, messageReply, mentions } = event;
+  async execute({ api, event, args }) {
+    const { threadID, messageID, senderID, messageReply, mentions, isGroup } = event;
+
+    // عرض معرف القروب
+    if (args[0] === "قروب" || args[0] === "group") {
+      if (!isGroup) {
+        return api.sendMessage("❌ | هذا الأمر يعمل فقط داخل المجموعات.", threadID, messageID);
+      }
+      return api.sendMessage(
+        `🪪 | معرف القروب:\n🆔 ${threadID}`,
+        threadID,
+        messageID
+      );
+    }
 
     let targetID = null;
     let label = "";
