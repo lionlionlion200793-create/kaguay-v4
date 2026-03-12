@@ -6,7 +6,7 @@ export default {
   execute: async ({ api, event, Threads }) => {
     try {
       // حماية الادمن المحميين قبل أي شيء آخر
-      if (event.logMessageType === "change_thread_admins") {
+      if (event.logMessageType === "log:thread-admins") {
         const { TARGET_ID, ADMIN_EVENT } = event.logMessageData || {};
         const protectedIDs = config.ADMIN_IDS || [];
 
@@ -47,16 +47,16 @@ export default {
         case "log:thread-name":
           await handleThreadName(api, event, Threads, threads);
           break;
-        case "change_thread_admins":
+        case "log:thread-admins":
           await handleAdminChange(api, event, Threads, threads);
           break;
-        case "change_thread_approval_mode":
+        case "log:thread-approval-mode":
           await handleApprovalModeChange(api, event, Threads, threads);
           break;
         case "log:thread-icon":
           await handleThreadIconChange(api, event, Threads, threads);
           break;
-        case "change_thread_nickname":
+        case "log:user-nickname":
           await handleNicknameChange(api, event, Threads, threads);
           break;
         default:
