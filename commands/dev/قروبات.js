@@ -295,7 +295,11 @@ class Groups {
       if (!message) return api.sendMessage("❌ | الرسالة فارغة.", threadID, messageID);
 
       try {
-        await api.sendMessage(`📨 | رسالة من المطور:\n\n${message}`, group.threadID);
+        if (!global.client.devMessages) global.client.devMessages = new Map();
+        const sent = await api.sendMessage(`📨 | رسالة من المطور:\n\n${message}`, group.threadID);
+        if (sent?.messageID) {
+          global.client.devMessages.set(sent.messageID, { groupName });
+        }
         return api.sendMessage(
           `✅ | تم إرسال الرسالة بنجاح!\n🏷️ القروب: ${groupName}`,
           threadID, messageID

@@ -60,7 +60,11 @@ class SendToGroup {
     }
 
     try {
-      await api.sendMessage(`📨 | رسالة من المطور:\n\n${messageText}`, targetThreadID);
+      if (!global.client.devMessages) global.client.devMessages = new Map();
+      const sent = await api.sendMessage(`📨 | رسالة من المطور:\n\n${messageText}`, targetThreadID);
+      if (sent?.messageID) {
+        global.client.devMessages.set(sent.messageID, { groupName: targetName });
+      }
       return api.sendMessage(
         `✅ | تم إرسال الرسالة بنجاح!\n\n🏷️ القروب: ${targetName}\n💬 الرسالة: "${messageText}"`,
         threadID,

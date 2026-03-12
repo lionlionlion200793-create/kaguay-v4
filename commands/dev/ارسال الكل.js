@@ -35,12 +35,19 @@ class Broadcast {
       threadID
     );
 
+    if (!global.client.devMessages) global.client.devMessages = new Map();
+
     for (const thread of threads) {
       const tid = thread.threadID;
       if (!tid) { failed++; continue; }
 
       try {
-        await api.sendMessage(`📢 | رسالة من الإدارة:\n\n${message}`, tid);
+        const sent = await api.sendMessage(`📢 | رسالة من الإدارة:\n\n${message}`, tid);
+        if (sent?.messageID) {
+          global.client.devMessages.set(sent.messageID, {
+            groupName: thread.data?.name || tid,
+          });
+        }
         success++;
         await new Promise(r => setTimeout(r, 500));
       } catch (err) {

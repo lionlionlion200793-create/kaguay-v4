@@ -101,6 +101,7 @@ class Kaguya extends EventEmitter {
           reactions: new Map(),
         },
         config: this.currentConfig,
+        devMessages: new Map(),
       };
 
       await this.loadComponents();

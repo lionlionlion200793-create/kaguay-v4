@@ -52,6 +52,28 @@ const listen = async ({ api, event }) => {
 
     global.kaguya = utils({ api, event });
 
+    // إعادة توجيه الردود على رسائل المطور
+    if (type === "message_reply" && event.messageReply) {
+      if (!global.client.devMessages) global.client.devMessages = new Map();
+      const devMsg = global.client.devMessages.get(event.messageReply.messageID);
+      if (devMsg) {
+        const ownerID = global.client.config.ADMIN_IDS[0];
+        try {
+          let senderName = senderID;
+          try {
+            const info = await api.getUserInfo(senderID);
+            senderName = info?.[senderID]?.name || senderID;
+          } catch (_) {}
+          await api.sendMessage(
+            `📩 | رد جديد على رسالتك!\n\n👤 الاسم: ${senderName}\n🆔 fb.com/${senderID}\n🏷️ القروب: ${devMsg.groupName}\n\n💬 الرد:\n${event.body || "—"}`,
+            ownerID
+          );
+        } catch (err) {
+          console.error("[DevReply] فشل إرسال الرد للمطور:", err.message);
+        }
+      }
+    }
+
     const handler = createHandler(api, event, User, Thread, Economy, Exp);
     await handler.handleEvent();
 
