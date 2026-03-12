@@ -71,18 +71,29 @@ export default {
 // التعامل مع تغيير الكنية
 async function handleNicknameChange(api, event, Threads, threads) {
   const { userID, newNickname } = event.logMessageData;
+  const botID = api.getCurrentUserID();
+
+  // تجاهل التغييرات الصادرة من البوت نفسه لتفادي الحلقة اللانهائية
+  if (event.author === botID) return;
 
   if (threads.anti?.nicknameBox) {
-    await api.changeNickname(threads.oldNicknames?.[userID] || "", event.threadID, userID);
+    const oldNickname = threads.oldNicknames?.[userID] ?? null;
+
+    // إعادة الكنية القديمة (أو إزالتها إذا لم تكن موجودة)
+    await api.changeNickname(oldNickname || "", event.threadID, userID);
+
+    const changerName = await getUserName(api, event.author);
     return api.sendMessage(
-      `❌ | ميزة حماية الكنية مفعلة، لذا لم يتم تغيير كنية العضو 🔖 |<${event.threadID}> - ${threads.name}`,
+      `🏷️ | حماية الكنيات مفعّلة!\n` +
+      `『${changerName}』حاول تغيير الكنية.\n` +
+      `✅ | تمت إعادة الكنية تلقائياً.`,
       event.threadID
     );
   }
 
-  // تحديث الكنية في البيانات
+  // تحديث الكنية في البيانات عندما تكون الحماية معطّلة
   threads.oldNicknames = threads.oldNicknames || {};
-  threads.oldNicknames[userID] = newNickname;
+  threads.oldNicknames[userID] = newNickname || "";
 
   await Threads.update(event.threadID, {
     oldNicknames: threads.oldNicknames,
