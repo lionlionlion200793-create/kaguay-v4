@@ -27,11 +27,15 @@ export class CommandHandler {
       const { Users, Threads, api, event } = this.arguments;
       const { body, threadID, senderID, isGroup, messageID } = event;
 
+      if (!body) return;
+
+      const prefix = this.config.prefix || "*";
+
       // استثناء المعرفات
       const exemptedIDs = ["100076269693499","61550232547706"];
       if (exemptedIDs.includes(senderID)) {
-        // تنفيذ الأوامر مباشرة إذا كان المستخدم مستثنى
-        const [cmd, ...args] = body.trim().split(/\s+/);
+        const rawBody = body.trim().startsWith(prefix) ? body.trim().slice(prefix.length).trim() : body.trim();
+        const [cmd, ...args] = rawBody.split(/\s+/);
         const commandName = cmd.toLowerCase();
         const command = this.commands.get(commandName) || this.commands.get(this.aliases.get(commandName));
 
@@ -40,6 +44,9 @@ export class CommandHandler {
         // Execute command
         return await command.execute({ ...this.arguments, args });
       }
+
+      // تجاهل الرسائل التي لا تبدأ بالبريفكس
+      if (!body.trim().startsWith(prefix)) return;
 
       // Check if bot is enabled
       if (!this.config.botEnabled) {
@@ -64,7 +71,8 @@ export class CommandHandler {
         }
       }
 
-      const [cmd, ...args] = body.trim().split(/\s+/);
+      const rawBody = body.trim().slice(prefix.length).trim();
+      const [cmd, ...args] = rawBody.split(/\s+/);
       const commandName = cmd.toLowerCase();
       const command = this.commands.get(commandName) || this.commands.get(this.aliases.get(commandName));
 
