@@ -8,12 +8,12 @@ class ImageQuality {
     this.name = "جودة";
     this.author = "Kaguya Project";
     this.cooldowns = 15;
-    this.description = "تحسين جودة صورة عند الرد عليها";
+    this.description = "تحسين جودة صورة عند الرد عليها ورفعها لجودة عالية";
     this.role = "member";
-    this.aliases = ["enhance", "upscale", "hd"];
+    this.aliases = ["enhance", "upscale", "hd", "4k"];
   }
 
-  async execute({ api, event, args }) {
+  async execute({ api, event }) {
     const { threadID, messageID, messageReply } = event;
 
     if (!messageReply) {
@@ -42,7 +42,7 @@ class ImageQuality {
 
     api.setMessageReaction("⏳", messageID, () => {}, true);
 
-    const tempPath = path.join(process.cwd(), "temp", `quality_${Date.now()}.jpg`);
+    const tempPath = path.join(process.cwd(), "temp", `quality_${Date.now()}.png`);
 
     try {
       const response = await axios.get(imageUrl, {
@@ -56,26 +56,26 @@ class ImageQuality {
 
       const origW = metadata.width || 800;
       const origH = metadata.height || 800;
-      const newWidth = origW * 2;
-      const newHeight = origH * 2;
+
+      const MAX_SIZE = 4096;
+      const scale = Math.min(MAX_SIZE / origW, MAX_SIZE / origH, 4);
+      const newWidth = Math.round(origW * scale);
+      const newHeight = Math.round(origH * scale);
 
       await sharp(buffer)
         .resize(newWidth, newHeight, {
           kernel: sharp.kernel.lanczos3,
           fastShrinkOnLoad: false
         })
-        .sharpen({ sigma: 2.5, m1: 3, m2: 0.5 })
-        .modulate({ saturation: 1.3, brightness: 1.05 })
-        .linear(1.2, -(128 * 0.2))
-        .toFormat("jpeg", { quality: 95 })
+        .sharpen({ sigma: 1.5, m1: 2, m2: 0.3 })
+        .png({ compressionLevel: 1, quality: 100 })
         .toFile(tempPath);
 
       await api.sendMessage(
         {
           body:
-            `✅ | تم تحسين الصورة!\n` +
-            `📐 الأبعاد: ${origW}×${origH} ➜ ${newWidth}×${newHeight}\n` +
-            `🎨 حدة + إشباع + تباين محسّن`,
+            `✅ | تمت رفع الجودة!\n` +
+            `📐 ${origW}×${origH} ➜ ${newWidth}×${newHeight}`,
           attachment: [fs.createReadStream(tempPath)],
         },
         threadID,
