@@ -10,6 +10,7 @@ class Permissions {
     this.description = "عرض الصلاحيات الممنوحة لمستخدم معين";
     this.role = "admin";
     this.aliases = ["permissions", "perms"];
+    this.hidden = true;
   }
 
   async execute({ api, event }) {

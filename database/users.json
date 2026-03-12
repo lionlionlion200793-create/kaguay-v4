@@ -3615,5 +3615,51 @@
       "gender": "Nam",
       "other": {}
     }
+  },
+  {
+    "uid": "61586328715291",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ﹾ٭ﹾۦٰ۪۫ قطہٰ۪عہٰٙ۫ة سہٰٙ۫كہٰٙ۫رۦٰ۪۫ﹾ٭ﹾ",
+      "firstName": "ﹾ٭ﹾۦٰ۪۫ قطہٰ۪عہٰٙ۫ة",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61586328715291/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61586328715291",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nữ",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61572877720191",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "Saroumy Hataky",
+      "firstName": "Saroumy",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61572877720191/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61572877720191",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nữ",
+      "other": {}
+    }
   }
 ]
