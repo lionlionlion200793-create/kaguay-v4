@@ -2208,5 +2208,51 @@
       "gender": "Nam",
       "other": {}
     }
+  },
+  {
+    "uid": "61587931677661",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "Luffy San",
+      "firstName": "Luffy",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61587931677661/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61587931677661",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61578567969223",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ᏚᎯ ᏚᏫᏁᎶ",
+      "firstName": "ᏚᎯ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61578567969223/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61578567969223",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Không xác định",
+      "other": {}
+    }
   }
 ]
