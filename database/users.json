@@ -2116,5 +2116,51 @@
       "gender": "Nam",
       "other": {}
     }
+  },
+  {
+    "uid": "61585972314878",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "آغ سہٰاما",
+      "firstName": "آغ",
+      "vanity": "AG1SAMA",
+      "avatar": "https://graph.facebook.com/61585972314878/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/AG1SAMA",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61560203094018",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "Møhâmêđ F Îbřâhêm",
+      "firstName": "Møhâmêđ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61560203094018/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61560203094018",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
   }
 ]
