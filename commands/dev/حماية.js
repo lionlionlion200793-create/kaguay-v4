@@ -3,7 +3,7 @@ class Protect {
     this.name = "حماية";
     this.author = "Kaguya Project";
     this.cooldowns = 5;
-    this.description = "Manage group protections (name / image / nicknames)";
+    this.description = "Manage group protections (name / image)";
     this.role = "admin";
     this.aliases = ["protect", "حمايه"];
     this.hidden = true;
@@ -29,22 +29,19 @@ class Protect {
     const sub = args[0];
 
     if (!sub) {
-      const nameStatus     = anti.nameBox     ? "✅ Enabled" : "❌ Disabled";
-      const imageStatus    = anti.imageBox    ? "✅ Enabled" : "❌ Disabled";
-      const nicknameStatus = anti.nicknameBox ? "✅ Enabled" : "❌ Disabled";
+      const nameStatus  = anti.nameBox  ? "✅ Enabled" : "❌ Disabled";
+      const imageStatus = anti.imageBox ? "✅ Enabled" : "❌ Disabled";
 
       return api.sendMessage(
         `╔══════════════════╗\n` +
         `║   🛡️ Protection Status   ║\n` +
         `╚══════════════════╝\n` +
-        `🔤 Name Protection:     ${nameStatus}\n` +
-        `🖼️ Image Protection:    ${imageStatus}\n` +
-        `🏷️ Nickname Protection: ${nicknameStatus}\n` +
+        `🔤 Name Protection:  ${nameStatus}\n` +
+        `🖼️ Image Protection: ${imageStatus}\n` +
         `┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n` +
         `📌 To enable/disable:\n` +
         `  *حماية name\n` +
-        `  *حماية image\n` +
-        `  *حماية nickname`,
+        `  *حماية image`,
         threadID, messageID
       );
     }
@@ -85,23 +82,8 @@ class Protect {
       );
     }
 
-    // Nickname protection
-    if (sub === "كنية" || sub === "كنيات" || sub === "nickname") {
-      const newValue = !anti.nicknameBox;
-      await Threads.update(threadID, {
-        anti: { ...anti, nicknameBox: newValue },
-      });
-      return api.sendMessage(
-        `🏷️ | Nickname Protection: ${newValue ? "✅ Enabled" : "❌ Disabled"}\n` +
-        (newValue
-          ? "📌 | No one can change their nickname or others' nicknames."
-          : "📌 | Nicknames can now be changed freely."),
-        threadID, messageID
-      );
-    }
-
     return api.sendMessage(
-      "❌ | Invalid option.\n\n📌 Available options:\n  *حماية name\n  *حماية image\n  *حماية nickname",
+      "❌ | Invalid option.\n\n📌 Available options:\n  *حماية name\n  *حماية image",
       threadID, messageID
     );
   }

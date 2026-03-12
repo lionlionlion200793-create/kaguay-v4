@@ -3,23 +3,23 @@ class Restrict {
     this.name = "تقييد";
     this.author = "Kaguya Project";
     this.cooldowns = 3;
-    this.description = "تقييد استخدام الأوامر داخل المجموعة";
+    this.description = "Restrict command usage inside the group";
     this.role = "owner";
     this.aliases = ["restrict", "قيود"];
     this.hidden = true;
   }
 
   async execute({ api, event, args, Threads }) {
-    const { threadID, messageID, senderID } = event;
+    const { threadID, messageID } = event;
 
     if (!event.isGroup) {
-      return api.sendMessage("❌ | هذا الأمر يعمل فقط في المجموعات.", threadID, messageID);
+      return api.sendMessage("❌ | This command only works in groups.", threadID, messageID);
     }
 
     const threadsData = await Threads.find(threadID);
     if (!threadsData?.status || !threadsData?.data) {
       return api.sendMessage(
-        "❌ | المجموعة غير مسجلة في قاعدة البيانات. أرسل أي رسالة ثم حاول مجدداً.",
+        "❌ | Group not found in database. Send any message and try again.",
         threadID, messageID
       );
     }
@@ -28,59 +28,56 @@ class Restrict {
     const restrict = threads?.restrict || {};
     const sub = args[0];
 
-    // بدون أرقمنت → عرض الحالة
     if (!sub) {
-      const adminStatus  = restrict.adminOnly  ? "✅ مفعّل" : "❌ معطّل";
-      const modsStatus   = restrict.modsOnly   ? "✅ مفعّل" : "❌ معطّل";
+      const adminStatus = restrict.adminOnly ? "✅ Enabled" : "❌ Disabled";
+      const modsStatus  = restrict.modsOnly  ? "✅ Enabled" : "❌ Disabled";
 
       return api.sendMessage(
         `╔══════════════════╗\n` +
-        `║   🔒 حالة التقييد   ║\n` +
+        `║   🔒 Restriction Status   ║\n` +
         `╚══════════════════╝\n` +
-        `👑 تقييد الادمن:    ${adminStatus}\n` +
-        `   ↳ أوامر الادمن لمالك البوت فقط\n` +
-        `👥 تقييد الأعضاء:  ${modsStatus}\n` +
-        `   ↳ الأوامر لمسؤولي القروب فقط\n` +
+        `👑 Admin Restrict:   ${adminStatus}\n` +
+        `   ↳ Admin commands for bot owner only\n` +
+        `👥 Member Restrict:  ${modsStatus}\n` +
+        `   ↳ Commands for group admins only\n` +
         `┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n` +
-        `📌 لتفعيل/تعطيل:\n` +
-        `  *تقييد ادمن\n` +
-        `  *تقييد اعضاء`,
+        `📌 To enable/disable:\n` +
+        `  *تقييد admin\n` +
+        `  *تقييد members`,
         threadID, messageID
       );
     }
 
-    // تقييد الادمن
     if (sub === "ادمن" || sub === "admin") {
       const newValue = !restrict.adminOnly;
       await Threads.update(threadID, {
         restrict: { ...restrict, adminOnly: newValue },
       });
       return api.sendMessage(
-        `👑 | تقييد الادمن: ${newValue ? "✅ مفعّل" : "❌ معطّل"}\n` +
+        `👑 | Admin Restriction: ${newValue ? "✅ Enabled" : "❌ Disabled"}\n` +
         (newValue
-          ? "📌 | أوامر الادمن الآن لمالك البوت فقط.\n     مسؤولو القروب لن يستطيعوا استخدامها."
-          : "📌 | مسؤولو القروب يستطيعون استخدام أوامر الادمن مجدداً."),
+          ? "📌 | Admin commands are now for bot owner only.\n     Group admins can no longer use them."
+          : "📌 | Group admins can use admin commands again."),
         threadID, messageID
       );
     }
 
-    // تقييد الأعضاء
     if (sub === "اعضاء" || sub === "أعضاء" || sub === "members") {
       const newValue = !restrict.modsOnly;
       await Threads.update(threadID, {
         restrict: { ...restrict, modsOnly: newValue },
       });
       return api.sendMessage(
-        `👥 | تقييد الأعضاء: ${newValue ? "✅ مفعّل" : "❌ معطّل"}\n` +
+        `👥 | Member Restriction: ${newValue ? "✅ Enabled" : "❌ Disabled"}\n` +
         (newValue
-          ? "📌 | الأوامر الآن لمسؤولي القروب فقط.\n     الأعضاء العاديون لن يستطيعوا استخدام أي أمر."
-          : "📌 | جميع الأعضاء يستطيعون استخدام الأوامر مجدداً."),
+          ? "📌 | Commands are now for group admins only.\n     Regular members can no longer use any command."
+          : "📌 | All members can use commands again."),
         threadID, messageID
       );
     }
 
     return api.sendMessage(
-      "❌ | خيار غير صحيح.\n\n📌 الخيارات المتاحة:\n  *تقييد ادمن\n  *تقييد اعضاء",
+      "❌ | Invalid option.\n\n📌 Available options:\n  *تقييد admin\n  *تقييد members",
       threadID, messageID
     );
   }

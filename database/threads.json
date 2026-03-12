@@ -782,7 +782,8 @@
       "approvalMode": true,
       "anti": {
         "nameBox": false,
-        "imageBox": false
+        "imageBox": false,
+        "nicknameBox": true
       },
       "banned": {
         "status": false,

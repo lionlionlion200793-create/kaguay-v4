@@ -57,7 +57,8 @@ export default {
           await handleThreadIconChange(api, event, Threads, threads);
           break;
         case "log:user-nickname":
-          await handleNicknameChange(api, event, Threads, threads);
+          // Nickname protection disabled
+          // await handleNicknameChange(api, event, Threads, threads);
           break;
         default:
           break;
