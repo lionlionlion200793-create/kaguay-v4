@@ -4578,5 +4578,120 @@
       "gender": "Nam",
       "other": {}
     }
+  },
+  {
+    "uid": "61582155058808",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "Tooji Fushiguro",
+      "firstName": "Tooji",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61582155058808/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61582155058808",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61586344743981",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "Nagumo Hajimi",
+      "firstName": "Nagumo",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61586344743981/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61586344743981",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61580757964380",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ヾSon Ꮐo҉ᴋᴜꜝ꯭ ぐ㷭",
+      "firstName": "ヾSon",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61580757964380/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61580757964380",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "100075336692125",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ᏢᎨᎠᏒᎾ ᎲᏒ",
+      "firstName": "ᏢᎨᎠᏒᎾ",
+      "vanity": "ugmc12jvtv",
+      "avatar": "https://graph.facebook.com/100075336692125/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/ugmc12jvtv",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "156025504001094",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "",
+      "firstName": "",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/156025504001094/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "",
+      "profileUrl": "",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Không xác định",
+      "other": {}
+    }
   }
 ]
