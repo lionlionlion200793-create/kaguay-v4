@@ -3038,7 +3038,11 @@
       "isFriend": false,
       "isBirthday": false,
       "gender": "Nữ",
-      "other": {}
+      "other": {
+        "grantedCommands": [
+          "طرد"
+        ]
+      }
     }
   },
   {
@@ -4346,6 +4350,144 @@
       "avatar": "https://graph.facebook.com/61568030053896/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
       "type": "user",
       "profileUrl": "https://www.facebook.com/naginagibrka",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61588147019555",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "Мино Абдул Раззак",
+      "firstName": "Мино",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61588147019555/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61588147019555",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61587400623232",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ᎶᎡᎯ ᏁᎠᎰᎯ ᎿᎻᎬᎡ ᏢᎥᎬᎿᎡᏫ",
+      "firstName": "ᎶᎡᎯ ᏁᎠᎰᎯ ᎿᎻᎬᎡ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61587400623232/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61587400623232",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61585321793276",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ﹺ؍ﹾ٭ﹾ روٌزٍآلَنِدٍﹺ؍ﹾ٭ﹾ ﹺ؍ﹾ",
+      "firstName": "ﹺ؍ﹾ٭ﹾ روٌزٍآلَنِدٍﹺ؍ﹾ٭ﹾ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61585321793276/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61585321793276",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nữ",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61587014607135",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "食.DA'RK.SOLO くあ",
+      "firstName": "食.DA'RK.SOLO",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61587014607135/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61587014607135",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61568750198355",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "كـَــہرَزَةٌ ﹿٰٰٰٖٖٖٜ۬ﹿٰٰٖٖٜ۬ﹿٰٖٜ۬ﹿﮩ٭ ۦۦ٭۬ﮧ۬",
+      "firstName": "كـَــہرَزَةٌ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61568750198355/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61568750198355",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nữ",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61583282963120",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "مِـحًمِـد آلَبّـآبّـوُر",
+      "firstName": "مِـحًمِـد",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61583282963120/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61583282963120",
       "isFriend": false,
       "isBirthday": false,
       "gender": "Nam",
