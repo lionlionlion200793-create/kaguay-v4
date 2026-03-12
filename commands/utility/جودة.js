@@ -1,7 +1,7 @@
 import axios from "axios";
 import fs from "fs-extra";
 import path from "path";
-import Jimp from "jimp";
+import sharp from "sharp";
 
 class ImageQuality {
   constructor() {
@@ -18,7 +18,7 @@ class ImageQuality {
 
     if (!messageReply) {
       return api.sendMessage(
-        "❌ | رُد على صورة لتحسين جودتها.\n\n📌 طريقة الاستخدام:\n  رد على صورة + جودة",
+        "❌ | رُد على صورة لتحسين جودتها.\n\n📌 طريقة الاستخدام:\n  رد على صورة + *جودة",
         threadID,
         messageID
       );
@@ -43,28 +43,34 @@ class ImageQuality {
 
     api.setMessageReaction("⏳", messageID, () => {}, true);
 
-    const tempPath = path.join(process.cwd(), "temp", `quality_${Date.now()}.png`);
+    const tempPath = path.join(process.cwd(), "temp", `quality_${Date.now()}.jpg`);
 
     try {
-      const response = await axios.get(imageUrl, { responseType: "arraybuffer", timeout: 15000 });
+      const response = await axios.get(imageUrl, {
+        responseType: "arraybuffer",
+        timeout: 15000,
+        headers: { "User-Agent": "Mozilla/5.0" }
+      });
+
       const buffer = Buffer.from(response.data);
 
-      const img = await Jimp.read(buffer);
+      const metadata = await sharp(buffer).metadata();
+      const newWidth = (metadata.width || 800) * 2;
+      const newHeight = (metadata.height || 800) * 2;
 
-      const newWidth = img.getWidth() * 2;
-      const newHeight = img.getHeight() * 2;
-
-      img
-        .resize(newWidth, newHeight, Jimp.RESIZE_BICUBIC)
-        .contrast(0.1)
-        .quality(100);
-
-      await img.writeAsync(tempPath);
+      await sharp(buffer)
+        .resize(newWidth, newHeight, {
+          kernel: sharp.kernel.lanczos3,
+          fastShrinkOnLoad: false
+        })
+        .sharpen({ sigma: 1.2, m1: 1.5, m2: 0.7 })
+        .jpeg({ quality: 95, mozjpeg: true })
+        .toFile(tempPath);
 
       await api.sendMessage(
         {
-          body: "✅ | تم تحسين جودة الصورة بنجاح! 🖼️",
-          attachment: fs.createReadStream(tempPath),
+          body: "✅ | تم تحسين جودة الصورة! 🖼️\n📐 الأبعاد الجديدة: " + newWidth + "×" + newHeight,
+          attachment: [fs.createReadStream(tempPath)],
         },
         threadID,
         messageID
@@ -77,7 +83,7 @@ class ImageQuality {
       return api.sendMessage("❌ | حدث خطأ أثناء معالجة الصورة.", threadID, messageID);
     } finally {
       if (fs.existsSync(tempPath)) {
-        fs.unlinkSync(tempPath);
+        try { fs.unlinkSync(tempPath); } catch (_) {}
       }
     }
   }
