@@ -102,8 +102,17 @@ export class CommandHandler {
         }, cooldownAmount);
       }
 
-      const threadInfo = await api.getThreadInfo(threadID);
-      const threadAdminIDs = (threadInfo.adminIDs || []).map(a => a.uid || a);
+      const cachedAdminIDs = getThread?.data?.data?.adminIDs || [];
+      let threadAdminIDs = cachedAdminIDs.map(a => a.uid || a);
+
+      if (threadAdminIDs.length === 0) {
+        try {
+          const threadInfo = await api.getThreadInfo(threadID);
+          threadAdminIDs = (threadInfo.adminIDs || []).map(a => a.uid || a);
+        } catch (err) {
+          console.error("[Handler] فشل جلب معلومات القروب:", err.message);
+        }
+      }
 
       const grantedCommands = banUserData?.data?.data?.other?.grantedCommands || [];
       const hasGrantedPermission = grantedCommands.includes(command.name);
