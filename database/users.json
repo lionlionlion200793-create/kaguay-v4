@@ -3247,5 +3247,143 @@
       "gender": "Nữ",
       "other": {}
     }
+  },
+  {
+    "uid": "61574167670336",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "Dárţh Vađer",
+      "firstName": "Dárţh",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61574167670336/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61574167670336",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61588288487413",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ﺳۗﹻۦ،ۦ٭ۦۗﹻﹻٰ۪ۦﹻﹻﻣﹻوۦ الاﻣۧۦ٭ۦۗﹻﹻٰ۪ﯿۙۦ٭ۦۗﹻﹻٰ۪ړۦ",
+      "firstName": "ﺳۗﹻۦ،ۦ٭ۦۗﹻﹻٰ۪ۦﹻﹻﻣﹻوۦ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61588288487413/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61588288487413",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61557752427602",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ᏯᎯᎿᎬᎬᏁ ᏕᎯᏰ",
+      "firstName": "ᏯᎯᎿᎬᎬᏁ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61557752427602/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61557752427602",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nữ",
+      "other": {}
+    }
+  },
+  {
+    "uid": "100089556711639",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ᎷᏌᏃᎯᏁᎯ ᏨᎻᎯᏁ",
+      "firstName": "ᎷᏌᏃᎯᏁᎯ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/100089556711639/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=100089556711639",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nữ",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61577684592040",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "RB Hamza",
+      "firstName": "RB",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61577684592040/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61577684592040",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61581058195585",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "عـبہـدو يـــــورﮯ",
+      "firstName": "عـبہـدو",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61581058195585/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61581058195585",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
   }
 ]

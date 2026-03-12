@@ -72,21 +72,54 @@ export default {
 async function handleNicknameChange(api, event, Threads, threads) {
   const { userID, newNickname } = event.logMessageData;
   const botID = api.getCurrentUserID();
+  const protectedIDs = config.ADMIN_IDS || [];
 
   // تجاهل التغييرات الصادرة من البوت نفسه لتفادي الحلقة اللانهائية
   if (event.author === botID) return;
 
   if (threads.anti?.nicknameBox) {
     const oldNickname = threads.oldNicknames?.[userID] ?? null;
-
-    // إعادة الكنية القديمة (أو إزالتها إذا لم تكن موجودة)
-    await api.changeNickname(oldNickname || "", event.threadID, userID);
-
     const changerName = await getUserName(api, event.author);
+    const targetName = await getUserName(api, userID);
+
+    let nicknameRestored = false;
+    let kickDone = false;
+
+    // المحاولة الأولى: تغيير الكنية مباشرة عبر API
+    try {
+      await api.changeNickname(oldNickname || "", event.threadID, userID);
+      nicknameRestored = true;
+    } catch (err) {
+      console.log("[nicknameProtect] changeNickname failed:", err?.error || err);
+    }
+
+    // المحاولة الثانية: إذا فشل التغيير المباشر، نطرد المخالف ونُعيد إضافته
+    // (الطرد وإعادة الإضافة يُعيد ضبط الكنية للفارغة)
+    if (!nicknameRestored && !protectedIDs.includes(event.author)) {
+      try {
+        await api.removeUserFromGroup(event.author, event.threadID);
+        await new Promise(r => setTimeout(r, 2500));
+        await api.addUserToGroup(event.author, event.threadID);
+        kickDone = true;
+        nicknameRestored = true;
+      } catch (kickErr) {
+        console.log("[nicknameProtect] kick+re-add failed:", kickErr?.error || kickErr);
+      }
+    }
+
+    let statusLine;
+    if (nicknameRestored && kickDone) {
+      statusLine = `🚪 | تم طرد وإعادة إضافة『${changerName}』لإعادة ضبط الكنية.`;
+    } else if (nicknameRestored) {
+      statusLine = `✅ | تمت إعادة الكنية تلقائياً.`;
+    } else {
+      statusLine = `⚠️ | تعذّر إعادة الكنية تلقائياً.`;
+    }
+
     return api.sendMessage(
       `🏷️ | حماية الكنيات مفعّلة!\n` +
-      `『${changerName}』حاول تغيير الكنية.\n` +
-      `✅ | تمت إعادة الكنية تلقائياً.`,
+      `『${changerName}』حاول تغيير كنية『${targetName}』.\n` +
+      statusLine,
       event.threadID
     );
   }
