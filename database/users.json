@@ -4693,5 +4693,74 @@
       "gender": "Không xác định",
       "other": {}
     }
+  },
+  {
+    "uid": "61586979092454",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "Roxy ʚʆɞ",
+      "firstName": "Roxy",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61586979092454/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61586979092454",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nữ",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61560268203053",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "تُــــــــــلَــيّــــــــــآ احـــــمــــــد",
+      "firstName": "تُــــــــــلَــيّــــــــــآ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61560268203053/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61560268203053",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nữ",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61580741274852",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ᎶᏫᏦᏌ ᏚᎯᏁ",
+      "firstName": "ᎶᏫᏦᏌ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61580741274852/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61580741274852",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
   }
 ]
