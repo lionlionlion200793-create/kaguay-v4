@@ -66,9 +66,8 @@ export default {
         await api.sendMessage(
           `🔇 | تم طرد 『${senderName}』\n` +
           `━━━━━━━━━━━━━━━━━━━━━━\n` +
-          `⚠️ القروب في وضع الصمت، الكلام ممنوع!\n` +
-          `💡 للسماح له بالعودة:\n` +
-          `   ${prefix}مسموح ${senderStr}`,
+          `⚠️ القروب معلق، لا يُسمح بالكلام!\n` +
+          `💡 للسماح له بالعودة:\n   ${prefix}مسموح ${senderStr}`,
           threadID
         );
       } catch (err) {

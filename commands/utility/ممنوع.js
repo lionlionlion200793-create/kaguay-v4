@@ -26,7 +26,7 @@ class Mute {
     this.name = "ممنوع";
     this.author = "Kaguya Project";
     this.cooldowns = 3;
-    this.description = "تفعيل وضع الصمت - يتم طرد أي شخص يرسل دون إذن";
+    this.description = "تعليق القروب - يتعذر الإرسال على الجميع إلا المسموح لهم";
     this.role = "admin";
     this.aliases = ["مسموح"];
   }
@@ -63,30 +63,35 @@ class Mute {
 
     if (isMuteCommand) {
       if (muteData[tid]?.active) {
-        const allowedList = muteData[tid].allowedIDs || [];
         return api.sendMessage(
-          `🔇 | وضع الصمت مفعّل مسبقاً.\n` +
-          `👤 المسموح لهم: ${allowedList.length} شخص`,
+          `🔇 | وضع الصمت مفعّل مسبقاً.\n👤 المسموح لهم: ${(muteData[tid].allowedIDs || []).length} شخص`,
           threadID, messageID
         );
+      }
+
+      try {
+        await api.changeApprovalMode(tid, 1);
+      } catch (err) {
+        console.error("[ممنوع] changeApprovalMode error:", err?.message || err);
       }
 
       muteData[tid] = {
         active: true,
         allowedIDs: [String(senderID), botID],
+        elevatedAdmins: [],
         kickedUsers: {},
       };
       saveMuteData(muteData);
 
       return api.sendMessage(
-        "🔇 | تم تفعيل وضع الصمت!\n" +
+        "🔇 | تم تعليق القروب!\n" +
         "━━━━━━━━━━━━━━━━━━━━━━\n" +
-        "⚠️ أي شخص يرسل رسالة سيتم طرده فوراً!\n\n" +
-        `💡 لإضافة شخص مسموح:\n` +
+        "⛔ يتعذر على الجميع الإرسال الآن!\n\n" +
+        `💡 للسماح لشخص بالكلام:\n` +
         `   رد على رسالته + ${prefix}مسموح\n` +
         `   تاغ الشخص + ${prefix}مسموح\n` +
         `   ${prefix}مسموح [الآيدي]\n\n` +
-        `🔊 لإلغاء الصمت: ${prefix}مسموح الكل`,
+        `🔊 لرفع التعليق: ${prefix}مسموح الكل`,
         threadID, messageID
       );
     }
@@ -96,10 +101,25 @@ class Mute {
         if (!muteData[tid]?.active) {
           return api.sendMessage("❌ | وضع الصمت غير مفعّل في هذا القروب.", threadID, messageID);
         }
+
+        try {
+          await api.changeApprovalMode(tid, 0);
+        } catch (err) {
+          console.error("[مسموح] changeApprovalMode error:", err?.message || err);
+        }
+
+        const elevated = muteData[tid].elevatedAdmins || [];
+        for (const uid of elevated) {
+          try {
+            await api.changeAdminStatus(tid, [uid], false);
+          } catch {}
+        }
+
         delete muteData[tid];
         saveMuteData(muteData);
+
         return api.sendMessage(
-          "🔊 | تم إلغاء وضع الصمت!\n" +
+          "🔊 | تم رفع التعليق عن القروب!\n" +
           "━━━━━━━━━━━━━━━━━━━━━━\n" +
           "✅ الكل مسموح له الكلام الآن.",
           threadID, messageID
@@ -127,7 +147,7 @@ class Mute {
           `📌 رد على رسالته + ${prefix}مسموح\n` +
           `📌 تاغ الشخص + ${prefix}مسموح\n` +
           `📌 ${prefix}مسموح [الآيدي]\n` +
-          `📌 ${prefix}مسموح الكل ← إلغاء الصمت`,
+          `📌 ${prefix}مسموح الكل ← رفع التعليق`,
           threadID, messageID
         );
       }
@@ -147,24 +167,26 @@ class Mute {
 
       if (wasKicked) {
         delete muteData[tid].kickedUsers[targetID];
-        saveMuteData(muteData);
         try {
           await api.addUserToGroup(targetID, threadID);
-          return api.sendMessage(
-            `✅ | تم السماح لـ 『${targetName}』 وإعادة إضافته للقروب.`,
-            threadID, messageID
-          );
-        } catch {
-          saveMuteData(muteData);
-          return api.sendMessage(
-            `✅ | تم السماح لـ 『${targetName}』 بالكلام.\n` +
-            `⚠️ | فشلت إعادة إضافته، أضفه يدوياً.`,
-            threadID, messageID
-          );
+        } catch {}
+      }
+
+      const alreadyAdmin = threadAdmins.includes(targetID);
+      if (!alreadyAdmin) {
+        try {
+          await api.changeAdminStatus(tid, [targetID], true);
+          if (!muteData[tid].elevatedAdmins) muteData[tid].elevatedAdmins = [];
+          if (!muteData[tid].elevatedAdmins.includes(targetID)) {
+            muteData[tid].elevatedAdmins.push(targetID);
+          }
+        } catch (err) {
+          console.error("[مسموح] changeAdminStatus error:", err?.message || err);
         }
       }
 
       saveMuteData(muteData);
+
       return api.sendMessage(
         `✅ | تم السماح لـ 『${targetName}』 بالكلام في القروب.`,
         threadID, messageID
