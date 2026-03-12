@@ -110,6 +110,7 @@ class Groups {
       msg += `[3] 🤖 صلاحيات البوت\n`;
       msg += `[4] 💬 إحصائيات الرسائل\n`;
       msg += `[5] ⚙️ الأوامر الشغالة\n`;
+      msg += `[6] 📨 إرسال رسالة للقروب\n`;
       msg += `┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n`;
       msg += `رُد برقم الخيار`;
 
@@ -135,8 +136,8 @@ class Groups {
       const botID = await api.getCurrentUserID();
       const adminIDs = cached?.data?.adminIDs || [];
 
-      if (isNaN(option) || option < 1 || option > 5) {
-        return api.sendMessage("❌ | اختر رقماً من 1 إلى 5.", threadID, messageID);
+      if (isNaN(option) || option < 1 || option > 6) {
+        return api.sendMessage("❌ | اختر رقماً من 1 إلى 6.", threadID, messageID);
       }
 
       // ── 1. قائمة الأدمن ──
@@ -266,6 +267,41 @@ class Groups {
         msg += `🔒 أوامر مخفية (${hidden.length}):\n`;
         msg += hidden.length > 0 ? hidden.map(c => `  • ${c}`).join("\n") : "  لا توجد";
         return api.sendMessage(msg, threadID, messageID);
+      }
+
+      // ── 6. إرسال رسالة للقروب ──
+      if (option === 6) {
+        const sent = await api.sendMessage(
+          `📨 | إرسال رسالة إلى:\n🏷️ ${groupName}\n\nرُد بنص الرسالة التي تريد إرسالها.`,
+          threadID, messageID
+        );
+        global.client.handler.reply.set(sent.messageID, {
+          name: this.name,
+          author: senderID,
+          group,
+          groupName,
+          step: "send_msg",
+          unsend: false,
+        });
+        return;
+      }
+    }
+
+    // ─── الخطوة 3: إرسال الرسالة ───────────────────────────
+    if (reply.step === "send_msg") {
+      const { group, groupName } = reply;
+      const message = input;
+
+      if (!message) return api.sendMessage("❌ | الرسالة فارغة.", threadID, messageID);
+
+      try {
+        await api.sendMessage(`📨 | رسالة من المطور:\n\n${message}`, group.threadID);
+        return api.sendMessage(
+          `✅ | تم إرسال الرسالة بنجاح!\n🏷️ القروب: ${groupName}`,
+          threadID, messageID
+        );
+      } catch (err) {
+        return api.sendMessage(`❌ | فشل الإرسال: ${err.message}`, threadID, messageID);
       }
     }
   }
