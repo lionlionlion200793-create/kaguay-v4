@@ -66,9 +66,13 @@ export class CommandHandler {
 
       if (isGroup) {
         const banThread = getThread?.data?.data?.banned;
-
         if (banThread?.status && !this.config.ADMIN_IDS.includes(event.senderID)) {
           return api.sendMessage(`❌ |هذه المجموعة محظورة بسبب: ${banThread.reason}`, threadID);
+        }
+
+        const isEnabled = getThread?.data?.data?.enabled;
+        if (!isEnabled && !this.config.ADMIN_IDS.includes(senderID)) {
+          return;
         }
       }
 

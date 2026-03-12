@@ -1,672 +1,10 @@
 [
   {
-    "threadID": "6634436743320874",
-    "data": {
-      "name": "Tester Yumi",
-      "threadThumbnail": null,
-      "members": 19,
-      "adminIDs": [
-        "100040253298048"
-      ],
-      "emoji": null,
-      "prefix": null,
-      "approvalMode": false,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
-    "threadID": "5338986912893212",
-    "data": {
-      "name": "Suc Cac Cheo 247 (Chjch Me May )",
-      "threadThumbnail": "https://scontent.fbom44-1.fna.fbcdn.net/v/t1.15752-9/385452973_1001205487775742_5823148475580738951_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=a695e8&_nc_ohc=uYBIS-0pgEkAX9CPMa1&_nc_ht=scontent.fbom44-1.fna&oh=03_AdRVxbOuRuK5Bwxzh3YW73xYhUNGreZkJyKStALO1YMLCw&oe=654F2AF4",
-      "members": 121,
-      "adminIDs": [
-        "61550126549146",
-        "100026151890430",
-        "100082606987950"
-      ],
-      "emoji": "⚡️",
-      "prefix": null,
-      "approvalMode": true,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
-    "threadID": "5556442971082682",
-    "data": {
-      "name": "Niio-team 🐧🤌🏻",
-      "threadThumbnail": "https://scontent.fbom44-1.fna.fbcdn.net/v/t1.15752-9/386879581_692246585784677_728771236014852132_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=a695e8&_nc_ohc=2uCdZ1ThhhUAX-Nra7A&_nc_ht=scontent.fbom44-1.fna&oh=03_AdRpNjAthMGCi-ESpvQu3VkzC55e9pTJ7LTxMjxHUqz5Kw&oe=654F4919",
-      "members": 48,
-      "adminIDs": [
-        "100047874375055",
-        "100060894693968",
-        "100073889114412",
-        "100084424387341",
-        "100085130240990",
-        "100087652159146"
-      ],
-      "emoji": "☕️",
-      "prefix": null,
-      "approvalMode": false,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
-    "threadID": "6539464249430068",
-    "data": {
-      "name": "yukihirasoma : community dev",
-      "threadThumbnail": "https://scontent-iad3-1.xx.fbcdn.net/v/t1.15752-9/364819763_2530021550487057_5072112982171235374_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=a695e8&_nc_eui2=AeEsnMHXfSi5I8sstg8y1e2BZjzZwkUP6cpmPNnCRQ_pynlAcddskvL-23ElLV8LAX0WMWeujTnAeg_K34Xzv_9N&_nc_ohc=IhbbH69Wm1MAX8XsNyb&_nc_ht=scontent-iad3-1.xx&oh=03_AdTNvz2FynZiLjC7toTZB2TIjsNRlGcfOKU862c7jNvdeA&oe=656149E1",
-      "members": 133,
-      "adminIDs": [
-        "100026572185576"
-      ],
-      "emoji": "⚡️",
-      "prefix": null,
-      "approvalMode": false,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
-    "threadID": "6380570965353212",
-    "data": {
-      "name": "🔴 [ 𝗕𝗢𝗧 ] 𝗣𝗿𝗶𝘃𝗮𝘁𝗲 𝗧𝗲𝘀𝘁𝗲𝗿 🔴",
-      "threadThumbnail": "https://scontent-iad3-1.xx.fbcdn.net/v/t1.15752-9/393713253_995492178350837_8093551084753025323_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=a695e8&_nc_eui2=AeE3InsnZzI185azlg_oWEARHXCuPV6HFVwdcK49XocVXIEZe-82AFMHyZohJQzo3r-D8-ipE1E4wRzegRaV2s_u&_nc_ohc=hhCCsr3_YyMAX-4Zl-A&_nc_ht=scontent-iad3-1.xx&oh=03_AdQzC2WK4MKEiKY3--RbzXjp-vHUyhbgu9gz1H2aDuE8Ww&oe=6561466C",
-      "members": 77,
-      "adminIDs": [
-        "100040253298048",
-        "100048892837161",
-        "100079446515066"
-      ],
-      "emoji": "😭",
-      "prefix": null,
-      "approvalMode": false,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
-    "threadID": "6998063543566552",
-    "data": {
-      "name": "☀️Sailor Sunset☀️",
-      "threadThumbnail": "https://scontent-sea1-1.xx.fbcdn.net/v/t1.15752-9/387560620_285024011056009_4465670951873244220_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=a695e8&_nc_eui2=AeFHTxGb3RnR7499-vLL84FV7drTO-dAXgLt2tM750BeAki0fZ--HaktIpQotOcxOdBfSWSN4brjoPQyR0zqzA8v&_nc_ohc=2ErHqbMIpR8AX-41IAa&_nc_ht=scontent-sea1-1.xx&oh=03_AdRokaZ2QNkFthJtrTMQtHszIC2z7N9ANEpKNYo9zAaLWw&oe=656162AB",
-      "members": 80,
-      "adminIDs": [
-        "100095480555608"
-      ],
-      "emoji": null,
-      "prefix": null,
-      "approvalMode": false,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
-    "threadID": "7256617661106958",
-    "data": {
-      "name": "Chatbot Community (𝙴𝚍𝚞𝚌𝚊𝚝𝚒𝚘𝚗𝚊𝚕 𝚙𝚞𝚛𝚙𝚘𝚜𝚎)",
-      "threadThumbnail": "https://scontent-atl3-2.xx.fbcdn.net/v/t1.15752-9/456151443_1024559612506777_4641728602548491048_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=935a9d&_nc_ohc=Y2HeGcvMyXkQ7kNvgEJLn0c&_nc_ht=scontent-atl3-2.xx&_nc_gid=AfJSnpmsF9F9PReXoI0HF0n&oh=03_Q7cD1QGnZr9TUwhy4_jQUe8CqxZBMTDpiafGz5f-KujeUoIDtQ&oe=670F947C",
-      "members": 248,
-      "adminIDs": [
-        "61551923027328",
-        "61563002491403",
-        "61565019929507",
-        "100075534565817",
-        "100077338397319",
-        "100082748880815",
-        "100087212564100",
-        "100093264610467"
-      ],
-      "emoji": "🥇",
-      "prefix": null,
-      "approvalMode": false,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
-    "threadID": "7256617661106958",
-    "data": {
-      "name": "Chatbot Community (𝙴𝚍𝚞𝚌𝚊𝚝𝚒𝚘𝚗𝚊𝚕 𝚙𝚞𝚛𝚙𝚘𝚜𝚎)",
-      "threadThumbnail": "https://scontent-atl3-2.xx.fbcdn.net/v/t1.15752-9/456151443_1024559612506777_4641728602548491048_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=935a9d&_nc_ohc=Y2HeGcvMyXkQ7kNvgEJLn0c&_nc_ht=scontent-atl3-2.xx&_nc_gid=A8WVuWvXPQPebWZcgpIfvXy&oh=03_Q7cD1QEcBkMrd3LGps9ogV1AMTA1jjzEfzXZLz1I07yA5vyieA&oe=670F947C",
-      "members": 249,
-      "adminIDs": [
-        "61551923027328",
-        "61563002491403",
-        "61565019929507",
-        "100075534565817",
-        "100077338397319",
-        "100082748880815",
-        "100087212564100",
-        "100093264610467"
-      ],
-      "emoji": "🥇",
-      "prefix": null,
-      "approvalMode": false,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
-    "threadID": "8169011059875567",
-    "data": {
-      "name": "Sneak Peak",
-      "threadThumbnail": null,
-      "members": 3,
-      "adminIDs": [
-        "100040253298048"
-      ],
-      "emoji": null,
-      "prefix": null,
-      "approvalMode": false,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
-    "threadID": "7876308042479999",
-    "data": {
-      "name": "tvd 🫶",
-      "threadThumbnail": "https://scontent-ord5-1.xx.fbcdn.net/v/t1.15752-9/458088174_1952976248481163_8815801341097813494_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=935a9d&_nc_ohc=Cc89Y-Eh_rkQ7kNvgGbWdpi&_nc_ht=scontent-ord5-1.xx&_nc_gid=AFRDOy2fu7dMI3d6Ek7Ukf5&oh=03_Q7cD1QG227HeQCcNBzorvCgrAnHtdrNUI_QNU6bf_70H8x0adQ&oe=671C44D1",
-      "members": 88,
-      "adminIDs": [
-        "61554969614398",
-        "61563211151880",
-        "61565228085572",
-        "100086132330758"
-      ],
-      "emoji": "🥱",
-      "prefix": null,
-      "approvalMode": true,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
-    "threadID": "26669770175970993",
-    "data": {
-      "name": "TAHANAN NG MGA DEV",
-      "threadThumbnail": "https://scontent-iad3-2.xx.fbcdn.net/v/t1.15752-9/460160414_589635546719910_7478455334568194734_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=935a9d&_nc_ohc=j1BRuM7iWPAQ7kNvgFT0c6S&_nc_ht=scontent-iad3-2.xx&_nc_gid=AaICSR4B4DMkfJdI4kT1IX8&oh=03_Q7cD1QHfuUhZ8aXGVPUtEIthrwn9ISEfy_FIoZAhwj96DReU_A&oe=671C73BA",
-      "members": 13,
-      "adminIDs": [
-        "100036956043695",
-        "100040253298048"
-      ],
-      "emoji": null,
-      "prefix": null,
-      "approvalMode": false,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
-    "threadID": "7515185308582296",
-    "data": {
-      "name": "اتحـاد الصيادين",
-      "threadThumbnail": "https://scontent-ord5-2.xx.fbcdn.net/v/t1.15752-9/459810760_453652123662312_6052736833754238838_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=935a9d&_nc_eui2=AeF5iQe9MfXJU7BcHEm06ft58ZXmx2PT_cDxlebHY9P9wMV1__t73vQPhUg23xsECIvLj38AdQ7wb5FKE6K44cyt&_nc_ohc=YSFG145FJEEQ7kNvgHIaGCe&_nc_ht=scontent-ord5-2.xx&_nc_gid=ARNsajmr08qoAfa-ysszglo&oh=03_Q7cD1QEGx6F9u6vVhhcCyZILz-0haRByIe8vSvQNPqaN5Muj9A&oe=671CBDD7",
-      "members": 153,
-      "adminIDs": [
-        "61555691341564",
-        "61557411338558",
-        "61565180112498",
-        "100006263253448",
-        "100054133070771",
-        "100054496572099",
-        "100056516738030",
-        "100076269693499",
-        "100088091537615"
-      ],
-      "emoji": "🤝",
-      "prefix": null,
-      "approvalMode": true,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
-    "threadID": "7358076170957818",
-    "data": {
-      "name": "Chat MALAK",
-      "threadThumbnail": "https://scontent-sjc3-1.xx.fbcdn.net/v/t1.15752-9/456593427_501330389505872_3881274240972020835_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=935a9d&_nc_eui2=AeGruXHHOuhFMYJgPhHLB_iUYaph-0OfXY9hqmH7Q59dj6ggh2pM-t9SgSwFvwse3J5rxODJ6ZLCdekdPtH8X7Xf&_nc_ohc=hSWYnX3r3skQ7kNvgFHRJyU&_nc_ht=scontent-sjc3-1.xx&oh=03_Q7cD1QGg4_IQwLNM6Tuyom5NkRSPw_UGVmUK1UyHCFaYCFLJPw&oe=671DFDD9",
-      "members": 154,
-      "adminIDs": [
-        "61551119296937",
-        "61556592081353",
-        "61559701090929",
-        "61562600117768",
-        "61563008551858",
-        "100006773476332",
-        "100043226358732",
-        "100054109170896",
-        "100063612293543",
-        "100074509881655",
-        "100091239547168",
-        "100092316091941",
-        "100093044110177",
-        "100094316136444",
-        "100094409873389"
-      ],
-      "emoji": "✌️",
-      "prefix": null,
-      "approvalMode": false,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
-    "threadID": "7440724922609676",
-    "data": {
-      "name": "🐸 فرقة الضفادع 🐸",
-      "threadThumbnail": "https://scontent-sjc3-1.xx.fbcdn.net/v/t1.15752-9/450441890_1025460589160955_8281460260826188696_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=935a9d&_nc_eui2=AeGABOlrCaUiu4QQud1-c0mz1nY4lSRlzsrWdjiVJGXOyrRMUIaiRCzVckj70naNY1yZmoc7ZkvbktfVBv9E5TcN&_nc_ohc=buuZYR_ydUYQ7kNvgFSlzo0&_nc_ht=scontent-sjc3-1.xx&oh=03_Q7cD1QF8uT8apQr8EJjPwW1qxaUqPe8YH31rEbSMlWuZnrQfJg&oe=671DD42A",
-      "members": 128,
-      "adminIDs": [
-        "61552052911456",
-        "61557980675201"
-      ],
-      "emoji": "🐸",
-      "prefix": null,
-      "approvalMode": true,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
-    "threadID": "27014130521564423",
-    "data": {
-      "name": "TEST BOT",
-      "threadThumbnail": "https://scontent-sea1-1.xx.fbcdn.net/v/t1.15752-9/460205772_2009987146096626_7625634555120081117_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=935a9d&_nc_ohc=vzHo4A-BjjkQ7kNvgEeRibq&_nc_ht=scontent-sea1-1.xx&_nc_gid=A1m6ldGaafiRL4hLOOotYVH&oh=03_Q7cD1QGiXCgMbYT3jP73AksPQuShQXGRTfZ17hjeoQVvxjF5iQ&oe=671E3307",
-      "members": 6,
-      "adminIDs": [
-        "100076269693499"
-      ],
-      "emoji": null,
-      "prefix": null,
-      "approvalMode": false,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
-    "threadID": "8052280544889429",
-    "data": {
-      "name": "[ ༆ فࢪسان الضلام  «༆༒༆»  مملكة سبايدر ༆ ]",
-      "threadThumbnail": "https://scontent-sea1-1.xx.fbcdn.net/v/t1.15752-9/456990691_1553276795621564_2390589670194799226_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=935a9d&_nc_ohc=CXM2LE85GF0Q7kNvgHHA5xm&_nc_ht=scontent-sea1-1.xx&oh=03_Q7cD1QE0Jbj-3kYDef-OsLcQjHNTgpFDpHlffUAsxjRSq7uIcA&oe=671E6FD6",
-      "members": 54,
-      "adminIDs": [
-        "61550058353082",
-        "61553087033120",
-        "61553862758397",
-        "61559810001395",
-        "61564866073657",
-        "100076269693499",
-        "100091970379945",
-        "100093589771272",
-        "100095254003943"
-      ],
-      "emoji": "🧸",
-      "prefix": null,
-      "approvalMode": false,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
-    "threadID": "26841988975447254",
-    "data": {
-      "name": "ميتين بس عايشين عناد🚶‍♀️☝🏻",
-      "threadThumbnail": "https://scontent-sea1-1.xx.fbcdn.net/v/t1.15752-9/460124660_497760609809465_279005416998441284_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=935a9d&_nc_ohc=F2Erueyb_bwQ7kNvgFY52QP&_nc_ht=scontent-sea1-1.xx&oh=03_Q7cD1QFDzcOU0hkZY_eXCZLYsapu9QUGPIs-Oqg8yi58583WkQ&oe=671E4A72",
-      "members": 36,
-      "adminIDs": [
-        "61562055849800"
-      ],
-      "emoji": "👻",
-      "prefix": null,
-      "approvalMode": false,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
-    "threadID": "100092631887370",
-    "data": {
-      "name": null,
-      "threadThumbnail": null,
-      "members": 2,
-      "adminIDs": [],
-      "emoji": null,
-      "prefix": null,
-      "approvalMode": false,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
-    "threadID": "27828877200036461",
-    "data": {
-      "name": "〘⇣ فيلق⇔الشهب⇡〙",
-      "threadThumbnail": "https://scontent-ord5-2.xx.fbcdn.net/v/t1.15752-9/461785353_909175197928160_8305568219606010692_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=935a9d&_nc_eui2=AeEfUlPwjvdEtwt4iWi9JYJe3z9JhpNz97DfP0mGk3P3sIgWinlKIyixcGR0CLSS6-lf2EUeyrDyOvVyex9GX-We&_nc_ohc=AqcOcCyE06kQ7kNvgEGm1d6&_nc_zt=23&_nc_ht=scontent-ord5-2.xx&oh=03_Q7cD1QFFGucnJpkuLHSpHJ3Wh1RQIUItdtQjbOhkKF3mWv-tcA&oe=6751BDC3",
-      "members": 80,
-      "adminIDs": [
-        "61564006912478",
-        "61564359943275",
-        "100006263253448",
-        "100087424362723",
-        "100087782415539"
-      ],
-      "emoji": "🔥",
-      "prefix": null,
-      "approvalMode": true,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
-    "threadID": "7577352082359486",
-    "data": {
-      "name": "مجموعة جوق😁😂(اضحك😂وغير جوك🔥😜)",
-      "threadThumbnail": "https://scontent-iad3-1.xx.fbcdn.net/v/t1.15752-9/448936494_390260026842424_3738862966543585593_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=935a9d&_nc_eui2=AeENx2kaWPAmmuZu6C4-4SOSZj-aiD11K8JmP5qIPXUrwmM03nrJZKy51zsMm70icG7eJTUFIUMOUjSSfqpqc_9B&_nc_ohc=rwj529kYj4MQ7kNvgHKusjB&_nc_zt=23&_nc_ht=scontent-iad3-1.xx&oh=03_Q7cD1QHa-qrsDHtV88QZYosvIxQ00WBh8nSOsw63r3qAwzFgjQ&oe=67520024",
-      "members": 51,
-      "adminIDs": [
-        "100089240747406",
-        "100092925543171"
-      ],
-      "emoji": null,
-      "prefix": null,
-      "approvalMode": true,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
-    "threadID": "1630478541298563",
-    "data": {
-      "name": "✯⇡╽✰ مــقــر ঌ اقــلـيــم ঌ بـلـيـتـش ✰╿⇣⁦⁦⁦✯",
-      "threadThumbnail": "https://scontent-sea1-1.xx.fbcdn.net/v/t1.15752-9/627258513_910294911741365_2578940812336845498_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=935a9d&_nc_ohc=jJ0LLnWblCYQ7kNvwFnLU4V&_nc_oc=AdnlabAGVpVxrgjVlAvmbf3HA03U_296PgrS3Oo4a9UD6pFMgsP6_HEr3EM8kr99h7Y&_nc_zt=23&_nc_ht=scontent-sea1-1.xx&_nc_ss=8&oh=03_Q7cD4wElP875SCr5MAXIH5A_fIHNsN66GGoMge1ExoXOB_nLiQ&oe=69D98CA8",
-      "members": 70,
-      "adminIDs": [
-        "61556259310617",
-        "61557355315547",
-        "61560876153226",
-        "61566034400693",
-        "61566836905925",
-        "61569702655016",
-        "61570526043721",
-        "61572717952151",
-        "61578770805390",
-        "61581265795050",
-        "61585260673323",
-        "61586892946606",
-        "61586946845835",
-        "100020317921391",
-        "100024990413064",
-        "100058737267079",
-        "100067912153258",
-        "100085679528143",
-        "100087294964954",
-        "100087522507821",
-        "100040979254135"
-      ],
-      "emoji": "🧙‍♂️",
-      "prefix": null,
-      "approvalMode": true,
-      "anti": {
-        "nameBox": true,
-        "imageBox": true,
-        "nicknameBox": true
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
-    "threadID": "24207364282217085",
-    "data": {
-      "name": "┋ ✯『 الـعـاب ⇠ انـمـي غــولـد 』✯ ┋",
-      "threadThumbnail": "https://scontent-sea5-1.xx.fbcdn.net/v/t1.15752-9/589100924_1526958088352699_3883006325713642117_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=935a9d&_nc_ohc=TK70b-LyXUAQ7kNvwHGyPHv&_nc_oc=AdnvK21O2AyjEVy4_hGb1bEw6hnyhZXELGzM_7nHuMGuHRnJ0W2ImHVyu9nNSlUFoDM&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_ss=8&oh=03_Q7cD4wHKN8M8HakUVolpA_aX23pGu81qJN4bTkaAYVh5WUYh1g&oe=69D995FA",
-      "members": 42,
-      "adminIDs": [
-        "61564134585166",
-        "61569702655016",
-        "61570526043721",
-        "61574167670336",
-        "61581778290140",
-        "100002592426874",
-        "100075554683246",
-        "100087522507821"
-      ],
-      "emoji": null,
-      "prefix": null,
-      "approvalMode": true,
-      "anti": {
-        "nameBox": true,
-        "imageBox": true,
-        "nicknameBox": true
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
-    "threadID": "1395526519244666",
-    "data": {
-      "name": "〘 الـمـقـــر الامــبــراطــوري - Ⓐⓝⓘⓜⓔ  ⓞⓜⓘⓖⓐ 〙",
-      "threadThumbnail": "https://scontent-sea5-1.xx.fbcdn.net/v/t1.15752-9/637640509_894612253480771_872351287340932487_n.jpg?stp=dst-jpg_p960x960_tt6&_nc_cat=111&ccb=1-7&_nc_sid=935a9d&_nc_ohc=9H2ROPzPaJMQ7kNvwFiorxx&_nc_oc=AdmW7p1eoJntRwTyRCR-HwaJY9gML9Etln7ZgymYU695qH_x309xSJ1rj2lO6oJjEA8&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_ss=8&oh=03_Q7cD4wFIXcOTol7KNgeN2PtBFHhcWyz5wUDQf1JHpQM3IoTl9A&oe=69D974D7",
-      "members": 118,
-      "adminIDs": [
-        "61570526043721",
-        "61574887552168",
-        "61579201437438",
-        "61580664682833",
-        "61586245792935",
-        "61586328715291",
-        "61586603174368",
-        "61586965331245",
-        "61587066366593",
-        "61587332550125",
-        "100093108305617"
-      ],
-      "emoji": "👑",
-      "prefix": null,
-      "approvalMode": true,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
-    "threadID": "1395526519244666",
-    "data": {
-      "name": "〘 الـمـقـــر الامــبــراطــوري - Ⓐⓝⓘⓜⓔ  ⓞⓜⓘⓖⓐ 〙",
-      "threadThumbnail": "https://scontent-sea5-1.xx.fbcdn.net/v/t1.15752-9/637640509_894612253480771_872351287340932487_n.jpg?stp=dst-jpg_p960x960_tt6&_nc_cat=111&ccb=1-7&_nc_sid=935a9d&_nc_ohc=9H2ROPzPaJMQ7kNvwFiorxx&_nc_oc=AdmW7p1eoJntRwTyRCR-HwaJY9gML9Etln7ZgymYU695qH_x309xSJ1rj2lO6oJjEA8&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_ss=8&oh=03_Q7cD4wFIXcOTol7KNgeN2PtBFHhcWyz5wUDQf1JHpQM3IoTl9A&oe=69D974D7",
-      "members": 118,
-      "adminIDs": [
-        "61570526043721",
-        "61574887552168",
-        "61579201437438",
-        "61580664682833",
-        "61586245792935",
-        "61586328715291",
-        "61586603174368",
-        "61586965331245",
-        "61587066366593",
-        "61587332550125",
-        "100093108305617"
-      ],
-      "emoji": "👑",
-      "prefix": null,
-      "approvalMode": true,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
     "threadID": "902076996138775",
     "data": {
-      "name": "☫ ❲ 「  فيـﹻۧ۬ﹻٰ۬ـلق٭۬الاسہٰۣۧتطـ̨̥̬̩لا؏ 」❳ ☫",
+      "name": "[𝙒𝙞𝙨𝙩𝙤𝙣𝙞𝙖] ◑◑◑ ُ𝙁𝙤𝙧 𝙂𝙤𝙤𝙙づ",
       "threadThumbnail": "https://scontent-atl3-3.xx.fbcdn.net/v/t1.15752-9/639563251_1397793308762882_7348402769394083965_n.jpg?stp=dst-jpg_s280x280_tt6&_nc_cat=111&ccb=1-7&_nc_sid=9f807c&_nc_ohc=9-E5-BiTFREQ7kNvwG72-qU&_nc_oc=Adk81VNA09tcLOMEd8QJSDvdmomAT1lg8CvNVUSsMvQdkrfBnlYAEjYJ5uw7njxsx-0&_nc_zt=23&_nc_ht=scontent-atl3-3.xx&_nc_ss=8&oh=03_Q7cD4wF-83wMXJcwVICmOYoGTURQzQkMadb_UPxefgSADN0QqA&oe=69DA9BBD",
-      "members": 230,
+      "members": 231,
       "adminIDs": [
         "61554015091942",
         "61554978646754",
@@ -716,39 +54,16 @@
         "status": false,
         "reason": null,
         "time": null
-      }
-    }
-  },
-  {
-    "threadID": "28790175887295393",
-    "data": {
-      "name": "رمضان يجمعنا ✨✨",
-      "threadThumbnail": "https://scontent-sea5-1.xx.fbcdn.net/v/t1.15752-9/482389583_1689256338327617_8973954452805866171_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=935a9d&_nc_ohc=jYWO-Jl1Ut4Q7kNvwEOlGH5&_nc_oc=AdlITMgK-kpiLuGgBr-DWLPYElQ3NUhUKJExqwggX-VyfmrE_zHhIredQRs_9BcWKQk&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_ss=8&oh=03_Q7cD4wGtNT4h8a-cOmeL0jKTQ6DreG7Z236PgPAN0LWcVbs9Xw&oe=69D9B3B4",
-      "members": 43,
-      "adminIDs": [
-        "61567060923620"
-      ],
-      "emoji": "😜",
-      "prefix": null,
-      "approvalMode": false,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
       },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      },
-      "oldNicknames": {}
+      "enabled": true
     }
   },
   {
     "threadID": "8593116540793075",
     "data": {
-      "name": "",
+      "name": "بدون اسم",
       "threadThumbnail": "https://scontent-sea5-1.xx.fbcdn.net/v/t1.15752-9/649510895_2262483804243352_825151868021623819_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=935a9d&_nc_ohc=rBB0VtEZmAEQ7kNvwHt-gmw&_nc_oc=Adlr7cpb5OVYjvymUIdC8TyOwexet4I_7LXr7D5uMTnqY9uZ_rTDgLYcRHzWHCgXFfI&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_ss=8&oh=03_Q7cD4wHkTTsvuPb5Ky4tmE-iapwOCUVdxjoHSCrL0LifUrKOAw&oe=69D99A25",
-      "members": 98,
+      "members": 4,
       "adminIDs": [
         "61570526043721",
         "61558137598499"
@@ -766,7 +81,141 @@
         "reason": null,
         "time": null
       },
-      "oldNicknames": {}
+      "enabled": true
+    }
+  },
+  {
+    "threadID": "1630478541298563",
+    "data": {
+      "name": "✯⇡╽✰ مــقــر ঌ اقــلـيــم ঌ بـلـيـتـش ✰╿⇣⁦⁦⁦✯",
+      "threadThumbnail": "https://scontent-sea1-1.xx.fbcdn.net/v/t1.15752-9/627258513_910294911741365_2578940812336845498_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=935a9d&_nc_ohc=jJ0LLnWblCYQ7kNvwFnLU4V&_nc_oc=AdnlabAGVpVxrgjVlAvmbf3HA03U_296PgrS3Oo4a9UD6pFMgsP6_HEr3EM8kr99h7Y&_nc_zt=23&_nc_ht=scontent-sea1-1.xx&_nc_ss=8&oh=03_Q7cD4wElP875SCr5MAXIH5A_fIHNsN66GGoMge1ExoXOB_nLiQ&oe=69D98CA8",
+      "members": 72,
+      "adminIDs": [
+        "61556259310617",
+        "61557355315547",
+        "61560876153226",
+        "61566034400693",
+        "61566836905925",
+        "61569702655016",
+        "61570526043721",
+        "61572717952151",
+        "61578770805390",
+        "61581265795050",
+        "61585260673323",
+        "61586892946606",
+        "61586946845835",
+        "100020317921391",
+        "100024990413064",
+        "100058737267079",
+        "100067912153258",
+        "100085679528143",
+        "100087294964954",
+        "100087522507821",
+        "100040979254135"
+      ],
+      "emoji": "🧙‍♂️",
+      "prefix": null,
+      "approvalMode": true,
+      "anti": {
+        "nameBox": true,
+        "imageBox": true,
+        "nicknameBox": true
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      },
+      "enabled": true
+    }
+  },
+  {
+    "threadID": "1657144175281301",
+    "data": {
+      "name": "☬『 الإدارة العـلــيا - | - ANIME OMIGA 』☬",
+      "threadThumbnail": "https://scontent-atl3-2.xx.fbcdn.net/v/t1.15752-9/608722318_860619569940468_5282781424910599103_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=935a9d&_nc_ohc=qkSUvhnlZa0Q7kNvwG3mqMS&_nc_oc=Adk5Ao1UeyaV3CD3CbJmyYSywsISZ9B6Xwi58JHVztbfdOGbpsvIFJc2iAwaQZDdzhs&_nc_zt=23&_nc_ht=scontent-atl3-2.xx&_nc_ss=8&oh=03_Q7cD4wF7C0pLf2cNse89nbIBXXnDbW-n9vB7Jt-51x5IRzRPIA&oe=69DAB2D6",
+      "members": 28,
+      "adminIDs": [
+        "61558137598499",
+        "61570526043721",
+        "61574887552168",
+        "61579201437438",
+        "61580806948639",
+        "61586965331245",
+        "61587291194721",
+        "61587332550125",
+        "61587990347789",
+        "61588389412955"
+      ],
+      "emoji": "🥶",
+      "prefix": null,
+      "approvalMode": true,
+      "anti": {
+        "nameBox": false,
+        "imageBox": false
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      },
+      "enabled": true
+    }
+  },
+  {
+    "threadID": "933281532575276",
+    "data": {
+      "name": "اداࢪة البوت ==",
+      "threadThumbnail": "https://scontent-atl3-3.xx.fbcdn.net/v/t1.15752-9/650047236_1929061237970365_3949459819776356442_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=935a9d&_nc_ohc=GFK-1P2X1pcQ7kNvwE4l6GQ&_nc_oc=Adlj7QFtKRH1AF96nkDntadmkoAeJse78QiTNR_GGDGMPF0eb5lf3xlLWEZAqqlXCjc&_nc_zt=23&_nc_ht=scontent-atl3-3.xx&_nc_ss=8&oh=03_Q7cD4wGneokCgSweLvyJgVCJIMdZ1aajxAo8BnZAiU3Vrm1pyA&oe=69DAA04F",
+      "members": 4,
+      "adminIDs": [
+        "61570526043721"
+      ],
+      "emoji": null,
+      "prefix": null,
+      "approvalMode": false,
+      "anti": {
+        "nameBox": false,
+        "imageBox": false
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      },
+      "enabled": true
+    }
+  },
+  {
+    "threadID": "24207364282217085",
+    "data": {
+      "name": "┋ ✯『 الـعـاب ⇠ انـمـي غــولـد 』✯ ┋",
+      "threadThumbnail": "https://scontent-sea5-1.xx.fbcdn.net/v/t1.15752-9/589100924_1526958088352699_3883006325713642117_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=935a9d&_nc_ohc=TK70b-LyXUAQ7kNvwHGyPHv&_nc_oc=AdnvK21O2AyjEVy4_hGb1bEw6hnyhZXELGzM_7nHuMGuHRnJ0W2ImHVyu9nNSlUFoDM&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_ss=8&oh=03_Q7cD4wHKN8M8HakUVolpA_aX23pGu81qJN4bTkaAYVh5WUYh1g&oe=69D995FA",
+      "members": 43,
+      "adminIDs": [
+        "61564134585166",
+        "61569702655016",
+        "61570526043721",
+        "61574167670336",
+        "61581778290140",
+        "100002592426874",
+        "100075554683246",
+        "100087522507821"
+      ],
+      "emoji": null,
+      "prefix": null,
+      "approvalMode": true,
+      "anti": {
+        "nameBox": true,
+        "imageBox": true,
+        "nicknameBox": true
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      },
+      "enabled": true
     }
   },
   {
@@ -774,7 +223,7 @@
     "data": {
       "name": "‏༆〄『 كـتـيـبة_الـنـايـت_رايــد』〄༆",
       "threadThumbnail": "https://scontent-ord5-3.xx.fbcdn.net/v/t1.15752-9/638731777_1667831527535472_1087084905081481518_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=935a9d&_nc_ohc=jXjtfySg-kcQ7kNvwFTYOVa&_nc_oc=AdnwggSGX0iLDmSdZd_bzhfLlb-dga08c3yY3MbGo-03Qi55jjZuj_UBkZpAmFp3lj4&_nc_zt=23&_nc_ht=scontent-ord5-3.xx&_nc_ss=8&oh=03_Q7cD4wGmEEPFlx7ABzHNYHfdfRhczOhrQ6__sa525-80fQ38Ow&oe=69DA234D",
-      "members": 108,
+      "members": 109,
       "adminIDs": [
         "61551908096169",
         "61558137598499",
@@ -811,40 +260,8 @@
         "status": false,
         "reason": null,
         "time": null
-      }
-    }
-  },
-  {
-    "threadID": "1210014801184280",
-    "data": {
-      "name": "¦ [ إدارة إقـلـيـم الـمـافـيـا ] ¦",
-      "threadThumbnail": "https://scontent-ord5-1.xx.fbcdn.net/v/t1.15752-9/581954406_874370474932436_3292557542237504395_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=101&ccb=1-7&_nc_sid=935a9d&_nc_ohc=hV7wDvLzLr0Q7kNvwGKytmV&_nc_oc=Adk1X6R5cvDZW3Tzlksnr7drSX18KBwseVbNrnFOU5yEa2QKcZ3TWFj0dY1qq7CrTbo&_nc_zt=23&_nc_ht=scontent-ord5-1.xx&_nc_ss=8&oh=03_Q7cD4wHy2AHLERFaKosmRnLpDF8Udilh_CK34fZILxB3X6guxA&oe=69DA6521",
-      "members": 43,
-      "adminIDs": [
-        "61570526043721",
-        "61583174314166",
-        "61585336261971",
-        "100087522507821",
-        "100089556711639",
-        "61558137598499"
-      ],
-      "emoji": "🧙‍♂️",
-      "prefix": null,
-      "approvalMode": true,
-      "anti": {
-        "nameBox": true,
-        "imageBox": true,
-        "nicknameBox": true
       },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      },
-      "oldNicknames": {},
-      "restrict": {
-        "adminOnly": true
-      }
+      "enabled": true
     }
   },
   {
@@ -867,13 +284,78 @@
         "status": false,
         "reason": null,
         "time": null
-      }
+      },
+      "enabled": true
+    }
+  },
+  {
+    "threadID": "1210014801184280",
+    "data": {
+      "name": "¦ [ إدارة إقـلـيـم الـمـافـيـا ] ¦",
+      "threadThumbnail": "https://scontent-ord5-1.xx.fbcdn.net/v/t1.15752-9/581954406_874370474932436_3292557542237504395_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=101&ccb=1-7&_nc_sid=935a9d&_nc_ohc=hV7wDvLzLr0Q7kNvwGKytmV&_nc_oc=Adk1X6R5cvDZW3Tzlksnr7drSX18KBwseVbNrnFOU5yEa2QKcZ3TWFj0dY1qq7CrTbo&_nc_zt=23&_nc_ht=scontent-ord5-1.xx&_nc_ss=8&oh=03_Q7cD4wHy2AHLERFaKosmRnLpDF8Udilh_CK34fZILxB3X6guxA&oe=69DA6521",
+      "members": 39,
+      "adminIDs": [
+        "61570526043721",
+        "61583174314166",
+        "61585336261971",
+        "100087522507821",
+        "100089556711639",
+        "61558137598499"
+      ],
+      "emoji": "🧙‍♂️",
+      "prefix": null,
+      "approvalMode": true,
+      "anti": {
+        "nameBox": true,
+        "imageBox": true,
+        "nicknameBox": true
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      },
+      "enabled": true
+    }
+  },
+  {
+    "threadID": "1395526519244666",
+    "data": {
+      "name": "〘 الـمـقـــر الامــبــراطــوري - Ⓐⓝⓘⓜⓔ  ⓞⓜⓘⓖⓐ 〙",
+      "threadThumbnail": "https://scontent-sea5-1.xx.fbcdn.net/v/t1.15752-9/637640509_894612253480771_872351287340932487_n.jpg?stp=dst-jpg_p960x960_tt6&_nc_cat=111&ccb=1-7&_nc_sid=935a9d&_nc_ohc=9H2ROPzPaJMQ7kNvwFiorxx&_nc_oc=AdmW7p1eoJntRwTyRCR-HwaJY9gML9Etln7ZgymYU695qH_x309xSJ1rj2lO6oJjEA8&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_ss=8&oh=03_Q7cD4wFIXcOTol7KNgeN2PtBFHhcWyz5wUDQf1JHpQM3IoTl9A&oe=69D974D7",
+      "members": 121,
+      "adminIDs": [
+        "61570526043721",
+        "61574887552168",
+        "61579201437438",
+        "61580664682833",
+        "61586245792935",
+        "61586328715291",
+        "61586603174368",
+        "61586965331245",
+        "61587066366593",
+        "61587332550125",
+        "100093108305617"
+      ],
+      "emoji": "👑",
+      "prefix": null,
+      "approvalMode": true,
+      "anti": {
+        "nameBox": false,
+        "imageBox": false
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      },
+      "enabled": true
     }
   },
   {
     "threadID": "940763442261555",
     "data": {
-      "name": null,
+      "name": "بدون اسم",
       "threadThumbnail": null,
       "members": 3,
       "adminIDs": [
@@ -891,51 +373,20 @@
         "status": false,
         "reason": null,
         "time": null
-      }
-    }
-  },
-  {
-    "threadID": "1657144175281301",
-    "data": {
-      "name": "☬『 الإدارة العـلــيا - | - ANIME OMIGA 』☬",
-      "threadThumbnail": "https://scontent-atl3-2.xx.fbcdn.net/v/t1.15752-9/608722318_860619569940468_5282781424910599103_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=935a9d&_nc_ohc=qkSUvhnlZa0Q7kNvwG3mqMS&_nc_oc=Adk5Ao1UeyaV3CD3CbJmyYSywsISZ9B6Xwi58JHVztbfdOGbpsvIFJc2iAwaQZDdzhs&_nc_zt=23&_nc_ht=scontent-atl3-2.xx&_nc_ss=8&oh=03_Q7cD4wF7C0pLf2cNse89nbIBXXnDbW-n9vB7Jt-51x5IRzRPIA&oe=69DAB2D6",
-      "members": 27,
-      "adminIDs": [
-        "61558137598499",
-        "61570526043721",
-        "61574887552168",
-        "61579201437438",
-        "61580806948639",
-        "61586965331245",
-        "61587291194721",
-        "61587332550125",
-        "61587990347789",
-        "61588389412955"
-      ],
-      "emoji": "🥶",
-      "prefix": null,
-      "approvalMode": true,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
       },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
+      "enabled": true
     }
   },
   {
-    "threadID": "933281532575276",
+    "threadID": "28790175887295393",
     "data": {
-      "name": "اداࢪة البوت ==",
-      "threadThumbnail": "https://scontent-atl3-3.xx.fbcdn.net/v/t1.15752-9/650047236_1929061237970365_3949459819776356442_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=935a9d&_nc_ohc=GFK-1P2X1pcQ7kNvwE4l6GQ&_nc_oc=Adlj7QFtKRH1AF96nkDntadmkoAeJse78QiTNR_GGDGMPF0eb5lf3xlLWEZAqqlXCjc&_nc_zt=23&_nc_ht=scontent-atl3-3.xx&_nc_ss=8&oh=03_Q7cD4wGneokCgSweLvyJgVCJIMdZ1aajxAo8BnZAiU3Vrm1pyA&oe=69DAA04F",
-      "members": 4,
+      "name": "رمضان يجمعنا ✨✨",
+      "threadThumbnail": "https://scontent-sea5-1.xx.fbcdn.net/v/t1.15752-9/482389583_1689256338327617_8973954452805866171_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=935a9d&_nc_ohc=jYWO-Jl1Ut4Q7kNvwEOlGH5&_nc_oc=AdlITMgK-kpiLuGgBr-DWLPYElQ3NUhUKJExqwggX-VyfmrE_zHhIredQRs_9BcWKQk&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_ss=8&oh=03_Q7cD4wGtNT4h8a-cOmeL0jKTQ6DreG7Z236PgPAN0LWcVbs9Xw&oe=69D9B3B4",
+      "members": 42,
       "adminIDs": [
-        "61570526043721"
+        "61567060923620"
       ],
-      "emoji": null,
+      "emoji": "😜",
       "prefix": null,
       "approvalMode": false,
       "anti": {
@@ -946,7 +397,8 @@
         "status": false,
         "reason": null,
         "time": null
-      }
+      },
+      "enabled": true
     }
   }
 ]

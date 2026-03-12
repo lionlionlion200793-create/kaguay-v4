@@ -47,6 +47,7 @@ export default function ({ api }) {
           approvalMode,
           anti: { nameBox: false, imageBox: false },
           banned: { status: false, reason: null, time: null },
+          enabled: false,
         } ?? {}
       };
 

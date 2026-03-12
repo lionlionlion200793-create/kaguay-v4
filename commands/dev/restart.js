@@ -49,6 +49,7 @@ class Restart {
             approvalMode: existing?.data?.approvalMode || false,
             anti: existing?.data?.anti || { nameBox: false, imageBox: false },
             banned: existing?.data?.banned || { status: false, reason: null, time: null },
+            enabled: existing?.data?.enabled ?? false,
           }
         };
       });
