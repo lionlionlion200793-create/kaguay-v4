@@ -1,42 +1,31 @@
-class AddMe {
+class Leave {
   constructor() {
-    this.name = "اضفني";
-    this.author = "Kaguya Project";
-    this.cooldowns = 5;
-    this.description = "يضيف المالك إلى قروب عن طريق معرّف القروب";
-    this.role = "owner";
-    this.aliases = ["addme"];
+    this.name = "اخرج";                // اسم الأمر
+    this.aliases = ["leave", "خروج"]; // أسماء بديلة
+    this.description = "يجعل البوت يخرج من القروب الحالي";
+    this.role = "owner";               // يقتصر على المالك
+    this.cooldowns = 5;                // فترة انتظار بين الاستخدامات
   }
 
   async execute({ api, event, args }) {
-    const { threadID, messageID, senderID } = event;
-
-    const targetThreadID = args[0];
-
-    if (!targetThreadID) {
-      return api.sendMessage(
-        "❌ | يرجى تحديد معرّف القروب.\n📌 مثال: اضفني 123456789",
-        threadID,
-        messageID
-      );
-    }
+    const { threadID } = event;
 
     try {
-      await api.addUserToGroup(senderID, targetThreadID);
-      return api.sendMessage(
-        `✅ | تمت إضافتك إلى القروب بنجاح.\n🆔 | ${targetThreadID}`,
-        threadID,
-        messageID
-      );
+      // إرسال رسالة قبل الخروج
+      await api.sendMessage("👋 البوت سيغادر هذه المجموعة الآن...", threadID);
+
+      // الخروج من القروب
+      await api.removeUserFromGroup(api.getCurrentUserID(), threadID);
+
+      console.log(`Bot left chat: ${threadID}`);
     } catch (err) {
-      console.error("[اضفني] خطأ:", err);
-      return api.sendMessage(
-        `❌ | فشلت العملية.\n⚠️ | تأكد من أن البوت موجود في القروب وله صلاحية الإضافة.\n🆔 | ${targetThreadID}`,
-        threadID,
-        messageID
+      console.error("[اخرج] خطأ:", err);
+      await api.sendMessage(
+        "❌ حدث خطأ! ربما البوت ليس أدمن في هذا القروب.",
+        threadID
       );
     }
   }
 }
 
-export default new AddMe();
+export default new Leave();
