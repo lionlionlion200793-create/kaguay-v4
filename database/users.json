@@ -2369,5 +2369,97 @@
       "gender": "Nữ",
       "other": {}
     }
+  },
+  {
+    "uid": "61581320610950",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "Zen Zen",
+      "firstName": "Zen",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61581320610950/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61581320610950",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61557466182449",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "Taha Khalid Amin",
+      "firstName": "Taha",
+      "vanity": "taha.khalid.al.amin",
+      "avatar": "https://graph.facebook.com/61557466182449/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/taha.khalid.al.amin",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61561399881757",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ملاك المحطم",
+      "firstName": "ملاك",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61561399881757/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61561399881757",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61578770805390",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ᏦᏬᏒᎾᎽᎯᎷᎯ ᎨᏖᎯᏨᏂᎨ",
+      "firstName": "ᏦᏬᏒᎾᎽᎯᎷᎯ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61578770805390/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61578770805390",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
   }
 ]
