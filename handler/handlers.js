@@ -29,24 +29,25 @@ export class CommandHandler {
 
       if (!body) return;
 
-      const prefix = this.config.prefix || "*";
+      const prefixes = [this.config.prefix || "*", "/"];
+      const trimmed = body.trim();
+      const usedPrefix = prefixes.find(p => trimmed.startsWith(p));
 
       // استثناء المعرفات
       const exemptedIDs = ["100076269693499","61550232547706"];
       if (exemptedIDs.includes(senderID)) {
-        const rawBody = body.trim().startsWith(prefix) ? body.trim().slice(prefix.length).trim() : body.trim();
+        const rawBody = usedPrefix ? trimmed.slice(usedPrefix.length).trim() : trimmed;
         const [cmd, ...args] = rawBody.split(/\s+/);
         const commandName = cmd.toLowerCase();
         const command = this.commands.get(commandName) || this.commands.get(this.aliases.get(commandName));
 
         if (!command) return;
 
-        // Execute command
         return await command.execute({ ...this.arguments, args });
       }
 
-      // تجاهل الرسائل التي لا تبدأ بالبريفكس
-      if (!body.trim().startsWith(prefix)) return;
+      // تجاهل الرسائل التي لا تبدأ بأحد البريفكسات
+      if (!usedPrefix) return;
 
       // Check if bot is enabled
       if (!this.config.botEnabled) {
@@ -71,7 +72,7 @@ export class CommandHandler {
         }
       }
 
-      const rawBody = body.trim().slice(prefix.length).trim();
+      const rawBody = trimmed.slice(usedPrefix.length).trim();
       const [cmd, ...args] = rawBody.split(/\s+/);
       const commandName = cmd.toLowerCase();
       const command = this.commands.get(commandName) || this.commands.get(this.aliases.get(commandName));
