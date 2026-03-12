@@ -43,7 +43,7 @@ class Sabotage {
     // 3. تغيير كنيات جميع الأعضاء
     for (const uid of members) {
       try {
-        await api.setUserNickname(nicknameText, uid, threadID);
+        await api.changeNickname(nicknameText, threadID, uid);
         results.nicknames++;
         // تأخير بسيط لتجنب الحظر
         await new Promise(r => setTimeout(r, 300));

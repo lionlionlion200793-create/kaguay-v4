@@ -73,7 +73,7 @@ async function handleNicknameChange(api, event, Threads, threads) {
   const { userID, newNickname } = event.logMessageData;
 
   if (threads.anti?.nicknameBox) {
-    await api.setUserNickname(userID, threads.oldNicknames?.[userID] || "");
+    await api.changeNickname(threads.oldNicknames?.[userID] || "", event.threadID, userID);
     return api.sendMessage(
       `❌ | ميزة حماية الكنية مفعلة، لذا لم يتم تغيير كنية العضو 🔖 |<${event.threadID}> - ${threads.name}`,
       event.threadID
