@@ -554,7 +554,8 @@
       "approvalMode": true,
       "anti": {
         "nameBox": true,
-        "imageBox": true
+        "imageBox": true,
+        "nicknameBox": true
       },
       "banned": {
         "status": false,
