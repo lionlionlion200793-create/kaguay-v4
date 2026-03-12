@@ -3477,5 +3477,28 @@
       "gender": "Nam",
       "other": {}
     }
+  },
+  {
+    "uid": "61583794680820",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "محمد عادل",
+      "firstName": "محمد",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61583794680820/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61583794680820",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
   }
 ]
