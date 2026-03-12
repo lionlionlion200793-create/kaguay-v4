@@ -56,7 +56,7 @@ class ImageQuality {
 
       img
         .resize(newWidth, newHeight, Jimp.RESIZE_BICUBIC)
-        .convolve([
+        .convolute([
           [-0.5, -0.5, -0.5],
           [-0.5,  5,   -0.5],
           [-0.5, -0.5, -0.5]
