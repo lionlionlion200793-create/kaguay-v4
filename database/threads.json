@@ -666,7 +666,7 @@
     "data": {
       "name": "☫ ❲ 「  فيـﹻۧ۬ﹻٰ۬ـلق٭۬الاسہٰۣۧتطـ̨̥̬̩لا؏ 」❳ ☫",
       "threadThumbnail": "https://scontent-sea5-1.xx.fbcdn.net/v/t1.15752-9/641461402_844502708001107_2759195072083420023_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=935a9d&_nc_ohc=Hy-mPgi4U34Q7kNvwG71z9H&_nc_oc=AdkgxIJkkVXHg0FTGP75RH8N_dHawRtt9a0lOyA0xbAFZm790Lwf77XMwLLPiQMPOd4&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_ss=8&oh=03_Q7cD4wF4TFnBDbmARRpbpmI_nONaP_-lV25LXDJLjH5JO8-KOw&oe=69D99061",
-      "members": 239,
+      "members": 238,
       "adminIDs": [
         "61554015091942",
         "61554978646754",
@@ -874,6 +874,38 @@
       "emoji": null,
       "prefix": null,
       "approvalMode": false,
+      "anti": {
+        "nameBox": false,
+        "imageBox": false
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      }
+    }
+  },
+  {
+    "threadID": "1657144175281301",
+    "data": {
+      "name": "☬『 الإدارة العـلــيا - | - ANIME OMIGA 』☬",
+      "threadThumbnail": "https://scontent-atl3-2.xx.fbcdn.net/v/t1.15752-9/608722318_860619569940468_5282781424910599103_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=935a9d&_nc_ohc=qkSUvhnlZa0Q7kNvwG3mqMS&_nc_oc=Adk5Ao1UeyaV3CD3CbJmyYSywsISZ9B6Xwi58JHVztbfdOGbpsvIFJc2iAwaQZDdzhs&_nc_zt=23&_nc_ht=scontent-atl3-2.xx&_nc_ss=8&oh=03_Q7cD4wF7C0pLf2cNse89nbIBXXnDbW-n9vB7Jt-51x5IRzRPIA&oe=69DAB2D6",
+      "members": 27,
+      "adminIDs": [
+        "61558137598499",
+        "61570526043721",
+        "61574887552168",
+        "61579201437438",
+        "61580806948639",
+        "61586965331245",
+        "61587291194721",
+        "61587332550125",
+        "61587990347789",
+        "61588389412955"
+      ],
+      "emoji": "🥶",
+      "prefix": null,
+      "approvalMode": true,
       "anti": {
         "nameBox": false,
         "imageBox": false
