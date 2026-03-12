@@ -2649,5 +2649,97 @@
       "gender": "Nam",
       "other": {}
     }
+  },
+  {
+    "uid": "61577261673911",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "آلمہٰ۪۫ﹷٰٰﹷقدوره عہٰ۪۫ﹷٰٰﹷسہٰ۪۫ﹷٰٰﹷوله سہٰ۪۫ﹷٰٰﹷكہٰ۪۫ﹷٰٰﹷيبه ﹿٰٰٰٖٖٖٜ۬ﹿٰٰٖٖٜ۬ﹿٰٖٜ۬ﹿﮩ٭",
+      "firstName": "آلمہٰ۪۫ﹷٰٰﹷقدوره عہٰ۪۫ﹷٰٰﹷسہٰ۪۫ﹷٰٰﹷوله",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61577261673911/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61577261673911",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nữ",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61577947334251",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ᏫᎷᎯᎡ ᏚᎯᎷᎯ",
+      "firstName": "ᏫᎷᎯᎡ",
+      "vanity": "omar.anime.bleach.B",
+      "avatar": "https://graph.facebook.com/61577947334251/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/omar.anime.bleach.B",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61577950289690",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "シシィ ミミ",
+      "firstName": "ミミ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61577950289690/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61577950289690",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nữ",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61580806948639",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "جہمہيہعہ بہيہآدقہيہ",
+      "firstName": "جہمہيہعہ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61580806948639/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61580806948639",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
   }
 ]
