@@ -857,5 +857,33 @@
         "time": null
       }
     }
+  },
+  {
+    "threadID": "1210014801184280",
+    "data": {
+      "name": "¦ [ إدارة إقـلـيـم الـمـافـيـا ] ¦",
+      "threadThumbnail": "https://scontent-ord5-1.xx.fbcdn.net/v/t1.15752-9/581954406_874370474932436_3292557542237504395_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=101&ccb=1-7&_nc_sid=935a9d&_nc_ohc=hV7wDvLzLr0Q7kNvwGKytmV&_nc_oc=Adk1X6R5cvDZW3Tzlksnr7drSX18KBwseVbNrnFOU5yEa2QKcZ3TWFj0dY1qq7CrTbo&_nc_zt=23&_nc_ht=scontent-ord5-1.xx&_nc_ss=8&oh=03_Q7cD4wHy2AHLERFaKosmRnLpDF8Udilh_CK34fZILxB3X6guxA&oe=69DA6521",
+      "members": 39,
+      "adminIDs": [
+        "61570526043721",
+        "61583174314166",
+        "61585336261971",
+        "100087522507821",
+        "100089556711639"
+      ],
+      "emoji": "🧙‍♂️",
+      "prefix": null,
+      "approvalMode": true,
+      "anti": {
+        "nameBox": true,
+        "imageBox": true
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      },
+      "oldNicknames": {}
+    }
   }
 ]
