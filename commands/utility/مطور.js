@@ -16,7 +16,7 @@ class Developer {
       `👤 الاسم: هيتوري\n` +
       `┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n` +
       `🔗 رابط الحساب:\n` +
-      `https://www.facebook.com/share/15EQBXgrmV/\n` +
+      `https://www.facebook.com/4z6h37byo8\n` +
       `┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n` +
       `🤖 البوت: 𝙔𝙐𝙆𝙊\n` +
       `⚙️ البريفكس: 『${global.client?.config?.prefix || "*"}』\n` +
