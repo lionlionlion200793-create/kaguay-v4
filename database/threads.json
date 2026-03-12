@@ -569,7 +569,7 @@
     "data": {
       "name": "┋ ✯『 الـعـاب ⇠ انـمـي غــولـد 』✯ ┋",
       "threadThumbnail": "https://scontent-sea5-1.xx.fbcdn.net/v/t1.15752-9/589100924_1526958088352699_3883006325713642117_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=935a9d&_nc_ohc=TK70b-LyXUAQ7kNvwHGyPHv&_nc_oc=AdnvK21O2AyjEVy4_hGb1bEw6hnyhZXELGzM_7nHuMGuHRnJ0W2ImHVyu9nNSlUFoDM&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_ss=8&oh=03_Q7cD4wHKN8M8HakUVolpA_aX23pGu81qJN4bTkaAYVh5WUYh1g&oe=69D995FA",
-      "members": 41,
+      "members": 42,
       "adminIDs": [
         "61564134585166",
         "61569702655016",
@@ -585,7 +585,8 @@
       "approvalMode": true,
       "anti": {
         "nameBox": true,
-        "imageBox": true
+        "imageBox": true,
+        "nicknameBox": true
       },
       "banned": {
         "status": false,
@@ -618,7 +619,8 @@
       "approvalMode": true,
       "anti": {
         "nameBox": true,
-        "imageBox": true
+        "imageBox": true,
+        "nicknameBox": true
       },
       "banned": {
         "status": false,
@@ -877,7 +879,8 @@
       "approvalMode": true,
       "anti": {
         "nameBox": true,
-        "imageBox": true
+        "imageBox": true,
+        "nicknameBox": true
       },
       "banned": {
         "status": false,
