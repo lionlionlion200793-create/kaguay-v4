@@ -1,46 +1,49 @@
-import axios from 'axios';
-import fs from 'fs';
-import path from 'path';
 import moment from 'moment-timezone';
-import jimp from 'jimp';
 import config from '../KaguyaSetUp/config.js';
 
-async function execute({ api, event, Users, Threads }) {
+async function execute({ api, event }) {
   try {
-  const ownerFbIds = config.ADMIN_IDS || [];  // معرّفات المصرح لهم من الكونفيغ
+    const ownerFbIds = config.ADMIN_IDS || [];
 
-  switch (event.logMessageType) {
-    case "log:unsubscribe": {
-      const { leftParticipantFbId, reason } = event.logMessageData;
-      if (leftParticipantFbId == api.getCurrentUserID()) {
-        return;
+    switch (event.logMessageType) {
+      case "log:unsubscribe": {
+        const { leftParticipantFbId, reason } = event.logMessageData;
+
+        if (leftParticipantFbId == api.getCurrentUserID()) return;
+
+        const userInfo = await api.getUserInfo(leftParticipantFbId);
+        const profileName = userInfo[leftParticipantFbId]?.name || "Unknown";
+        const type = event.author == leftParticipantFbId ? "غادر لوحده" : "طرده الآدمن";
+        const membersCount = await api.getThreadInfo(event.threadID)
+          .then(info => info.participantIDs.length)
+          .catch(() => "؟");
+        const currentTime = moment().tz("Africa/Casablanca").format("hh:mm A")
+          .replace('AM', 'صباحًا').replace('PM', 'مساءً');
+
+        const farewellMessage =
+          `◆❯━━━━━▣✦▣━━━━━━❮◆\n` +
+          `≪⚠️ إشـعـار بـالـمـغـادرة ⚠️≫\n` +
+          `👤 | الاسـم : 『${profileName}』\n` +
+          `📝 | الـسـبـب : 『${type}』\n` +
+          `👥 | المـتـبـقـيـيـن : 『${membersCount} عـضـو』\n` +
+          `⏰ | الـوقـت : ${currentTime}\n` +
+          `◆❯━━━━━▣✦▣━━━━━━❮◆`;
+
+        await api.sendMessage(farewellMessage, event.threadID);
+        break;
       }
-      const userInfo = await api.getUserInfo(leftParticipantFbId);
-      const profileName = userInfo[leftParticipantFbId]?.name || "Unknown";
-      const type = event.author == leftParticipantFbId ? "غادر لوحده" : "طرده الآدمن";
-      const farewellReason = getFarewellReason(reason);
-      const membersCount = await api.getThreadInfo(event.threadID).then(info => info.participantIDs.length).catch(error => {
-        console.error('Error getting members count:', error);
-        return "Unknown";
-      });
-      const farewellMessage = `❏ الإســم 👤 : 『${profileName}』 \n❏ الـسـبـب 📝 : \n『${type}』 \n 『${farewellReason}』\n❏ المـتـبـقـيـيـن : ${membersCount} عـضـو`;
-      const profilePicturePath = await getProfilePicture(leftParticipantFbId);
-      await sendWelcomeOrFarewellMessage(api, event.threadID, farewellMessage, profilePicturePath);
-      break;
-    }
-    case "log:subscribe": {
-      const { addedParticipants } = event.logMessageData;
-      const botUserID = api.getCurrentUserID();
-      const botAdded = addedParticipants.some(participant => participant.userFbId === botUserID);
 
-      if (botAdded) {
-        // التعامل مع إضافة البوت
-        await handleBotAddition(api, event, ownerFbIds);
+      case "log:subscribe": {
+        const { addedParticipants } = event.logMessageData;
+        const botUserID = api.getCurrentUserID();
+        const botAdded = addedParticipants.some(p => p.userFbId === botUserID);
+
+        if (botAdded) {
+          await handleBotAddition(api, event, ownerFbIds);
+        }
+        break;
       }
-
-      break;  // لا ترسل رسالة ترحيب
     }
-  }
   } catch (err) {
     console.error("[ترحيب_ومغادرة] خطأ:", err);
   }
@@ -78,29 +81,6 @@ async function handleBotAddition(api, event, ownerFbIds) {
   } catch (err) {
     console.error("[handleBotAddition] خطأ:", err);
   }
-}
-
-async function sendWelcomeOrFarewellMessage(api, threadID, message, attachmentPath) {
-  try {
-    await api.sendMessage({
-      body: message,
-      attachment: fs.createReadStream(attachmentPath),
-    }, threadID);
-  } catch (error) {
-    console.error('Error sending welcome or farewell message:', error);
-  }
-}
-
-async function getProfilePicture(userID) {
-  const url = `https://graph.facebook.com/${userID}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`;
-  const img = await jimp.read(url);
-  const profilePath = path.join(process.cwd(), 'cache', `profile_${userID}.png`);
-  await img.writeAsync(profilePath);
-  return profilePath;
-}
-
-function getFarewellReason(reason) {
-  return reason === "leave" ? "ناقص واحد ناقص مشكلة 😉" : "لاتنسى تسكر الباب وراك 🙂";
 }
 
 export default {
