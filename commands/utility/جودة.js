@@ -13,7 +13,7 @@ class ImageQuality {
     this.aliases = ["enhance", "upscale", "hd"];
   }
 
-  async execute({ api, event }) {
+  async execute({ api, event, args }) {
     const { threadID, messageID, messageReply } = event;
 
     if (!messageReply) {
@@ -36,7 +36,6 @@ class ImageQuality {
     }
 
     const imageUrl = image.largePreviewUrl || image.previewUrl || image.url;
-
     if (!imageUrl) {
       return api.sendMessage("❌ | تعذّر الحصول على رابط الصورة.", threadID, messageID);
     }
@@ -48,28 +47,35 @@ class ImageQuality {
     try {
       const response = await axios.get(imageUrl, {
         responseType: "arraybuffer",
-        timeout: 15000,
+        timeout: 20000,
         headers: { "User-Agent": "Mozilla/5.0" }
       });
 
       const buffer = Buffer.from(response.data);
-
       const metadata = await sharp(buffer).metadata();
-      const newWidth = (metadata.width || 800) * 2;
-      const newHeight = (metadata.height || 800) * 2;
+
+      const origW = metadata.width || 800;
+      const origH = metadata.height || 800;
+      const newWidth = origW * 2;
+      const newHeight = origH * 2;
 
       await sharp(buffer)
         .resize(newWidth, newHeight, {
           kernel: sharp.kernel.lanczos3,
           fastShrinkOnLoad: false
         })
-        .sharpen({ sigma: 1.2, m1: 1.5, m2: 0.7 })
-        .jpeg({ quality: 95, mozjpeg: true })
+        .sharpen({ sigma: 2.5, m1: 3, m2: 0.5 })
+        .modulate({ saturation: 1.3, brightness: 1.05 })
+        .linear(1.2, -(128 * 0.2))
+        .toFormat("jpeg", { quality: 95 })
         .toFile(tempPath);
 
       await api.sendMessage(
         {
-          body: "✅ | تم تحسين جودة الصورة! 🖼️\n📐 الأبعاد الجديدة: " + newWidth + "×" + newHeight,
+          body:
+            `✅ | تم تحسين الصورة!\n` +
+            `📐 الأبعاد: ${origW}×${origH} ➜ ${newWidth}×${newHeight}\n` +
+            `🎨 حدة + إشباع + تباين محسّن`,
           attachment: [fs.createReadStream(tempPath)],
         },
         threadID,
@@ -78,7 +84,7 @@ class ImageQuality {
 
       api.setMessageReaction("✅", messageID, () => {}, true);
     } catch (err) {
-      console.error("[جودة] خطأ:", err);
+      console.error("[جودة] خطأ:", err.message);
       api.setMessageReaction("❌", messageID, () => {}, true);
       return api.sendMessage("❌ | حدث خطأ أثناء معالجة الصورة.", threadID, messageID);
     } finally {
