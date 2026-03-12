@@ -56,11 +56,7 @@ class ImageQuality {
 
       img
         .resize(newWidth, newHeight, Jimp.RESIZE_BICUBIC)
-        .convolute([
-          [-0.5, -0.5, -0.5],
-          [-0.5,  5,   -0.5],
-          [-0.5, -0.5, -0.5]
-        ])
+        .contrast(0.1)
         .quality(100);
 
       await img.writeAsync(tempPath);

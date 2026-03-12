@@ -60,29 +60,37 @@ function getRandomBackground() {
 
 // دالة لإرسال رسالة الترحيب باستخدام API
 async function sendWelcomeMessage(api, threadID, message, avatarUrl, membersCount, profileName, threadName) {
+  let imagePath = null;
   try {
-    const background = getRandomBackground(); // اختيار خلفية عشوائية
-    const apiUrl = `https://api.popcat.xyz/welcomecard?background=${encodeURIComponent(background)}&text1=${encodeURIComponent(profileName)}&text2=مرحبا بك إلى ${threadName}&text3=أنت العضو رقم ${membersCount}&avatar=${encodeURIComponent(avatarUrl)}`;
+    const background = getRandomBackground();
+    const apiUrl = `https://api.popcat.xyz/welcomecard?background=${encodeURIComponent(background)}&text1=${encodeURIComponent(profileName)}&text2=${encodeURIComponent("مرحبا بك إلى " + threadName)}&text3=${encodeURIComponent("أنت العضو رقم " + membersCount)}&avatar=${encodeURIComponent(avatarUrl)}`;
 
     const response = await axios({
       method: 'get',
       url: apiUrl,
-      responseType: 'arraybuffer'
+      responseType: 'arraybuffer',
+      timeout: 10000
     });
 
-    const imagePath = path.join(process.cwd(), 'cache', `welcome_${Date.now()}.png`);
+    if (!response.data || response.data.byteLength < 100) {
+      throw new Error("استجابة الصورة فارغة أو غير صالحة");
+    }
+
+    imagePath = path.join(process.cwd(), 'cache', `welcome_${Date.now()}.png`);
     fs.writeFileSync(imagePath, response.data);
 
     await api.sendMessage({
       body: message,
-      attachment: fs.createReadStream(imagePath),
+      attachment: [fs.createReadStream(imagePath)],
     }, threadID);
 
-    // حذف الصورة بعد الإرسال
-    fs.unlinkSync(imagePath);
   } catch (error) {
-    console.error('Error sending welcome message:', error);
-    await api.sendMessage("حدث خطأ أثناء إرسال رسالة الترحيب.", threadID);
+    console.error('Error sending welcome message:', error.message);
+    await api.sendMessage(message, threadID);
+  } finally {
+    if (imagePath && fs.existsSync(imagePath)) {
+      try { fs.unlinkSync(imagePath); } catch (_) {}
+    }
   }
 }
 
