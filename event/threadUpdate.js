@@ -87,12 +87,6 @@ async function handleNicknameChange(api, event, Threads, threads) {
   await Threads.update(event.threadID, {
     oldNicknames: threads.oldNicknames,
   });
-
-  const adminName = await getUserName(api, event.author);
-  await api.sendMessage(
-    `تم تغيير كنية العضو <${userID}> إلى: ${newNickname} 🔖 | بواسطة: ${adminName}`,
-    event.threadID
-  );
 }
 
 // التعامل مع تغيير الاسم
