@@ -11,9 +11,9 @@ class Kick {
   extractIDFromArg(arg) {
     if (!arg) return null;
 
-    if (/^\d+$/.test(arg)) {
-      return arg;
-    }
+    const clean = arg.replace(/^@/, "").trim();
+
+    if (/^\d+$/.test(clean)) return clean;
 
     const idFromQuery = arg.match(/[?&]id=(\d+)/);
     if (idFromQuery) return idFromQuery[1];
@@ -22,52 +22,66 @@ class Kick {
     if (fbUrlMatch) {
       const segment = fbUrlMatch[1];
       if (/^\d+$/.test(segment)) return segment;
-      return segment;
     }
 
     return null;
   }
 
-  async resolveTarget(api, arg) {
-    const extracted = this.extractIDFromArg(arg);
-    if (!extracted) return null;
+  getMentionIDs(event) {
+    const ids = [];
 
-    if (/^\d+$/.test(extracted)) {
-      return extracted;
+    const mentions = event.mentions;
+    if (mentions && typeof mentions === "object") {
+      for (const id of Object.keys(mentions)) {
+        if (/^\d+$/.test(id)) ids.push(id);
+      }
     }
 
-    try {
-      const info = await api.getUserInfo(extracted);
-      if (info && Object.keys(info).length > 0) {
-        return Object.keys(info)[0];
+    if (ids.length === 0 && event.body) {
+      const body = event.body;
+      const prng = event.delta?.data?.prng;
+      if (prng) {
+        try {
+          const parsed = JSON.parse(prng);
+          for (const entry of parsed) {
+            if (entry.i && /^\d+$/.test(String(entry.i))) {
+              ids.push(String(entry.i));
+            }
+          }
+        } catch {}
       }
-    } catch (_) {}
+    }
 
-    return null;
+    return ids;
   }
 
   async execute({ api, event, args }) {
-    const { threadID, messageID, senderID, messageReply, mentions } = event;
+    const { threadID, messageID, senderID, messageReply } = event;
 
     if (!event.isGroup) {
       return api.sendMessage("❌ | هذا الأمر يعمل فقط في المجموعات.", threadID, messageID);
     }
 
+    const botID = String(api.getCurrentUserID());
     let targetID = null;
     let targetName = null;
 
     if (messageReply) {
-      targetID = messageReply.senderID;
-    } else if (mentions && Object.keys(mentions).length > 0) {
-      targetID = Object.keys(mentions)[0];
-    } else if (args[0]) {
-      targetID = await this.resolveTarget(api, args[0]);
-      if (!targetID) {
-        return api.sendMessage(
-          "❌ | تعذّر إيجاد الحساب. تأكد من صحة المعرف أو الرابط.",
-          threadID,
-          messageID
-        );
+      targetID = String(messageReply.senderID);
+    } else {
+      const mentionIDs = this.getMentionIDs(event);
+      if (mentionIDs.length > 0) {
+        targetID = mentionIDs[0];
+      } else if (args[0]) {
+        const extracted = this.extractIDFromArg(args[0]);
+        if (!extracted) {
+          return api.sendMessage(
+            "❌ | تعذّر إيجاد الحساب. تأكد من صحة المعرف أو الرابط.",
+            threadID,
+            messageID
+          );
+        }
+        targetID = extracted;
       }
     }
 
@@ -83,11 +97,11 @@ class Kick {
       );
     }
 
-    if (targetID === senderID) {
+    if (targetID === String(senderID)) {
       return api.sendMessage("❌ | لا يمكنك طرد نفسك.", threadID, messageID);
     }
 
-    if (targetID === api.getCurrentUserID()) {
+    if (targetID === botID) {
       return api.sendMessage("❌ | لا يمكنك طرد البوت.", threadID, messageID);
     }
 
