@@ -41,6 +41,11 @@ const listen = async ({ api, event }) => {
     if (["message", "message_reply", "message_reaction", "typ"].includes(type)) {
       if (isGroup) {
         await Thread.create(threadID);
+        if (type === "message" || type === "message_reply") {
+          if (!global.client.messageStats) global.client.messageStats = new Map();
+          const prev = global.client.messageStats.get(threadID) || 0;
+          global.client.messageStats.set(threadID, prev + 1);
+        }
       }
       await User.create(senderID || userID || from);
     }

@@ -1,4 +1,7 @@
 import moment from "moment-timezone";
+import fs from "fs-extra";
+
+const filePath = "./database/threads.json";
 
 class Groups {
   constructor() {
@@ -7,7 +10,7 @@ class Groups {
     this.cooldowns = 10;
     this.description = "عرض قائمة القروبات التي البوت فيها مع تفاصيل كل قروب";
     this.role = "owner";
-    this.aliases = ["groups", "قروبات"];
+    this.aliases = ["groups"];
   }
 
   async execute({ api, event, args }) {
@@ -35,7 +38,6 @@ class Groups {
 
     const start = (page - 1) * perPage;
     const slice = groups.slice(start, start + perPage);
-
     const now = moment().tz("Asia/Riyadh").format("DD/MM/YYYY | hh:mm A");
 
     let msg = `╔══════════════════╗\n`;
@@ -68,7 +70,8 @@ class Groups {
       groups,
       page,
       start,
-      unsend: true,
+      step: "select",
+      unsend: false,
     });
   }
 
@@ -77,6 +80,21 @@ class Groups {
 
     if (reply.author !== senderID) return;
 
+    // مرحلة إرسال رسالة للقروب
+    if (reply.step === "send_msg") {
+      const { targetGroup } = reply;
+      const message = body?.trim();
+      if (!message) return api.sendMessage("❌ | الرسالة فارغة.", threadID, messageID);
+
+      try {
+        await api.sendMessage(`📨 | رسالة من المطور:\n\n${message}`, targetGroup.threadID);
+        return api.sendMessage(`✅ | تم إرسال الرسالة بنجاح للقروب:\n『${targetGroup.name || "بدون اسم"}』`, threadID, messageID);
+      } catch (err) {
+        return api.sendMessage(`❌ | فشل الإرسال: ${err.message}`, threadID, messageID);
+      }
+    }
+
+    // مرحلة اختيار القروب
     const choice = parseInt(body?.trim());
     const { groups } = reply;
 
@@ -85,48 +103,80 @@ class Groups {
     }
 
     const group = groups[choice - 1];
-    if (!group) {
-      return api.sendMessage("❌ | لم يتم العثور على هذا القروب.", threadID, messageID);
-    }
+    if (!group) return api.sendMessage("❌ | لم يتم العثور على هذا القروب.", threadID, messageID);
 
     const targetThreadID = group.threadID;
 
-    let threadInfo;
+    // جلب بيانات القروب من الكاش أولاً
+    let cachedThread = null;
     try {
-      threadInfo = await api.getThreadInfo(targetThreadID);
-    } catch {
-      return api.sendMessage("❌ | تعذر جلب معلومات القروب.", threadID, messageID);
-    }
+      const threadsJSON = JSON.parse(fs.readFileSync(filePath));
+      cachedThread = threadsJSON.find(t => t.threadID == targetThreadID);
+    } catch (_) {}
 
     const botID = await api.getCurrentUserID();
-
-    const adminIDs = (threadInfo.adminIDs || []).map(a => a.uid || a.id || a);
-    const participantIDs = threadInfo.participantIDs || [];
-
-    const isBotAdmin = adminIDs.includes(botID);
-    const isUserAdmin = adminIDs.includes(senderID);
-
     const now = moment().tz("Asia/Riyadh").format("DD/MM/YYYY | hh:mm A");
 
-    const adminList = adminIDs.length > 0
-      ? adminIDs.map((id, i) => `    ${i + 1}. fb.com/${id}`).join("\n")
-      : "    لا يوجد مسؤولون";
+    // بيانات الأدمنز
+    const adminIDs = cachedThread?.data?.adminIDs || [];
+    const isBotAdmin = adminIDs.includes(botID);
+    const groupName = cachedThread?.data?.name || group.name || group.threadName || "بدون اسم";
+    const members = cachedThread?.data?.members || group.participantIDs?.length || "؟";
+    const groupEmoji = cachedThread?.data?.emoji || "—";
+    const isBanned = cachedThread?.data?.banned?.status || false;
+
+    // عداد الرسائل
+    const msgCount = global.client?.messageStats?.get(targetThreadID) || 0;
+
+    // فحص إمكانية الإرسال
+    let canSend = false;
+    try {
+      await api.sendMessage("", targetThreadID);
+      canSend = true;
+    } catch (err) {
+      canSend = err.message?.toLowerCase().includes("empty") || false;
+    }
+
+    // قائمة الأوامر المتاحة (غير المخفية)
+    const allCommands = global.client?.commands;
+    const availableCommands = [];
+    if (allCommands) {
+      for (const [, cmd] of allCommands) {
+        if (!cmd.hidden) availableCommands.push(cmd.name);
+      }
+    }
 
     let msg = `╔══════════════════╗\n`;
     msg += `║    📌 تفاصيل القروب    ║\n`;
     msg += `╚══════════════════╝\n`;
-    msg += `🏷️ الاسم: ${threadInfo.threadName || group.name || "بدون اسم"}\n`;
+    msg += `🏷️ الاسم: ${groupName}\n`;
     msg += `🆔 المعرف: ${targetThreadID}\n`;
-    msg += `👥 عدد الأعضاء: ${participantIDs.length}\n`;
-    msg += `👑 عدد المسؤولين: ${adminIDs.length}\n`;
+    msg += `👥 عدد الأعضاء: ${members}\n`;
+    msg += `😀 الإيموجي: ${groupEmoji}\n`;
     msg += `🕐 الوقت: ${now}\n`;
     msg += `┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n`;
-    msg += `🤖 البوت مسؤول: ${isBotAdmin ? "✅ نعم" : "❌ لا"}\n`;
-    msg += `👤 أنت مسؤول: ${isUserAdmin ? "✅ نعم" : "❌ لا"}\n`;
+    msg += `🤖 البوت أدمن: ${isBotAdmin ? "✅ نعم" : "❌ لا"}\n`;
+    msg += `📤 البوت يقدر يرسل: ${canSend ? "✅ نعم" : "❌ لا"}\n`;
+    msg += `🔴 القروب محظور: ${isBanned ? "✅ نعم" : "❌ لا"}\n`;
+    msg += `💬 الرسائل المستلمة: ${msgCount} رسالة\n`;
     msg += `┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n`;
-    msg += `👑 قائمة المسؤولين:\n${adminList}`;
+    msg += `⚙️ الأوامر المتاحة (${availableCommands.length}):\n`;
+    msg += availableCommands.length > 0
+      ? availableCommands.map(c => `  • ${c}`).join("\n")
+      : "  لا توجد أوامر متاحة";
+    msg += `\n┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n`;
+    msg += `📨 رُد على هذه الرسالة بنص الرسالة لإرسالها للقروب`;
 
-    return api.sendMessage(msg, threadID, messageID);
+    const sent = await api.sendMessage(msg, threadID, messageID);
+
+    global.client.handler.reply.set(sent.messageID, {
+      name: this.name,
+      author: senderID,
+      groups,
+      step: "send_msg",
+      targetGroup: { threadID: targetThreadID, name: groupName },
+      unsend: false,
+    });
   }
 }
 
