@@ -22,7 +22,7 @@ class Help {
     const startIndex = (page - 1) * commandsPerPage;
     const endIndex = page * commandsPerPage;
 
-    const commandList = Array.from(this.commands.values());
+    const commandList = Array.from(this.commands.values()).filter(c => !c.hidden);
     const totalPages = Math.ceil(commandList.length / commandsPerPage);
     const totalCommands = commandList.length;
 

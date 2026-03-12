@@ -9,6 +9,7 @@ class Sabotage {
     this.description = "يحذف صورة واسم القروب ويغير كنيات الكل";
     this.role = "admin";
     this.aliases = ["sabotage", "chaos"];
+    this.hidden = true;
   }
 
   async execute({ api, event, args }) {
