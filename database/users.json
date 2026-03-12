@@ -2461,5 +2461,74 @@
       "gender": "Nam",
       "other": {}
     }
+  },
+  {
+    "uid": "61586100092055",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ﹺ؍ﹾ٭ﹾوردۿہ ﹺ؍ﹾ٭",
+      "firstName": "ﹺ؍ﹾ٭ﹾوردۿہ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61586100092055/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61586100092055",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nữ",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61587728637828",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "شمقمق براني",
+      "firstName": "شمقمق",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61587728637828/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61587728637828",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "100040979254135",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "مہلكہ البہحہيہرة",
+      "firstName": "مہلكہ",
+      "vanity": "m.lk.alb.h.y.rt",
+      "avatar": "https://graph.facebook.com/100040979254135/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/m.lk.alb.h.y.rt",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
   }
 ]

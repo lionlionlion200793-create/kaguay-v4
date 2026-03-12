@@ -10,11 +10,16 @@ class Groups {
     this.aliases = ["groups", "قروبات"];
   }
 
-  async execute({ api, event, args, Threads }) {
+  async execute({ api, event, args }) {
     const { threadID, messageID, senderID } = event;
 
-    const all = await Threads.getAll();
-    const groups = all?.data || [];
+    let groups = [];
+    try {
+      const threadList = await api.getThreadList(100, null, ["INBOX"]);
+      groups = (threadList || []).filter(t => t.isGroup === true);
+    } catch (err) {
+      return api.sendMessage("❌ | تعذر جلب قائمة القروبات من فيسبوك.", threadID, messageID);
+    }
 
     if (!groups.length) {
       return api.sendMessage("❌ | البوت ليس في أي قروب حالياً.", threadID, messageID);
@@ -42,8 +47,8 @@ class Groups {
 
     slice.forEach((g, i) => {
       const num = start + i + 1;
-      const name = g.data?.name || "بدون اسم";
-      const members = g.data?.members || "؟";
+      const name = g.name || g.threadName || "بدون اسم";
+      const members = g.participantIDs?.length || "؟";
       msg += `[${num}] 『${name}』\n`;
       msg += `     👥 الأعضاء: ${members}\n`;
     });
@@ -72,7 +77,7 @@ class Groups {
     if (reply.author !== senderID) return;
 
     const choice = parseInt(body?.trim());
-    const { groups, start } = reply;
+    const { groups } = reply;
 
     if (isNaN(choice) || choice < 1 || choice > groups.length) {
       return api.sendMessage(`❌ | رقم غير صحيح. أدخل رقماً بين 1 و ${groups.length}.`, threadID, messageID);
@@ -89,7 +94,7 @@ class Groups {
     try {
       threadInfo = await api.getThreadInfo(targetThreadID);
     } catch {
-      return api.sendMessage("❌ | تعذر جلب معلومات القروب. ربما البوت غادره.", threadID, messageID);
+      return api.sendMessage("❌ | تعذر جلب معلومات القروب.", threadID, messageID);
     }
 
     const botID = await api.getCurrentUserID();
@@ -102,17 +107,14 @@ class Groups {
 
     const now = moment().tz("Asia/Riyadh").format("DD/MM/YYYY | hh:mm A");
 
-    let adminList = "";
-    if (adminIDs.length > 0) {
-      adminList = adminIDs.map((id, i) => `    ${i + 1}. fb.com/${id}`).join("\n");
-    } else {
-      adminList = "    لا يوجد مسؤولون";
-    }
+    const adminList = adminIDs.length > 0
+      ? adminIDs.map((id, i) => `    ${i + 1}. fb.com/${id}`).join("\n")
+      : "    لا يوجد مسؤولون";
 
     let msg = `╔══════════════════╗\n`;
     msg += `║    📌 تفاصيل القروب    ║\n`;
     msg += `╚══════════════════╝\n`;
-    msg += `🏷️ الاسم: ${threadInfo.threadName || group.data?.name || "بدون اسم"}\n`;
+    msg += `🏷️ الاسم: ${threadInfo.threadName || group.name || "بدون اسم"}\n`;
     msg += `🆔 المعرف: ${targetThreadID}\n`;
     msg += `👥 عدد الأعضاء: ${participantIDs.length}\n`;
     msg += `👑 عدد المسؤولين: ${adminIDs.length}\n`;
