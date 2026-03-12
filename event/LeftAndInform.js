@@ -1,4 +1,3 @@
-import moment from 'moment-timezone';
 import config from '../KaguyaSetUp/config.js';
 
 async function execute({ api, event }) {
@@ -7,29 +6,6 @@ async function execute({ api, event }) {
 
     switch (event.logMessageType) {
       case "log:unsubscribe": {
-        const { leftParticipantFbId, reason } = event.logMessageData;
-
-        if (leftParticipantFbId == api.getCurrentUserID()) return;
-
-        const userInfo = await api.getUserInfo(leftParticipantFbId);
-        const profileName = userInfo[leftParticipantFbId]?.name || "Unknown";
-        const type = event.author == leftParticipantFbId ? "غادر لوحده" : "طرده الآدمن";
-        const membersCount = await api.getThreadInfo(event.threadID)
-          .then(info => info.participantIDs.length)
-          .catch(() => "؟");
-        const currentTime = moment().tz("Africa/Casablanca").format("hh:mm A")
-          .replace('AM', 'صباحًا').replace('PM', 'مساءً');
-
-        const farewellMessage =
-          `◆❯━━━━━▣✦▣━━━━━━❮◆\n` +
-          `≪⚠️ إشـعـار بـالـمـغـادرة ⚠️≫\n` +
-          `👤 | الاسـم : 『${profileName}』\n` +
-          `📝 | الـسـبـب : 『${type}』\n` +
-          `👥 | المـتـبـقـيـيـن : 『${membersCount} عـضـو』\n` +
-          `⏰ | الـوقـت : ${currentTime}\n` +
-          `◆❯━━━━━▣✦▣━━━━━━❮◆`;
-
-        await api.sendMessage(farewellMessage, event.threadID);
         break;
       }
 

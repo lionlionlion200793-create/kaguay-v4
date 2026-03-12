@@ -114,7 +114,6 @@ class Kick {
       }
 
       await api.removeUserFromGroup(targetID, threadID);
-      await api.sendMessage(`✅ | تم طرد『${targetName}』من المجموعة بنجاح.`, threadID);
     } catch (err) {
       await api.sendMessage(
         "❌ | فشل طرد العضو. تأكد من أن البوت لديه صلاحيات الإدارة.",

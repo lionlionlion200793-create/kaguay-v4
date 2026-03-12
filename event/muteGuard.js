@@ -61,15 +61,6 @@ export default {
         if (!muteData[tid].kickedUsers) muteData[tid].kickedUsers = {};
         muteData[tid].kickedUsers[senderStr] = { name: senderName, kickedAt: Date.now() };
         saveMuteData(muteData);
-
-        const prefix = config.prefix || "*";
-        await api.sendMessage(
-          `🔇 | تم طرد 『${senderName}』\n` +
-          `━━━━━━━━━━━━━━━━━━━━━━\n` +
-          `⚠️ القروب معلق، لا يُسمح بالكلام!\n` +
-          `💡 للسماح له بالعودة:\n   ${prefix}مسموح ${senderStr}`,
-          threadID
-        );
       } catch (err) {
         console.error("[muteGuard] فشل الطرد:", err?.message || err);
       }
