@@ -925,5 +925,28 @@
         "time": null
       }
     }
+  },
+  {
+    "threadID": "933281532575276",
+    "data": {
+      "name": "اداࢪة البوت ==",
+      "threadThumbnail": "https://scontent-atl3-3.xx.fbcdn.net/v/t1.15752-9/650047236_1929061237970365_3949459819776356442_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=935a9d&_nc_ohc=GFK-1P2X1pcQ7kNvwE4l6GQ&_nc_oc=Adlj7QFtKRH1AF96nkDntadmkoAeJse78QiTNR_GGDGMPF0eb5lf3xlLWEZAqqlXCjc&_nc_zt=23&_nc_ht=scontent-atl3-3.xx&_nc_ss=8&oh=03_Q7cD4wGneokCgSweLvyJgVCJIMdZ1aajxAo8BnZAiU3Vrm1pyA&oe=69DAA04F",
+      "members": 4,
+      "adminIDs": [
+        "61570526043721"
+      ],
+      "emoji": null,
+      "prefix": null,
+      "approvalMode": false,
+      "anti": {
+        "nameBox": false,
+        "imageBox": false
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      }
+    }
   }
 ]
