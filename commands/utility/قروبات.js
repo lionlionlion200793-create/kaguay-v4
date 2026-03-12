@@ -60,7 +60,7 @@ class Groups {
     }
     msg += `\n💬 رُد على هذه الرسالة برقم القروب لعرض تفاصيله`;
 
-    const sent = await api.sendMessage(msg, threadID, messageID);
+    const sent = await api.sendMessage(msg, threadID);
 
     global.client.handler.reply.set(sent.messageID, {
       name: this.name,
