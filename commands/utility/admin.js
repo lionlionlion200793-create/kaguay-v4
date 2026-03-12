@@ -1,3 +1,15 @@
+import fs from "fs-extra";
+
+const usersFilePath = "./database/users.json";
+
+function readUsers() {
+  return JSON.parse(fs.readFileSync(usersFilePath));
+}
+
+function saveUsers(data) {
+  fs.writeFileSync(usersFilePath, JSON.stringify(data, null, 2));
+}
+
 class Admin {
   constructor() {
     this.name = "ادمن";
@@ -59,14 +71,32 @@ class Admin {
 
       await api.changeAdminStatus(String(threadID), [targetID], isPromote);
 
+      let removedPerms = [];
+      if (!isPromote) {
+        try {
+          const users = readUsers();
+          const index = users.findIndex(u => String(u.uid) === String(targetID));
+          if (index !== -1) {
+            const granted = users[index]?.data?.other?.grantedCommands || [];
+            if (granted.length > 0) {
+              removedPerms = [...granted];
+              users[index].data.other.grantedCommands = [];
+              saveUsers(users);
+            }
+          }
+        } catch {}
+      }
+
       const emoji = isPromote ? "👑" : "🚫";
       const actionText = isPromote ? "تم رفع" : "تم نزع";
       const statusText = isPromote ? "إلى مشرف" : "من الإشراف";
 
-      await api.sendMessage(
-        `${emoji} | ${actionText}『${targetName}』${statusText} بنجاح.`,
-        threadID
-      );
+      let msg = `${emoji} | ${actionText}『${targetName}』${statusText} بنجاح.`;
+      if (removedPerms.length > 0) {
+        msg += `\n🗑️ تم إزالة صلاحياته: ${removedPerms.join("، ")}`;
+      }
+
+      await api.sendMessage(msg, threadID);
     } catch (err) {
       console.error("[ادمن] خطأ:", JSON.stringify(err));
       const errCode = err?.error || err?.rawResponse?.error || "";

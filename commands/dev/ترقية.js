@@ -10,6 +10,19 @@ function saveUsers(data) {
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
 }
 
+function grantCommandToUser(users, uid, commandName) {
+  const index = users.findIndex(u => String(u.uid) === String(uid));
+  if (index === -1) return false;
+  if (!users[index].data.other) users[index].data.other = {};
+  if (!Array.isArray(users[index].data.other.grantedCommands)) {
+    users[index].data.other.grantedCommands = [];
+  }
+  if (!users[index].data.other.grantedCommands.includes(commandName)) {
+    users[index].data.other.grantedCommands.push(commandName);
+  }
+  return true;
+}
+
 class Promote {
   constructor() {
     this.name = "ترقية";
@@ -24,20 +37,60 @@ class Promote {
   async execute({ api, event, args }) {
     const { threadID, messageID, senderID, messageReply } = event;
 
-    if (!messageReply) {
+    if (!args[0]) {
       return api.sendMessage(
-        "❌ | رُد على رسالة الشخص الذي تريد منحه الصلاحية.\n\n" +
+        "❌ | حدّد اسم الأمر.\n\n" +
         "📌 طريقة الاستخدام:\n" +
-        "  رد + ترقية [اسم الأمر]  ← منح صلاحية\n" +
-        "  رد + ترقية إلغاء [اسم الأمر]  ← إلغاء صلاحية",
+        "  رد + ترقية [أمر]              ← منح صلاحية لشخص\n" +
+        "  رد + ترقية إلغاء [أمر]        ← إلغاء صلاحية من شخص\n" +
+        "  ترقية صلاحيات ادمن [أمر]     ← منح الصلاحية لجميع الأدمن",
         threadID,
         messageID
       );
     }
 
-    if (!args[0]) {
+    if (args[0] === "صلاحيات" && args[1] === "ادمن") {
+      const commandName = args[2];
+      if (!commandName) {
+        return api.sendMessage(
+          "❌ | حدّد اسم الأمر.\nمثال: ترقية صلاحيات ادمن طرد",
+          threadID, messageID
+        );
+      }
+
+      const command = global.client.commands.get(commandName) || global.client.commands.get(global.client.aliases.get(commandName));
+      if (!command) {
+        return api.sendMessage(`❌ | الأمر '${commandName}' غير موجود.`, threadID, messageID);
+      }
+
+      const realName = command.name;
+      const threadInfo = await api.getThreadInfo(threadID);
+      const adminIDs = (threadInfo.adminIDs || []).map(a => String(a.uid || a)).filter(id => id !== String(api.getCurrentUserID()));
+
+      if (adminIDs.length === 0) {
+        return api.sendMessage("❌ | لا يوجد أدمن في هذا القروب.", threadID, messageID);
+      }
+
+      const users = readUsers();
+      let grantedCount = 0;
+      for (const uid of adminIDs) {
+        if (grantCommandToUser(users, uid, realName)) grantedCount++;
+      }
+      saveUsers(users);
+
       return api.sendMessage(
-        "❌ | حدّد اسم الأمر.\nمثال: رد + ترقية طرد",
+        `✅ | تم منح صلاحية '${realName}' لـ ${grantedCount} أدمن في القروب.`,
+        threadID, messageID
+      );
+    }
+
+    if (!messageReply) {
+      return api.sendMessage(
+        "❌ | رُد على رسالة الشخص الذي تريد منحه الصلاحية.\n\n" +
+        "📌 طريقة الاستخدام:\n" +
+        "  رد + ترقية [أمر]              ← منح صلاحية لشخص\n" +
+        "  رد + ترقية إلغاء [أمر]        ← إلغاء صلاحية من شخص\n" +
+        "  ترقية صلاحيات ادمن [أمر]     ← منح الصلاحية لجميع الأدمن",
         threadID,
         messageID
       );
