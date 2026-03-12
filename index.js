@@ -35,32 +35,27 @@ class Kaguya extends EventEmitter {
       this.emit("system:error", "Cannot parse JSON credentials in KaguyaSetUp/KaguyaState.json");
     }
   }
-async checkVersion() {
+  async checkVersion() {
     try {
-        const pinkGradient = gradient(["#ff00ff", "#ff99ff"]); // تدرج لوني وردي
+        const pinkGradient = gradient(["#ff00ff", "#ff99ff"]);
         console.log(pinkGradient(`       
 █▄▀ ▄▀█ █▀▀ █░█ █▄█ ▄▀█
 █░█ █▀█ █▄█ █▄█ ░█░ █▀█
 `));
-
         console.log(`${gradient(["#ff99ff", "#ff00ff"])("[ owner ]: ")} ${gradient("cyan", "pink")("HUSSEIN YACOUBI")}`);
         console.log(`${gradient(["#ff99ff", "#ff00ff"])("[ Facebook ]: ")} ${gradient("cyan", "pink")("https://www.facebook.com/share/15EQBXgrmV/")}`);
-
         const { data } = await axios.get("https://raw.githubusercontent.com/Tshukie/Kaguya-Pr0ject/master/package.json");
         if (semver.lt(this.package.version, (data.version ??= this.package.version))) {
             log([{ message: "[ SYSTEM ]: ", color: "yellow" }, { message: `New Update: contact the owner`, color: "white" }]);
         }
-
-        this.emit("system:run"); // تشغيل النظام مباشرة بدون إطار متحرك
+        this.emit("system:run");
     } catch (err) {
         this.emit("system:error", err);
     }
-}
+  }
 
   async loadComponents() {
     let failedCount = 0;
-
-    // تحميل الأوامر
     try {
       await commandMiddleware();
       console.log(`✔ Loaded ${global.client.commands.size} commands.`);
@@ -68,8 +63,6 @@ async checkVersion() {
       failedCount++;
       console.error(`❌ Failed to load commands: ${err.message}`);
     }
-
-    // تحميل الأحداث
     try {
       await eventMiddleware();
       console.log(`✔ Loaded ${global.client.events.size} events.`);
@@ -77,8 +70,6 @@ async checkVersion() {
       failedCount++;
       console.error(`❌ Failed to load events: ${err.message}`);
     }
-
-    // طباعة ملخص التحميل
     console.log("=".repeat(50));
     console.log(`✔ Total commands loaded: ${global.client.commands.size}`);
     console.log(`✔ Total events loaded: ${global.client.events.size}`);
@@ -112,8 +103,7 @@ async checkVersion() {
         config: this.currentConfig,
       };
 
-      await this.loadComponents(); // استدعاء دالة التحميل
-
+      await this.loadComponents();
       this.checkVersion();
 
       this.on("system:run", () => {
@@ -121,6 +111,14 @@ async checkVersion() {
           if (err) this.emit("system:error", err);
 
           api.setOptions(this.currentConfig.options);
+
+          // ←←← هنا تضع الكود المضاف الخاص برسالة إعادة التشغيل
+          if (fs.existsSync("restart_info.json")) {
+            const data = JSON.parse(fs.readFileSync("restart_info.json", "utf-8"));
+            api.sendMessage("✅ تمت إعادة التشغيل بنجاح!", data.threadID);
+            fs.unlinkSync("restart_info.json");
+          }
+          // ←←← نهاية الإضافة
 
           const listenMqtt = async () => {
             try {
