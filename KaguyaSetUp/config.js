@@ -10,7 +10,7 @@ export default {
         "listenTyping": true,
         "logLevel": "silent",
         "updatePresence": true,
-        "selfListen": true,
+        "selfListen": false,
         "usedDatabase":false
     },
     database: {

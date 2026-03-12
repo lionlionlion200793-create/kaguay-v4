@@ -17,6 +17,8 @@ const createHandler = (api, event, User, Thread, Economy, Exp) => {
   return new CommandHandler(args);
 };
 
+const processedMessages = new Set();
+
 /**
  * Handle the main event.
  * @param {object} options - Event handling options.
@@ -24,6 +26,13 @@ const createHandler = (api, event, User, Thread, Economy, Exp) => {
 const listen = async ({ api, event }) => {
   try {
     const { threadID, senderID, type, userID, from, isGroup } = event;
+
+    if (event.messageID && (type === "message" || type === "message_reply")) {
+      if (processedMessages.has(event.messageID)) return;
+      processedMessages.add(event.messageID);
+      setTimeout(() => processedMessages.delete(event.messageID), 10000);
+    }
+
     const Thread = threadsController({ api });
     const User = usersController({ api });
     const Economy = economyControllers({ api, event });
