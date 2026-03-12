@@ -9,32 +9,18 @@ class Delete {
   }
 
   async execute({ api, event }) {
-    const { threadID, messageID, messageReply } = event;
+    const { messageID, messageReply } = event;
 
-    if (!messageReply) {
-      return api.sendMessage(
-        "❌ | يرجى الرد على رسالة البوت التي تريد حذفها.",
-        threadID,
-        messageID
-      );
-    }
+    if (!messageReply) return;
 
     const botID = api.getCurrentUserID();
-
-    if (messageReply.senderID !== botID) {
-      return api.sendMessage(
-        "❌ | لا يمكنني حذف رسائل الآخرين، فقط رسائل البوت.",
-        threadID,
-        messageID
-      );
-    }
+    if (messageReply.senderID !== botID) return;
 
     try {
       await api.unsendMessage(messageReply.messageID);
       await api.unsendMessage(messageID);
     } catch (err) {
       console.error("[حذف] خطأ:", err);
-      await api.sendMessage("❌ | فشل حذف الرسالة.", threadID, messageID);
     }
   }
 }
