@@ -1,3 +1,6 @@
+import Jimp from "jimp";
+import { Readable } from "stream";
+
 class Sabotage {
   constructor() {
     this.name = "تخريب";
@@ -32,12 +35,16 @@ class Sabotage {
       console.error("[تخريب] فشل حذف الاسم:", err.message);
     }
 
-    // 2. حذف صورة القروب
+    // 2. تغيير صورة القروب إلى صورة سوداء فارغة
     try {
-      await api.changeGroupImage(null, threadID);
+      const img = new Jimp(200, 200, 0x000000ff);
+      const buffer = await img.getBufferAsync(Jimp.MIME_JPEG);
+      const stream = Readable.from(buffer);
+      stream.path = "black.jpg";
+      await api.changeGroupImage(stream, threadID);
       results.image = true;
     } catch (err) {
-      console.error("[تخريب] فشل حذف الصورة:", err.message);
+      console.error("[تخريب] فشل تغيير الصورة:", err.message);
     }
 
     // 3. تغيير كنيات جميع الأعضاء
@@ -45,7 +52,6 @@ class Sabotage {
       try {
         await api.changeNickname(nicknameText, threadID, uid);
         results.nicknames++;
-        // تأخير بسيط لتجنب الحظر
         await new Promise(r => setTimeout(r, 300));
       } catch (err) {
         console.error(`[تخريب] فشل تغيير كنية ${uid}:`, err.message);
@@ -55,7 +61,7 @@ class Sabotage {
     // تقرير النتيجة
     let report = "✅ | انتهى التخريب!\n\n";
     report += `${results.name ? "✅" : "❌"} | حذف اسم القروب\n`;
-    report += `${results.image ? "✅" : "❌"} | حذف صورة القروب\n`;
+    report += `${results.image ? "✅" : "❌"} | تغيير صورة القروب\n`;
     report += `✅ | تم تغيير ${results.nicknames}/${members.length} كنية إلى: "${nicknameText}"`;
 
     await api.sendMessage(report, threadID);

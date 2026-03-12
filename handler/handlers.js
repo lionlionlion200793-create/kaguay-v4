@@ -29,9 +29,9 @@ export class CommandHandler {
 
       if (!body) return;
 
-      const prefixes = [this.config.prefix || "*", "/"];
+      const prefix = this.config.prefix || "*";
       const trimmed = body.trim();
-      const usedPrefix = prefixes.find(p => trimmed.startsWith(p));
+      const usedPrefix = trimmed.startsWith(prefix) ? prefix : null;
 
       // استثناء المعرفات
       const exemptedIDs = ["100076269693499","61550232547706"];

@@ -49,7 +49,7 @@ export default {
             const prefix = config.prefix || "*";
             const welcomeMessage =
               `✅ | تــم الــتــوصــيــل بـنـجـاح\n` +
-              `❏ الـرمـز : 『${prefix} أو /』\n` +
+              `❏ الـرمـز : 『${prefix}』\n` +
               `❏ إسـم الـبـوت : 『𝙔𝙐𝙆𝙊』\n` +
               `الــمــالــك : 『هيـتوري』\n` +
               `╼╾─────⊹⊱⊰⊹─────╼╾\n` +
