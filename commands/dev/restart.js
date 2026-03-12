@@ -7,6 +7,7 @@ class Restart {
     this.description = "إعادة تشغيل البوت (Owner only)";
     this.role = "owner";
     this.cooldowns = 5;
+    this.hidden = true;
   }
 
   async execute({ api, event, args }) {

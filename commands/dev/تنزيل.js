@@ -18,6 +18,7 @@ class Demote {
     this.description = "إزالة جميع الصلاحيات الممنوحة من مستخدم";
     this.role = "owner";
     this.aliases = ["demote"];
+    this.hidden = true;
   }
 
   async execute({ api, event }) {

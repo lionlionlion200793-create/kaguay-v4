@@ -18,6 +18,7 @@ class Promote {
     this.description = "منح مستخدم صلاحية استخدام أمر معين أو إلغاؤها";
     this.role = "owner";
     this.aliases = ["promote"];
+    this.hidden = true;
   }
 
   async execute({ api, event, args }) {
