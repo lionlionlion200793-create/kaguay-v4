@@ -2553,5 +2553,97 @@
       "gender": "Nữ",
       "other": {}
     }
+  },
+  {
+    "uid": "61550553118944",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ァーレド・ パレスチナ",
+      "firstName": "ァーレド・",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61550553118944/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61550553118944",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61572243487168",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ᎰᎽᎾᏬᎠᎾᏒᎬ ᏕᎯᎷᎯ",
+      "firstName": "ᎰᎽᎾᏬᎠᎾᏒᎬ",
+      "vanity": "alqa.d.almslh",
+      "avatar": "https://graph.facebook.com/61572243487168/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/alqa.d.almslh",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "100092912030261",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ᎷᎯ ᎡᏨᏫ",
+      "firstName": "ᎷᎯ ᎡᏨᏫ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/100092912030261/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=100092912030261",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "100074109145516",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "إبراهيم علي الاوسي",
+      "firstName": "إبراهيم",
+      "vanity": "abrahym.ly.alansary",
+      "avatar": "https://graph.facebook.com/100074109145516/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/abrahym.ly.alansary",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
   }
 ]

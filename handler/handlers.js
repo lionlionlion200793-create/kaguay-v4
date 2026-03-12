@@ -105,7 +105,10 @@ export class CommandHandler {
       const threadInfo = await api.getThreadInfo(threadID);
       const threadAdminIDs = (threadInfo.adminIDs || []).map(a => a.uid || a);
 
-      if ((command.role === "admin" || command.role === "owner") && !threadAdminIDs.includes(senderID) && !this.config.ADMIN_IDS.includes(senderID)) {
+      const grantedCommands = banUserData?.data?.data?.other?.grantedCommands || [];
+      const hasGrantedPermission = grantedCommands.includes(command.name);
+
+      if ((command.role === "admin" || command.role === "owner") && !threadAdminIDs.includes(senderID) && !this.config.ADMIN_IDS.includes(senderID) && !hasGrantedPermission) {
         api.setMessageReaction("🚫", event.messageID, (err) => {}, true);
         return api.sendMessage("🚫 | ليس لديك الصلاحية لإستخدام هذا الأمر", threadID, messageID);
       }
