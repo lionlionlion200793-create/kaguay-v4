@@ -1,5 +1,6 @@
 import { log } from "../logger/index.js";
 import config from "../KaguyaSetUp/config.js";
+import axios from "axios";
 
 export default {
   name: "threadUpdate",
@@ -52,7 +53,7 @@ export default {
         case "log:thread-approval-mode":
           await handleApprovalModeChange(api, event, Threads, threads);
           break;
-        case "log:thread-icon":
+        case "log:thread-image":
           await handleThreadIconChange(api, event, Threads, threads);
           break;
         case "log:user-nickname":
@@ -88,7 +89,7 @@ async function handleNicknameChange(api, event, Threads, threads) {
   });
 
   const adminName = await getUserName(api, event.author);
-  api.sendMessage(
+  await api.sendMessage(
     `تم تغيير كنية العضو <${userID}> إلى: ${newNickname} 🔖 | بواسطة: ${adminName}`,
     event.threadID
   );
@@ -118,7 +119,7 @@ async function handleThreadName(api, event, Threads, threads) {
   });
 
   const adminName = await getUserName(api, event.author);
-  api.sendMessage(
+  await api.sendMessage(
     `تم تغيير الاسم الجديد للمجموعة إلى: 🔖 | - 『${newName}』 بواسطة: ${adminName}`,
     event.threadID
   );
@@ -146,7 +147,7 @@ async function handleAdminChange(api, event, Threads, threads) {
 
   const action = ADMIN_EVENT === "add_admin" ? "✅ إضافة" : "❌ إزالة";
   const adminName = await getUserName(api, TARGET_ID);
-  api.sendMessage(
+  await api.sendMessage(
     `🔖 | تمت ${action} ${adminName} كآدمن في المجموعة`,
     event.threadID
   );
@@ -160,31 +161,44 @@ async function handleApprovalModeChange(api, event, Threads, threads) {
   });
 
   const action = APPROVAL_MODE === 0 ? "تفعيل" : "❌ تعطيل ✅";
-  api.sendMessage(
+  await api.sendMessage(
     `تم ${action} ميزة الموافقة في المجموعة 🔖 |<${event.threadID}> - ${threads.name}`,
     event.threadID
   );
 }
 
-// التعامل مع تغيير أيقونة المجموعة
+// التعامل مع تغيير صورة المجموعة
 async function handleThreadIconChange(api, event, Threads, threads) {
-  const { threadThumbnail: newIcon } = event.logMessageData;
-  const oldIcon = threads.data.threadThumbnail || null; // افترض أن هذا هو رمز الأيقونة القديم
-  const adminName = await getUserName(api, event.author);
+  const newImageUrl = event.logMessageData?.url || null;
+  const oldImageUrl = threads.threadThumbnail || null;
+  const botID = api.getCurrentUserID();
+  const isBot = event.author === botID;
 
-  // تحديث بيانات المجموعة لتخزين الصورة القديمة
-  await Threads.update(event.threadID, {
-    data: {
-      ...threads.data,
-      threadThumbnail: newIcon, // تحديث الصورة الرمزية الجديدة
-    },
-  });
+  if (threads.anti?.imageBox && !isBot && oldImageUrl) {
+    try {
+      const changerName = await getUserName(api, event.author);
+      const response = await axios.get(oldImageUrl, { responseType: "stream" });
+      await api.changeGroupImage(response.data, event.threadID);
+      await api.sendMessage(
+        `⚠️ | حماية الصورة مفعّلة!\n` +
+        `『${changerName}』حاول تغيير صورة المجموعة.\n` +
+        `✅ | تمت إعادة الصورة الأصلية تلقائياً.`,
+        event.threadID
+      );
+    } catch (err) {
+      console.error("[حماية الصورة] فشل الرجوع للصورة القديمة:", err);
+    }
+    return;
+  }
 
-  // إرسال إشعار بتغيير الصورة
-  api.sendMessage(
-    `تم تغيير صورة المجموعة بواسطة: ${adminName}`,
-    event.threadID
-  );
+  if (!isBot && newImageUrl) {
+    await Threads.update(event.threadID, { threadThumbnail: newImageUrl });
+    const adminName = await getUserName(api, event.author);
+    await api.sendMessage(
+      `🖼️ | تم تغيير صورة المجموعة بواسطة: 『${adminName}』`,
+      event.threadID
+    );
+  }
 }
 
 // الحصول على اسم المستخدم
