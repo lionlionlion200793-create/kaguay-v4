@@ -14,11 +14,18 @@ function loadMuteData() {
   }
 }
 
+function saveMuteData(data) {
+  try {
+    fs.mkdirSync(path.dirname(MUTE_FILE), { recursive: true });
+    fs.writeFileSync(MUTE_FILE, JSON.stringify(data, null, 2), "utf-8");
+  } catch {}
+}
+
 export default {
   name: "muteGuard",
   execute: async ({ api, event }) => {
     try {
-      const { type, threadID, senderID, messageID, isGroup } = event;
+      const { type, threadID, senderID, isGroup } = event;
 
       if (!isGroup) return;
       if (type !== "message" && type !== "message_reply") return;
@@ -32,7 +39,6 @@ export default {
       const botID = String(api.getCurrentUserID());
       const allowedIDs = (muteData[tid].allowedIDs || []).map(String);
       const ownerIDs = (config.ADMIN_IDS || []).map(String);
-
       const senderStr = String(senderID);
 
       if (
@@ -43,9 +49,31 @@ export default {
         return;
       }
 
+      let senderName = senderStr;
       try {
-        await api.unsendMessage(messageID);
+        const info = await api.getUserInfo(senderStr);
+        senderName = info?.[senderStr]?.name || senderStr;
       } catch {}
+
+      try {
+        await api.removeUserFromGroup(senderStr, threadID);
+
+        if (!muteData[tid].kickedUsers) muteData[tid].kickedUsers = {};
+        muteData[tid].kickedUsers[senderStr] = { name: senderName, kickedAt: Date.now() };
+        saveMuteData(muteData);
+
+        const prefix = config.prefix || "*";
+        await api.sendMessage(
+          `🔇 | تم طرد 『${senderName}』\n` +
+          `━━━━━━━━━━━━━━━━━━━━━━\n` +
+          `⚠️ القروب في وضع الصمت، الكلام ممنوع!\n` +
+          `💡 للسماح له بالعودة:\n` +
+          `   ${prefix}مسموح ${senderStr}`,
+          threadID
+        );
+      } catch (err) {
+        console.error("[muteGuard] فشل الطرد:", err?.message || err);
+      }
 
     } catch (err) {
       console.error("[muteGuard] خطأ:", err);

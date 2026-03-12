@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const MUTE_FILE = path.join(__dirname, "../../cache/data/mutedThreads.json");
 
-function loadMuteData() {
+export function loadMuteData() {
   try {
     if (!fs.existsSync(MUTE_FILE)) return {};
     return JSON.parse(fs.readFileSync(MUTE_FILE, "utf-8"));
@@ -14,7 +14,7 @@ function loadMuteData() {
   }
 }
 
-function saveMuteData(data) {
+export function saveMuteData(data) {
   try {
     fs.mkdirSync(path.dirname(MUTE_FILE), { recursive: true });
     fs.writeFileSync(MUTE_FILE, JSON.stringify(data, null, 2), "utf-8");
@@ -26,7 +26,7 @@ class Mute {
     this.name = "ممنوع";
     this.author = "Kaguya Project";
     this.cooldowns = 3;
-    this.description = "تفعيل وضع الصمت في القروب - لا أحد يتكلم إلا المسموح لهم";
+    this.description = "تفعيل وضع الصمت - يتم طرد أي شخص يرسل دون إذن";
     this.role = "admin";
     this.aliases = ["مسموح"];
   }
@@ -41,7 +41,7 @@ class Mute {
     const config = global.client?.config || {};
     const prefix = config.prefix || "*";
     const botID = String(api.getCurrentUserID());
-    const isOwner = config.ADMIN_IDS?.includes(String(senderID));
+    const isOwner = (config.ADMIN_IDS || []).includes(String(senderID));
 
     const threadInfo = await api.getThreadInfo(threadID);
     const threadAdmins = (threadInfo.adminIDs || []).map(a => String(a.uid || a));
@@ -56,50 +56,58 @@ class Mute {
 
     const body = (event.body || "").trim();
     const bodyWithoutPrefix = body.startsWith(prefix) ? body.slice(prefix.length).trim() : body;
-    const firstWord = bodyWithoutPrefix.split(/\s+/)[0].toLowerCase();
+    const firstWord = bodyWithoutPrefix.split(/\s+/)[0];
     const isMuteCommand = firstWord === "ممنوع";
     const isAllowCommand = firstWord === "مسموح";
-
     const fullArgs = args.join(" ").trim();
 
     if (isMuteCommand) {
       if (muteData[tid]?.active) {
-        return api.sendMessage("🔇 | وضع الصمت مفعّل مسبقاً في هذا القروب.", threadID, messageID);
+        const allowedList = muteData[tid].allowedIDs || [];
+        return api.sendMessage(
+          `🔇 | وضع الصمت مفعّل مسبقاً.\n` +
+          `👤 المسموح لهم: ${allowedList.length} شخص`,
+          threadID, messageID
+        );
       }
 
       muteData[tid] = {
         active: true,
         allowedIDs: [String(senderID), botID],
+        kickedUsers: {},
       };
       saveMuteData(muteData);
 
       return api.sendMessage(
         "🔇 | تم تفعيل وضع الصمت!\n" +
-        "━━━━━━━━━━━━━━━━\n" +
-        "❌ لا أحد يستطيع الإرسال الآن إلا أنت.\n\n" +
-        "💡 لإضافة شخص:\n" +
-        `  • رد على رسالته ثم أكتب ${prefix}مسموح\n` +
-        `  • تاج الشخص + ${prefix}مسموح\n` +
-        `  • ${prefix}مسموح [الآيدي]\n\n` +
-        `💡 لإلغاء الصمت: ${prefix}مسموح الكل`,
+        "━━━━━━━━━━━━━━━━━━━━━━\n" +
+        "⚠️ أي شخص يرسل رسالة سيتم طرده فوراً!\n\n" +
+        `💡 لإضافة شخص مسموح:\n` +
+        `   رد على رسالته + ${prefix}مسموح\n` +
+        `   تاغ الشخص + ${prefix}مسموح\n` +
+        `   ${prefix}مسموح [الآيدي]\n\n` +
+        `🔊 لإلغاء الصمت: ${prefix}مسموح الكل`,
         threadID, messageID
       );
     }
 
     if (isAllowCommand) {
-      if (!muteData[tid]?.active) {
-        return api.sendMessage("❌ | وضع الصمت غير مفعّل في هذا القروب.", threadID, messageID);
-      }
-
-      if (fullArgs === "" || fullArgs === "الكل") {
+      if (fullArgs === "الكل") {
+        if (!muteData[tid]?.active) {
+          return api.sendMessage("❌ | وضع الصمت غير مفعّل في هذا القروب.", threadID, messageID);
+        }
         delete muteData[tid];
         saveMuteData(muteData);
         return api.sendMessage(
           "🔊 | تم إلغاء وضع الصمت!\n" +
-          "━━━━━━━━━━━━━━━━\n" +
+          "━━━━━━━━━━━━━━━━━━━━━━\n" +
           "✅ الكل مسموح له الكلام الآن.",
           threadID, messageID
         );
+      }
+
+      if (!muteData[tid]?.active) {
+        return api.sendMessage("❌ | وضع الصمت غير مفعّل في هذا القروب.", threadID, messageID);
       }
 
       let targetID = null;
@@ -115,18 +123,13 @@ class Mute {
 
       if (!targetID) {
         return api.sendMessage(
-          "❌ | يرجى تحديد الشخص المسموح له بإحدى الطرق:\n" +
+          "❌ | حدد الشخص المسموح له:\n\n" +
           `📌 رد على رسالته + ${prefix}مسموح\n` +
-          `📌 تاج الشخص + ${prefix}مسموح\n` +
+          `📌 تاغ الشخص + ${prefix}مسموح\n` +
           `📌 ${prefix}مسموح [الآيدي]\n` +
-          `📌 ${prefix}مسموح الكل ← لإلغاء الصمت بالكامل`,
+          `📌 ${prefix}مسموح الكل ← إلغاء الصمت`,
           threadID, messageID
         );
-      }
-
-      if (!muteData[tid].allowedIDs.includes(targetID)) {
-        muteData[tid].allowedIDs.push(targetID);
-        saveMuteData(muteData);
       }
 
       try {
@@ -136,8 +139,34 @@ class Mute {
         targetName = targetID;
       }
 
+      if (!muteData[tid].allowedIDs.includes(targetID)) {
+        muteData[tid].allowedIDs.push(targetID);
+      }
+
+      const wasKicked = muteData[tid].kickedUsers?.[targetID];
+
+      if (wasKicked) {
+        delete muteData[tid].kickedUsers[targetID];
+        saveMuteData(muteData);
+        try {
+          await api.addUserToGroup(targetID, threadID);
+          return api.sendMessage(
+            `✅ | تم السماح لـ 『${targetName}』 وإعادة إضافته للقروب.`,
+            threadID, messageID
+          );
+        } catch {
+          saveMuteData(muteData);
+          return api.sendMessage(
+            `✅ | تم السماح لـ 『${targetName}』 بالكلام.\n` +
+            `⚠️ | فشلت إعادة إضافته، أضفه يدوياً.`,
+            threadID, messageID
+          );
+        }
+      }
+
+      saveMuteData(muteData);
       return api.sendMessage(
-        `✅ | تم السماح لـ『${targetName}』بالكلام في القروب.`,
+        `✅ | تم السماح لـ 『${targetName}』 بالكلام في القروب.`,
         threadID, messageID
       );
     }
