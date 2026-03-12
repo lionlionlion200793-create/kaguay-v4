@@ -107,9 +107,10 @@ args = "Start application"
 name = "Start application"
 author = "agent"
 
+[workflows.workflow.metadata]
+outputType = "webview"
+
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "node ."
-
-[workflows.workflow.metadata]
-outputType = "console"
+args = "node app.js"
+waitForPort = 3000
