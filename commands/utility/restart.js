@@ -1,22 +1,25 @@
+import fs from "fs";
+
 class Restart {
   constructor() {
-    this.name = "اعادة تشغيل";               // اسم الأمر
+    this.name = "اعادة تشغيل";
     this.aliases = ["ريستارت", "إعادة تشغيل"];
     this.description = "إعادة تشغيل البوت (Owner only)";
-    this.role = "owner";                 // فقط المالك يستطيع استخدامه
-    this.cooldowns = 5;                  // فترة انتظار بين الاستخدامات
+    this.role = "owner";
+    this.cooldowns = 5;
   }
 
   async execute({ api, event, args }) {
     const { threadID } = event;
-
     try {
       // إرسال رسالة قبل إعادة التشغيل
       await api.sendMessage("🔄 جاري إعادة تشغيل البوت...", threadID);
 
-      // يعطي وقت للرسالة لتظهر قبل الإغلاق
+      // تخزين threadID في ملف مؤقت
+      fs.writeFileSync("restart_info.json", JSON.stringify({ threadID }));
+
       setTimeout(() => {
-        process.exit(0); // Render سيعيد تشغيل البوت تلقائيًا إذا Auto Restart مفعل
+        process.exit(0); // سيعيد تشغيل البوت تلقائيًا إذا Auto Restart مفعل
       }, 1000);
 
     } catch (err) {
