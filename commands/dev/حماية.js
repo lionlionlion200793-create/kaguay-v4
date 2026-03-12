@@ -3,7 +3,7 @@ class Protect {
     this.name = "حماية";
     this.author = "Kaguya Project";
     this.cooldowns = 5;
-    this.description = "إدارة حمايات المجموعة (اسم / صورة / كنيات)";
+    this.description = "Manage group protections (name / image / nicknames)";
     this.role = "admin";
     this.aliases = ["protect", "حمايه"];
     this.hidden = true;
@@ -13,13 +13,13 @@ class Protect {
     const { threadID, messageID } = event;
 
     if (!event.isGroup) {
-      return api.sendMessage("❌ | هذا الأمر يعمل فقط في المجموعات.", threadID, messageID);
+      return api.sendMessage("❌ | This command only works in groups.", threadID, messageID);
     }
 
     const threadsData = await Threads.find(threadID);
     if (!threadsData?.status || !threadsData?.data) {
       return api.sendMessage(
-        "❌ | المجموعة غير مسجلة في قاعدة البيانات. أرسل أي رسالة ثم حاول مجدداً.",
+        "❌ | Group not found in database. Send any message and try again.",
         threadID, messageID
       );
     }
@@ -28,48 +28,47 @@ class Protect {
     const anti = threads?.anti || {};
     const sub = args[0];
 
-    // بدون أرقمنت → عرض حالة الحمايات
     if (!sub) {
-      const nameStatus    = anti.nameBox      ? "✅ مفعّلة" : "❌ معطّلة";
-      const imageStatus   = anti.imageBox     ? "✅ مفعّلة" : "❌ معطّلة";
-      const nicknameStatus = anti.nicknameBox ? "✅ مفعّلة" : "❌ معطّلة";
+      const nameStatus     = anti.nameBox     ? "✅ Enabled" : "❌ Disabled";
+      const imageStatus    = anti.imageBox    ? "✅ Enabled" : "❌ Disabled";
+      const nicknameStatus = anti.nicknameBox ? "✅ Enabled" : "❌ Disabled";
 
       return api.sendMessage(
         `╔══════════════════╗\n` +
-        `║   🛡️ حالة الحمايات   ║\n` +
+        `║   🛡️ Protection Status   ║\n` +
         `╚══════════════════╝\n` +
-        `🔤 حماية الاسم:    ${nameStatus}\n` +
-        `🖼️ حماية الصورة:   ${imageStatus}\n` +
-        `🏷️ حماية الكنيات: ${nicknameStatus}\n` +
+        `🔤 Name Protection:     ${nameStatus}\n` +
+        `🖼️ Image Protection:    ${imageStatus}\n` +
+        `🏷️ Nickname Protection: ${nicknameStatus}\n` +
         `┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n` +
-        `📌 لتفعيل/تعطيل:\n` +
-        `  *حماية اسم\n` +
-        `  *حماية صورة\n` +
-        `  *حماية كنية`,
+        `📌 To enable/disable:\n` +
+        `  *حماية name\n` +
+        `  *حماية image\n` +
+        `  *حماية nickname`,
         threadID, messageID
       );
     }
 
-    // حماية الاسم
+    // Name protection
     if (sub === "اسم" || sub === "name") {
       const newValue = !anti.nameBox;
       await Threads.update(threadID, {
         anti: { ...anti, nameBox: newValue },
       });
       return api.sendMessage(
-        `🔤 | حماية اسم المجموعة: ${newValue ? "✅ مفعّلة" : "❌ معطّلة"}\n` +
+        `🔤 | Group Name Protection: ${newValue ? "✅ Enabled" : "❌ Disabled"}\n` +
         (newValue
-          ? `📌 | أي تغيير للاسم سيُعاد تلقائياً إلى:\n「${threads.name || "الاسم الحالي"}」`
-          : "📌 | يمكن الآن تغيير اسم المجموعة بحرية."),
+          ? `📌 | Any name change will be automatically reverted to:\n「${threads.name || "Current Name"}」`
+          : "📌 | Group name can now be changed freely."),
         threadID, messageID
       );
     }
 
-    // حماية الصورة
+    // Image protection
     if (sub === "صورة" || sub === "image") {
       if (!anti.imageBox && !threads.threadThumbnail) {
         return api.sendMessage(
-          "❌ | لا توجد صورة محفوظة للمجموعة.\n📌 | تأكد من وجود صورة للمجموعة ثم حاول مجدداً.",
+          "❌ | No saved group image found.\n📌 | Make sure the group has an image and try again.",
           threadID, messageID
         );
       }
@@ -78,32 +77,31 @@ class Protect {
         anti: { ...anti, imageBox: newValue },
       });
       return api.sendMessage(
-        `🖼️ | حماية صورة المجموعة: ${newValue ? "✅ مفعّلة" : "❌ معطّلة"}\n` +
+        `🖼️ | Group Image Protection: ${newValue ? "✅ Enabled" : "❌ Disabled"}\n` +
         (newValue
-          ? "📌 | أي تغيير للصورة سيُعاد تلقائياً للصورة الأصلية."
-          : "📌 | يمكن الآن تغيير صورة المجموعة بحرية."),
+          ? "📌 | Any image change will be automatically reverted to the original."
+          : "📌 | Group image can now be changed freely."),
         threadID, messageID
       );
     }
 
-    // حماية الكنيات
+    // Nickname protection
     if (sub === "كنية" || sub === "كنيات" || sub === "nickname") {
       const newValue = !anti.nicknameBox;
       await Threads.update(threadID, {
         anti: { ...anti, nicknameBox: newValue },
       });
       return api.sendMessage(
-        `🏷️ | حماية الكنيات: ${newValue ? "✅ مفعّلة" : "❌ معطّلة"}\n` +
+        `🏷️ | Nickname Protection: ${newValue ? "✅ Enabled" : "❌ Disabled"}\n` +
         (newValue
-          ? "📌 | لن يستطيع أحد تغيير كنيته أو كنية الآخرين."
-          : "📌 | يمكن الآن تغيير الكنيات بحرية."),
+          ? "📌 | No one can change their nickname or others' nicknames."
+          : "📌 | Nicknames can now be changed freely."),
         threadID, messageID
       );
     }
 
-    // أرقمنت غير معروف
     return api.sendMessage(
-      "❌ | خيار غير صحيح.\n\n📌 الخيارات المتاحة:\n  *حماية اسم\n  *حماية صورة\n  *حماية كنية",
+      "❌ | Invalid option.\n\n📌 Available options:\n  *حماية name\n  *حماية image\n  *حماية nickname",
       threadID, messageID
     );
   }

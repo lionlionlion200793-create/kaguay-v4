@@ -620,7 +620,7 @@
       "anti": {
         "nameBox": true,
         "imageBox": true,
-        "nicknameBox": true
+        "nicknameBox": false
       },
       "banned": {
         "status": false,
