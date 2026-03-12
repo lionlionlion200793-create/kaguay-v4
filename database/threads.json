@@ -888,5 +888,28 @@
         "time": null
       }
     }
+  },
+  {
+    "threadID": "940763442261555",
+    "data": {
+      "name": null,
+      "threadThumbnail": null,
+      "members": 3,
+      "adminIDs": [
+        "61570526043721"
+      ],
+      "emoji": null,
+      "prefix": null,
+      "approvalMode": false,
+      "anti": {
+        "nameBox": false,
+        "imageBox": false
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      }
+    }
   }
 ]
