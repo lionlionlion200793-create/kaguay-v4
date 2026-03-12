@@ -24,12 +24,62 @@ class Demote {
   async execute({ api, event, args }) {
     const { threadID, messageID, senderID, messageReply } = event;
 
+    if (args[0] === "صلاحيات" && args[1] === "ادمن") {
+      const commandName = args[2];
+      if (!commandName) {
+        return api.sendMessage(
+          "❌ | حدّد اسم الأمر.\nمثال: تنزيل صلاحيات ادمن طرد",
+          threadID, messageID
+        );
+      }
+
+      const command = global.client.commands.get(commandName) || global.client.commands.get(global.client.aliases.get(commandName));
+      if (!command) {
+        return api.sendMessage(`❌ | الأمر '${commandName}' غير موجود.`, threadID, messageID);
+      }
+
+      const realName = command.name;
+      const threadInfo = await api.getThreadInfo(threadID);
+      const adminIDs = (threadInfo.adminIDs || []).map(a => String(a.uid || a)).filter(id => id !== String(api.getCurrentUserID()));
+
+      if (adminIDs.length === 0) {
+        return api.sendMessage("❌ | لا يوجد أدمن في هذا القروب.", threadID, messageID);
+      }
+
+      const users = readUsers();
+      let removedCount = 0;
+
+      for (const uid of adminIDs) {
+        const index = users.findIndex(u => String(u.uid) === String(uid));
+        if (index === -1) continue;
+        const granted = users[index]?.data?.other?.grantedCommands;
+        if (!Array.isArray(granted) || !granted.includes(realName)) continue;
+        users[index].data.other.grantedCommands = granted.filter(c => c !== realName);
+        removedCount++;
+      }
+
+      saveUsers(users);
+
+      if (removedCount === 0) {
+        return api.sendMessage(
+          `❌ | لا يوجد أدمن يملك صلاحية '${realName}' أصلاً.`,
+          threadID, messageID
+        );
+      }
+
+      return api.sendMessage(
+        `✅ | تم إزالة صلاحية '${realName}' من ${removedCount} أدمن في القروب.`,
+        threadID, messageID
+      );
+    }
+
     if (!messageReply) {
       return api.sendMessage(
         "❌ | رُد على رسالة الشخص الذي تريد تنزيله.\n\n" +
         "📌 طريقة الاستخدام:\n" +
-        "  رد + تنزيل          ← يزيل جميع صلاحياته\n" +
-        "  رد + تنزيل [أمر]   ← يزيل صلاحية أمر محدد فقط",
+        "  رد + تنزيل                    ← يزيل جميع صلاحياته\n" +
+        "  رد + تنزيل [أمر]              ← يزيل صلاحية أمر محدد فقط\n" +
+        "  تنزيل صلاحيات ادمن [أمر]     ← يزيل الصلاحية من جميع الأدمن",
         threadID,
         messageID
       );
