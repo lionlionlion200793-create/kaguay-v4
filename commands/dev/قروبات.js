@@ -18,6 +18,7 @@ class Groups {
     this.description = "عرض قائمة القروبات التي البوت فيها مع تفاصيل كل قروب";
     this.role = "owner";
     this.aliases = ["groups"];
+    this.hidden = true;
   }
 
   async execute({ api, event, args }) {
