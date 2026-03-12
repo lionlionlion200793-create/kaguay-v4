@@ -3,7 +3,7 @@ class Restrict {
     this.name = "تقييد";
     this.author = "Kaguya Project";
     this.cooldowns = 3;
-    this.description = "Restrict command usage inside the group";
+    this.description = "تقييد استخدام الأوامر داخل المجموعة";
     this.role = "owner";
     this.aliases = ["restrict", "قيود"];
     this.hidden = true;
@@ -13,13 +13,13 @@ class Restrict {
     const { threadID, messageID } = event;
 
     if (!event.isGroup) {
-      return api.sendMessage("❌ | This command only works in groups.", threadID, messageID);
+      return api.sendMessage("❌ | هذا الأمر يعمل فقط في المجموعات.", threadID, messageID);
     }
 
     const threadsData = await Threads.find(threadID);
     if (!threadsData?.status || !threadsData?.data) {
       return api.sendMessage(
-        "❌ | Group not found in database. Send any message and try again.",
+        "❌ | المجموعة غير مسجلة في قاعدة البيانات. أرسل أي رسالة ثم حاول مجدداً.",
         threadID, messageID
       );
     }
@@ -29,21 +29,21 @@ class Restrict {
     const sub = args[0];
 
     if (!sub) {
-      const adminStatus = restrict.adminOnly ? "✅ Enabled" : "❌ Disabled";
-      const modsStatus  = restrict.modsOnly  ? "✅ Enabled" : "❌ Disabled";
+      const adminStatus = restrict.adminOnly ? "✅ مفعّل" : "❌ معطّل";
+      const modsStatus  = restrict.modsOnly  ? "✅ مفعّل" : "❌ معطّل";
 
       return api.sendMessage(
         `╔══════════════════╗\n` +
-        `║   🔒 Restriction Status   ║\n` +
+        `║   🔒 حالة التقييد   ║\n` +
         `╚══════════════════╝\n` +
-        `👑 Admin Restrict:   ${adminStatus}\n` +
-        `   ↳ Admin commands for bot owner only\n` +
-        `👥 Member Restrict:  ${modsStatus}\n` +
-        `   ↳ Commands for group admins only\n` +
+        `👑 تقييد الادمن:    ${adminStatus}\n` +
+        `   ↳ أوامر الادمن لمالك البوت فقط\n` +
+        `👥 تقييد الأعضاء:  ${modsStatus}\n` +
+        `   ↳ الأوامر لمسؤولي القروب فقط\n` +
         `┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n` +
-        `📌 To enable/disable:\n` +
-        `  *تقييد admin\n` +
-        `  *تقييد members`,
+        `📌 لتفعيل/تعطيل:\n` +
+        `  *تقييد ادمن\n` +
+        `  *تقييد اعضاء`,
         threadID, messageID
       );
     }
@@ -54,10 +54,10 @@ class Restrict {
         restrict: { ...restrict, adminOnly: newValue },
       });
       return api.sendMessage(
-        `👑 | Admin Restriction: ${newValue ? "✅ Enabled" : "❌ Disabled"}\n` +
+        `👑 | تقييد الادمن: ${newValue ? "✅ مفعّل" : "❌ معطّل"}\n` +
         (newValue
-          ? "📌 | Admin commands are now for bot owner only.\n     Group admins can no longer use them."
-          : "📌 | Group admins can use admin commands again."),
+          ? "📌 | أوامر الادمن الآن لمالك البوت فقط.\n     مسؤولو القروب لن يستطيعوا استخدامها."
+          : "📌 | مسؤولو القروب يستطيعون استخدام أوامر الادمن مجدداً."),
         threadID, messageID
       );
     }
@@ -68,16 +68,16 @@ class Restrict {
         restrict: { ...restrict, modsOnly: newValue },
       });
       return api.sendMessage(
-        `👥 | Member Restriction: ${newValue ? "✅ Enabled" : "❌ Disabled"}\n` +
+        `👥 | تقييد الأعضاء: ${newValue ? "✅ مفعّل" : "❌ معطّل"}\n` +
         (newValue
-          ? "📌 | Commands are now for group admins only.\n     Regular members can no longer use any command."
-          : "📌 | All members can use commands again."),
+          ? "📌 | الأوامر الآن لمسؤولي القروب فقط.\n     الأعضاء العاديون لن يستطيعوا استخدام أي أمر."
+          : "📌 | جميع الأعضاء يستطيعون استخدام الأوامر مجدداً."),
         threadID, messageID
       );
     }
 
     return api.sendMessage(
-      "❌ | Invalid option.\n\n📌 Available options:\n  *تقييد admin\n  *تقييد members",
+      "❌ | خيار غير صحيح.\n\n📌 الخيارات المتاحة:\n  *تقييد ادمن\n  *تقييد اعضاء",
       threadID, messageID
     );
   }
