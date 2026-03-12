@@ -11,8 +11,18 @@ function saveUsers(data) {
 }
 
 function grantCommandToUser(users, uid, commandName) {
-  const index = users.findIndex(u => String(u.uid) === String(uid));
-  if (index === -1) return false;
+  let index = users.findIndex(u => String(u.uid) === String(uid));
+  if (index === -1) {
+    users.push({
+      uid: String(uid),
+      data: {
+        money: 0, exp: 0, level: 0,
+        banned: { status: false, reason: "", time: 0 },
+        other: { grantedCommands: [] }
+      }
+    });
+    index = users.length - 1;
+  }
   if (!users[index].data.other) users[index].data.other = {};
   if (!Array.isArray(users[index].data.other.grantedCommands)) {
     users[index].data.other.grantedCommands = [];
