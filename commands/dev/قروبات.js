@@ -114,7 +114,7 @@ class Groups {
       msg += `┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n`;
       msg += `رُد برقم الخيار`;
 
-      const sent = await api.sendMessage(msg, threadID, messageID);
+      const sent = await api.sendMessage(msg, threadID);
 
       global.client.handler.reply.set(sent.messageID, {
         name: this.name,
@@ -273,7 +273,7 @@ class Groups {
       if (option === 6) {
         const sent = await api.sendMessage(
           `📨 | إرسال رسالة إلى:\n🏷️ ${groupName}\n\nرُد بنص الرسالة التي تريد إرسالها.`,
-          threadID, messageID
+          threadID
         );
         global.client.handler.reply.set(sent.messageID, {
           name: this.name,

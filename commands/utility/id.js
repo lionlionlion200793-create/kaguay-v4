@@ -53,7 +53,7 @@ class ID {
       msg += `┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n`;
       msg += `رُد برقم الخيار`;
 
-      const sent = await api.sendMessage(msg, threadID, messageID);
+      const sent = await api.sendMessage(msg, threadID);
 
       global.client.handler.reply.set(sent.messageID, {
         name: this.name,
