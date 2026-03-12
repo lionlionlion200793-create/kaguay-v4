@@ -1564,5 +1564,97 @@
       "gender": "Nam",
       "other": {}
     }
+  },
+  {
+    "uid": "61557588163277",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ᏢᎬᏒᎴᎾᏆ ぐあ",
+      "firstName": "ᏢᎬᏒᎴᎾᏆ",
+      "vanity": "per.dox",
+      "avatar": "https://graph.facebook.com/61557588163277/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/per.dox",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61571888995536",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ᎡᎽᏫᏃᎯᏦᎥ ᎡᏞ",
+      "firstName": "ᎡᎽᏫᏃᎯᏦᎥ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61571888995536/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61571888995536",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61581778290140",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "هـومـلانـدر 'ﮮ",
+      "firstName": "هـومـلانـدر",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61581778290140/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61581778290140",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Không xác định",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61587220121420",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "Aizen D'm",
+      "firstName": "Aizen",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61587220121420/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61587220121420",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
   }
 ]

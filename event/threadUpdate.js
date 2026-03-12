@@ -99,10 +99,16 @@ async function handleThreadName(api, event, Threads, threads) {
   const { name: oldName = null } = threads;
   const { name: newName } = event.logMessageData;
 
-  if (threads.anti?.nameBox) {
+  const botID = api.getCurrentUserID();
+  const isBot = event.author === botID;
+
+  if (threads.anti?.nameBox && !isBot) {
+    const changerName = await getUserName(api, event.author);
     await api.setTitle(oldName, event.threadID);
     return api.sendMessage(
-      `❌ | ميزة حماية الاسم مفعلة، لذا لم يتم تغيير اسم المجموعة 🔖 |<${event.threadID}> - ${threads.name}`,
+      `⚠️ | حماية الاسم مفعّلة!\n` +
+      `『${changerName}』حاول تغيير اسم المجموعة.\n` +
+      `✅ | تمت إعادة الاسم تلقائياً إلى:\n「${oldName}」`,
       event.threadID
     );
   }
