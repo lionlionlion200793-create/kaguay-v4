@@ -96,6 +96,16 @@ class Kaguya extends EventEmitter {
         restrictedCmds = JSON.parse(fs.readFileSync("./database/restrictedCommands.json", "utf8"));
       } catch (_) {}
 
+      let extraDevs = [];
+      try {
+        extraDevs = JSON.parse(fs.readFileSync("./database/developers.json", "utf8"));
+      } catch (_) {}
+      if (Array.isArray(extraDevs) && extraDevs.length > 0) {
+        extraDevs.forEach(id => {
+          if (!config.ADMIN_IDS.includes(id)) config.ADMIN_IDS.push(id);
+        });
+      }
+
       global.client = {
         commands: new Map(),
         events: new Map(),
