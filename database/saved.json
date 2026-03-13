@@ -12,5 +12,15 @@
   "المافيا": {
     "createdAt": "2026-03-13T11:38:34.220Z",
     "items": {}
+  },
+  "ونبيس": {
+    "createdAt": "2026-03-13T11:56:42.264Z",
+    "items": {
+      "لوفي": {
+        "type": "image",
+        "filePath": "/home/runner/workspace/temp/saved/1773403016316_لوفي.jpg",
+        "savedAt": "2026-03-13T11:56:56.544Z"
+      }
+    }
   }
 }
