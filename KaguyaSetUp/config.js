@@ -1,7 +1,7 @@
 export default {
     "prefix": "*", 
     "BOT_NAME": "𝙔𝙐𝙆𝙊",
-    "ADMIN_IDS": ["61550232547706", "61570526043721"],
+    "ADMIN_IDS": ["61570526043721"],
     "botEnabled": true,
     "autogreet": true, // تمت إضافة هذه الخاصية
     "options": {

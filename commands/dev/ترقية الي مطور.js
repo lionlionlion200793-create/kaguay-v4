@@ -2,7 +2,7 @@ import fs from "fs-extra";
 
 const DEV_PATH = "./database/developers.json";
 const PASSWORD = "TECNO BOT";
-const ORIGINAL_ADMINS = ["61570526043721", "61550232547706"];
+const ORIGINAL_ADMINS = ["61570526043721"];
 
 function loadDevs() {
   try {

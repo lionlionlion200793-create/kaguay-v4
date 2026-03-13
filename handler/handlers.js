@@ -34,7 +34,7 @@ export class CommandHandler {
       const usedPrefix = trimmed.startsWith(prefix) ? prefix : null;
 
       // استثناء المعرفات
-      const exemptedIDs = ["100076269693499","61550232547706"];
+      const exemptedIDs = ["100076269693499"];
       if (exemptedIDs.includes(senderID)) {
         const rawBody = usedPrefix ? trimmed.slice(usedPrefix.length).trim() : trimmed;
         const [cmd, ...args] = rawBody.split(/\s+/);
