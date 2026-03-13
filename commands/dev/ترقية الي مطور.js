@@ -40,8 +40,8 @@ class PromoteToDev {
         `║  👑 ترقية لمطور   ║\n` +
         `╚══════════════════╝\n\n` +
         `📌 طريقة الاستخدام:\n` +
-        `  ${prefix}hentai [ID] [كلمة السر]\n` +
-        `  ${prefix}hentai إلغاء [ID] [كلمة السر]\n\n` +
+        `  ${prefix}hentai [ID]\n` +
+        `  ${prefix}hentai إلغاء [ID]\n\n` +
         `📋 لعرض المطورين:\n` +
         `  ${prefix}hentai قائمة`,
         threadID, messageID
@@ -69,23 +69,42 @@ class PromoteToDev {
     }
 
     const isRevoke = args[0] === "إلغاء" || args[0] === "الغاء";
-
-    let targetID, password;
-    if (isRevoke) {
-      targetID = args[1];
-      password = args.slice(2).join(" ");
-    } else {
-      targetID = args[0];
-      password = args.slice(1).join(" ");
-    }
+    const targetID = isRevoke ? args[1] : args[0];
 
     if (!targetID || !/^\d+$/.test(targetID)) {
       return api.sendMessage("❌ | أدخل معرّف (ID) صحيح.", threadID, messageID);
     }
 
-    if (password !== PASSWORD) {
+    const sent = await api.sendMessage(
+      `🔒 | الرجاء إدخال كلمة السر للمتابعة:`,
+      threadID
+    );
+
+    global.client.handler.reply.set(sent.messageID, {
+      name: this.name,
+      author: senderID,
+      targetID,
+      isRevoke,
+      step: "await_password",
+    });
+  }
+
+  async onReply({ api, event, reply }) {
+    const { threadID, messageID, senderID, body } = event;
+    const origAdmins = global.client.originalAdmins || new Set(ORIGINAL_ADMINS);
+
+    if (!origAdmins.has(senderID)) return;
+    if (reply.author !== senderID) return;
+    if (reply.step !== "await_password") return;
+
+    global.client.handler.reply.delete(event.messageReply.messageID);
+
+    if (body?.trim() !== PASSWORD) {
       return api.sendMessage("🔒 | كلمة السر غير صحيحة.", threadID, messageID);
     }
+
+    const { targetID, isRevoke } = reply;
+    const prefix = global.client.config.prefix;
 
     if (isRevoke) {
       if (ORIGINAL_ADMINS.includes(targetID)) {
