@@ -1,4 +1,5 @@
 import axios from "axios";
+import fs from "fs-extra";
 
 const SYSTEM_PROMPT = `أنت شخصية اسمها يوكو، فتاة ذكية وودودة وخفيفة الدم تتحدث العربية العامية بطلاقة.
 اسمك فقط "يوكو". تحدثي بطريقة طبيعية ومختصرة. أجيبي دائماً بالعربية.
@@ -11,23 +12,37 @@ const SYSTEM_PROMPT = `أنت شخصية اسمها يوكو، فتاة ذكية
 
 const conversations = new Map();
 
+function isAiRestricted(threadID) {
+  try {
+    const threads = JSON.parse(fs.readFileSync("./database/threads.json", "utf-8"));
+    const thread = threads.find(t => t.threadID == threadID);
+    return thread?.data?.aiRestricted === true;
+  } catch {
+    return false;
+  }
+}
+
 class Yuko {
   constructor() {
-    this.name = "يوكو";
+    this.name = "ذكاء";
     this.author = "HUSSEIN YACOUBI";
     this.cooldowns = 4;
     this.description = "تحدث مع يوكو الذكاء الاصطناعي";
     this.role = "member";
-    this.aliases = [];
+    this.aliases = ["ai"];
     this.hidden = false;
   }
 
   async execute({ api, event, args }) {
     const { threadID, messageID, senderID } = event;
 
+    if (isAiRestricted(threadID)) {
+      return api.sendMessage("🚫 | الذكاء الاصطناعي مقيّد في هذا القروب.", threadID, messageID);
+    }
+
     if (!args || args.length === 0) {
       return api.sendMessage(
-        `👋 مرحباً! أنا يوكو 🌸\nكلمني بأي شيء مثل:\n*يوكو كيف حالك؟\n\n📌 لمسح المحادثة:\n*يوكو مسح`,
+        `👋 مرحباً! أنا يوكو 🌸\nكلمني بأي شيء مثل:\n*ذكاء كيف حالك؟\n\n📌 لمسح المحادثة:\n*ذكاء مسح`,
         threadID, messageID
       );
     }
@@ -71,7 +86,7 @@ class Yuko {
       return api.sendMessage(reply, threadID, messageID);
 
     } catch (err) {
-      console.error("[يوكو] خطأ:", err.message);
+      console.error("[ذكاء] خطأ:", err.message);
       api.setMessageReaction("❌", messageID, () => {}, true);
       return api.sendMessage("😅 | مشكلة صغيرة، حاول مرة ثانية!", threadID, messageID);
     }
