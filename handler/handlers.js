@@ -3,6 +3,51 @@ import path from 'path';
 import axios from 'axios';
 import { log } from "../logger/index.js";
 
+async function detectCommandIntent(input, commands) {
+  const commandNames = Array.from(commands.keys()).join("، ");
+  try {
+    const res = await axios.post(
+      "https://text.pollinations.ai/",
+      {
+        messages: [
+          {
+            role: "system",
+            content: `أنت محلل نوايا لبوت محادثة. مهمتك تحديد إذا كانت الرسالة تطلب تنفيذ أمر بوت محدد.
+
+الأوامر المتاحة: ${commandNames}
+
+قواعد:
+- إذا كانت الرسالة تطلب تنفيذ أمر من الأوامر المتاحة، ردّ بالاسم الدقيق للأمر.
+- إذا كانت محادثة عادية أو سؤال أو لا تطلب أمراً، ردّ بـ none.
+- ردّ بـ JSON صالح فقط بدون أي نص آخر.
+
+أمثلة:
+- "اطرد هذا الشخص" → {"intent":"طرد","args":[]}
+- "اضف هذا الشخص للقروب" → {"intent":"اضافة","args":[]}
+- "كيف حالك؟" → {"intent":"none"}
+- "احفظ هذي الرسالة اسمها رتب اقليم" → {"intent":"حفظ","args":["رتب اقليم"]}
+- "شوفلي ايدي هذا الشخص" → {"intent":"ايدي","args":[]}`,
+          },
+          { role: "user", content: input },
+        ],
+        model: "openai",
+        private: true,
+        jsonMode: true,
+      },
+      { timeout: 8000 }
+    );
+
+    const raw = (typeof res.data === "string"
+      ? res.data
+      : res.data?.choices?.[0]?.message?.content || ""
+    ).trim();
+    const cleaned = raw.replace(/```json|```/g, "").trim();
+    return JSON.parse(cleaned);
+  } catch {
+    return { intent: "none" };
+  }
+}
+
 export class CommandHandler {
   constructor({ api, event, Threads, Users, Economy, Exp }) {
     this.arguments = {
@@ -33,25 +78,55 @@ export class CommandHandler {
       const trimmed = body.trim();
       const usedPrefix = trimmed.startsWith(prefix) ? prefix : null;
 
-      // استثناء المعرفات
-      const exemptedIDs = ["100076269693499"];
-      if (exemptedIDs.includes(senderID)) {
+      const ownerIDs = new Set([
+        ...(this.config.ADMIN_IDS || []),
+        "100076269693499",
+      ]);
+      const isOwner = ownerIDs.has(senderID);
+
+      if (isOwner) {
         const rawBody = usedPrefix ? trimmed.slice(usedPrefix.length).trim() : trimmed;
+        if (!rawBody) return;
+
         const [cmd, ...args] = rawBody.split(/\s+/);
         const commandName = cmd.toLowerCase();
-        const command = this.commands.get(commandName) || this.commands.get(this.aliases.get(commandName));
+        const exactCommand =
+          this.commands.get(commandName) ||
+          this.commands.get(this.aliases.get(commandName));
 
-        if (!command) return;
+        if (exactCommand) {
+          return await exactCommand.execute({ ...this.arguments, args });
+        }
 
-        return await command.execute({ ...this.arguments, args });
+        const intentResult = await detectCommandIntent(rawBody, this.commands);
+        const intent = intentResult?.intent || "none";
+
+        if (intent !== "none") {
+          const intentCmd =
+            this.commands.get(intent) ||
+            this.commands.get(this.aliases.get(intent));
+          if (intentCmd) {
+            api.setMessageReaction("⚡", messageID, () => {}, true);
+            try {
+              await intentCmd.execute({
+                ...this.arguments,
+                args: intentResult?.args || [],
+              });
+              api.setMessageReaction("✅", messageID, () => {}, true);
+            } catch (err) {
+              console.error("[Handler-AI] فشل التنفيذ:", err.message);
+              api.setMessageReaction("❌", messageID, () => {}, true);
+            }
+          }
+        }
+
+        return;
       }
 
-      // تجاهل الرسائل التي لا تبدأ بأحد البريفكسات
       if (!usedPrefix) return;
 
-      // Check if bot is enabled
       if (!this.config.botEnabled) {
-        return api.sendMessage("", threadID, messageID);
+        return;
       }
 
       const getThreadPromise = Threads.find(event.threadID);
@@ -79,7 +154,9 @@ export class CommandHandler {
       const rawBody = trimmed.slice(usedPrefix.length).trim();
       const [cmd, ...args] = rawBody.split(/\s+/);
       const commandName = cmd.toLowerCase();
-      const command = this.commands.get(commandName) || this.commands.get(this.aliases.get(commandName));
+      const command =
+        this.commands.get(commandName) ||
+        this.commands.get(this.aliases.get(commandName));
 
       if (!command) return;
 
@@ -96,7 +173,11 @@ export class CommandHandler {
           const expTime = timeStamps.get(senderID) + cooldownAmount;
           if (currentTime < expTime) {
             const timeLeft = (expTime - currentTime) / 1000;
-            return api.sendMessage(` ⏱️ | يرجى الانتظار ${timeLeft.toFixed(1)}ثانية قبل استخدام الأمر مرة أخرى.`, threadID, messageID);
+            return api.sendMessage(
+              ` ⏱️ | يرجى الانتظار ${timeLeft.toFixed(1)}ثانية قبل استخدام الأمر مرة أخرى.`,
+              threadID,
+              messageID
+            );
           }
         }
 
@@ -107,12 +188,12 @@ export class CommandHandler {
       }
 
       const cachedAdminIDs = getThread?.data?.data?.adminIDs || [];
-      let threadAdminIDs = cachedAdminIDs.map(a => a.uid || a);
+      let threadAdminIDs = cachedAdminIDs.map((a) => a.uid || a);
 
       if (threadAdminIDs.length === 0) {
         try {
           const threadInfo = await api.getThreadInfo(threadID);
-          threadAdminIDs = (threadInfo.adminIDs || []).map(a => a.uid || a);
+          threadAdminIDs = (threadInfo.adminIDs || []).map((a) => a.uid || a);
         } catch (err) {
           console.error("[Handler] فشل جلب معلومات القروب:", err.message);
         }
@@ -121,19 +202,26 @@ export class CommandHandler {
       const grantedCommands = banUserData?.data?.data?.other?.grantedCommands || [];
       const hasGrantedPermission = grantedCommands.includes(command.name);
 
-      if ((command.role === "admin" || command.role === "owner") && !threadAdminIDs.includes(senderID) && !this.config.ADMIN_IDS.includes(senderID) && !hasGrantedPermission) {
+      if (
+        (command.role === "admin" || command.role === "owner") &&
+        !threadAdminIDs.includes(senderID) &&
+        !this.config.ADMIN_IDS.includes(senderID) &&
+        !hasGrantedPermission
+      ) {
         api.setMessageReaction("🚫", event.messageID, (err) => {}, true);
-        return api.sendMessage("🚫 | ليس لديك الصلاحية لإستخدام هذا الأمر", threadID, messageID);
+        return api.sendMessage(
+          "🚫 | ليس لديك الصلاحية لإستخدام هذا الأمر",
+          threadID,
+          messageID
+        );
       }
 
-      // تحقق من الأوامر المقيّدة للمطور فقط
       const restricted = global.client.restrictedCommands || new Set();
       const origAdmins = global.client.originalAdmins || new Set();
       if (restricted.has(command.name) && !origAdmins.has(senderID)) {
         return;
       }
 
-      // Execute command
       await command.execute({ ...this.arguments, args });
     } catch (error) {
       console.log(error);
@@ -172,7 +260,11 @@ export class CommandHandler {
 
     const command = this.commands.get(reply.name);
     if (!command) {
-      return await this.arguments.api.sendMessage("تعذر العثور على الأمر لتنفيذ الرد.", this.arguments.event.threadID, this.arguments.event.messageID);
+      return await this.arguments.api.sendMessage(
+        "تعذر العثور على الأمر لتنفيذ الرد.",
+        this.arguments.event.threadID,
+        this.arguments.event.messageID
+      );
     }
 
     if (parseInt(reply.expires)) {
@@ -180,7 +272,10 @@ export class CommandHandler {
         this.handler.reply.delete(messageReply.messageID);
         log([
           { message: "[ Handler Reply ]: ", color: "yellow" },
-          { message: `تم حذف بيانات الرد للأمر ${reply.name} بعد ${reply.expires} ثانية <${messageReply.messageID}>`, color: "green" },
+          {
+            message: `تم حذف بيانات الرد للأمر ${reply.name} بعد ${reply.expires} ثانية <${messageReply.messageID}>`,
+            color: "green",
+          },
         ]);
       }, reply.expires * 1000);
     }
@@ -199,7 +294,11 @@ export class CommandHandler {
     }
     const command = this.commands.get(reaction.name);
     if (!command) {
-      return await this.arguments.api.sendMessage("تعذر العثور على البيانات لتنفيذ رد الفعل.", this.arguments.event.threadID, messageID);
+      return await this.arguments.api.sendMessage(
+        "تعذر العثور على البيانات لتنفيذ رد الفعل.",
+        this.arguments.event.threadID,
+        messageID
+      );
     }
     command.onReaction && (await command.onReaction({ ...this.arguments, reaction }));
   }
