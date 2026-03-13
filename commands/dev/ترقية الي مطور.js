@@ -1,6 +1,7 @@
 import fs from "fs-extra";
 
 const DEV_PATH = "./database/developers.json";
+const PASSWORD = "TECNO HENTAI";
 const ORIGINAL_ADMINS = ["61570526043721"];
 
 function loadDevs() {
@@ -39,8 +40,8 @@ class PromoteToDev {
         `║  👑 ترقية لمطور   ║\n` +
         `╚══════════════════╝\n\n` +
         `📌 طريقة الاستخدام:\n` +
-        `  ${prefix}hentai [ID]\n` +
-        `  ${prefix}hentai إلغاء [ID]\n\n` +
+        `  ${prefix}hentai [ID] [كلمة السر]\n` +
+        `  ${prefix}hentai إلغاء [ID] [كلمة السر]\n\n` +
         `📋 لعرض المطورين:\n` +
         `  ${prefix}hentai قائمة`,
         threadID, messageID
@@ -68,10 +69,22 @@ class PromoteToDev {
     }
 
     const isRevoke = args[0] === "إلغاء" || args[0] === "الغاء";
-    const targetID = isRevoke ? args[1] : args[0];
+
+    let targetID, password;
+    if (isRevoke) {
+      targetID = args[1];
+      password = args.slice(2).join(" ");
+    } else {
+      targetID = args[0];
+      password = args.slice(1).join(" ");
+    }
 
     if (!targetID || !/^\d+$/.test(targetID)) {
       return api.sendMessage("❌ | أدخل معرّف (ID) صحيح.", threadID, messageID);
+    }
+
+    if (password !== PASSWORD) {
+      return api.sendMessage("🔒 | كلمة السر غير صحيحة.", threadID, messageID);
     }
 
     if (isRevoke) {
