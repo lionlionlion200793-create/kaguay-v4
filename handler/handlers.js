@@ -173,40 +173,32 @@ const INTENT_EXAMPLES = `
 
 async function detectCommandIntent(input, commands) {
   const commandList = buildCommandList(commands);
+  const systemPrompt =
+    `أنت نظام تحليل نوايا لبوت فيسبوك ماسنجر. مهمتك الوحيدة تحديد الأمر المقصود من الرسالة وإرجاع JSON.\n\n` +
+    `الأوامر المتاحة:\n${commandList}\n\n` +
+    `مكتبة الأمثلة:\n${INTENT_EXAMPLES}\n\n` +
+    `قواعد:\n` +
+    `1. حلّل الرسالة وطابقها مع الأمر الأنسب — حتى لو الصياغة مختلفة.\n` +
+    `2. args: ضع المعطيات الإضافية فيها، وإلا ضع [].\n` +
+    `3. إذا كانت محادثة عادية أو لا علاقة لها بأمر، أرجع {"intent":"none"}.\n` +
+    `4. ردّ بـ JSON صالح فقط، لا شيء آخر.`;
+
   try {
-    const res = await axios.post(
-      "https://text.pollinations.ai/",
+    const res = await axios.get(
+      `https://text.pollinations.ai/${encodeURIComponent(input)}`,
       {
-        messages: [
-          {
-            role: "system",
-            content: `أنت نظام تحليل نوايا لبوت فيسبوك ماسنجر. مهمتك الوحيدة تحديد الأمر المقصود من الرسالة وإرجاع JSON.
-
-الأوامر المتاحة مع وصفها:
-${commandList}
-
-مكتبة المصطلحات والأمثلة لكل أمر:
-${INTENT_EXAMPLES}
-
-قواعد:
-1. حلّل الرسالة وطابقها مع الأمر الأنسب من الأمثلة أعلاه — حتى لو الصياغة مختلفة.
-2. args: ضع المعطيات الإضافية فيها (مثل اسم الحفظ)، وإلا ضع [].
-3. إذا كانت محادثة عادية أو لا علاقة لها بأمر بوت، أرجع {"intent":"none"}.
-4. ردّ بـ JSON صالح فقط، لا شيء آخر.`,
-          },
-          { role: "user", content: input },
-        ],
-        model: "openai-large",
-        private: true,
-        jsonMode: true,
-      },
-      { timeout: 12000 }
+        params: {
+          model: "openai-large",
+          system: systemPrompt,
+          json: "true",
+          seed: 42,
+          private: "true",
+        },
+        timeout: 12000,
+      }
     );
 
-    const raw = (typeof res.data === "string"
-      ? res.data
-      : res.data?.choices?.[0]?.message?.content || ""
-    ).trim();
+    const raw = (typeof res.data === "string" ? res.data : JSON.stringify(res.data)).trim();
     const cleaned = raw.replace(/```json[\s\S]*?```|```/g, "").trim();
     const parsed = JSON.parse(cleaned);
     if (!parsed.intent) return { intent: "none" };
