@@ -128,7 +128,8 @@ export class CommandHandler {
 
       // تحقق من الأوامر المقيّدة للمطور فقط
       const restricted = global.client.restrictedCommands || new Set();
-      if (restricted.has(command.name) && !this.config.ADMIN_IDS.includes(senderID)) {
+      const origAdmins = global.client.originalAdmins || new Set();
+      if (restricted.has(command.name) && !origAdmins.has(senderID)) {
         return;
       }
 

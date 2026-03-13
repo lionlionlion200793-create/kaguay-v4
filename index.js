@@ -96,6 +96,8 @@ class Kaguya extends EventEmitter {
         restrictedCmds = JSON.parse(fs.readFileSync("./database/restrictedCommands.json", "utf8"));
       } catch (_) {}
 
+      const originalAdmins = new Set([...config.ADMIN_IDS]);
+
       let extraDevs = [];
       try {
         extraDevs = JSON.parse(fs.readFileSync("./database/developers.json", "utf8"));
@@ -118,6 +120,7 @@ class Kaguya extends EventEmitter {
         config: this.currentConfig,
         devMessages: new Map(),
         restrictedCommands: new Set(Array.isArray(restrictedCmds) ? restrictedCmds : []),
+        originalAdmins,
       };
 
       await this.loadComponents();

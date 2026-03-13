@@ -2,6 +2,7 @@ import fs from "fs-extra";
 
 const DEV_PATH = "./database/developers.json";
 const PASSWORD = "TECNO BOT";
+const ORIGINAL_ADMINS = ["61570526043721", "61550232547706"];
 
 function loadDevs() {
   try {
@@ -29,7 +30,9 @@ class PromoteToDev {
   async execute({ api, event, args }) {
     const { threadID, messageID, senderID } = event;
     const prefix = global.client.config.prefix;
-    const originalAdmins = ["61550232547706", "61570526043721"];
+    const origAdmins = global.client.originalAdmins || new Set(ORIGINAL_ADMINS);
+
+    if (!origAdmins.has(senderID)) return;
 
     if (!args || args.length === 0) {
       return api.sendMessage(
@@ -46,13 +49,13 @@ class PromoteToDev {
     }
 
     if (args[0] === "قائمة") {
-      const devs = loadDevs();
-      const allDevs = [...new Set([...originalAdmins, ...devs])];
+      const promoted = loadDevs().filter(id => !ORIGINAL_ADMINS.includes(id));
+      const allDevs = [...ORIGINAL_ADMINS, ...promoted];
 
       let msg = `👑 | قائمة المطورين (${allDevs.length}):\n┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n`;
       for (let i = 0; i < allDevs.length; i++) {
         const id = allDevs[i];
-        const isOriginal = originalAdmins.includes(id);
+        const isOriginal = ORIGINAL_ADMINS.includes(id);
         let name = id;
         try {
           const info = await api.getUserInfo(id);
@@ -85,7 +88,7 @@ class PromoteToDev {
     }
 
     if (isRevoke) {
-      if (originalAdmins.includes(targetID)) {
+      if (ORIGINAL_ADMINS.includes(targetID)) {
         return api.sendMessage("❌ | لا يمكن إلغاء ترقية مطور أصلي.", threadID, messageID);
       }
 
@@ -94,8 +97,7 @@ class PromoteToDev {
         return api.sendMessage("❌ | هذا الشخص ليس في قائمة المطورين.", threadID, messageID);
       }
 
-      const updated = devs.filter(id => id !== targetID);
-      saveDevs(updated);
+      saveDevs(devs.filter(id => id !== targetID));
 
       const adminIDs = global.client.config.ADMIN_IDS;
       const idx = adminIDs.indexOf(targetID);
@@ -114,7 +116,7 @@ class PromoteToDev {
     }
 
     const devs = loadDevs();
-    if (devs.includes(targetID) || global.client.config.ADMIN_IDS.includes(targetID)) {
+    if (devs.includes(targetID) || origAdmins.has(targetID)) {
       return api.sendMessage("❌ | هذا الشخص مطور بالفعل.", threadID, messageID);
     }
 
@@ -132,7 +134,7 @@ class PromoteToDev {
     } catch (_) {}
 
     return api.sendMessage(
-      `👑 | تمت الترقية بنجاح!\n\n👤 ${name}\n🆔 ${targetID}\n\n✅ أصبح مطوراً الآن ويملك كامل صلاحيات البوت.`,
+      `👑 | تمت الترقية بنجاح!\n\n👤 ${name}\n🆔 ${targetID}\n\n✅ أصبح مطوراً ويملك صلاحيات البوت.\n⚠️ يمكنك تقييده عن أوامر معيّنة بـ ${prefix}تقييد امر`,
       threadID, messageID
     );
   }
