@@ -16,11 +16,20 @@ function writeDB(data) {
   fs.writeFileSync(dbPath, JSON.stringify(data, null, 2));
 }
 
+function findItemAcrossRepos(db, itemName) {
+  for (const [repoName, repo] of Object.entries(db)) {
+    if (repo.items?.[itemName]) {
+      return { repoName, item: repo.items[itemName] };
+    }
+  }
+  return null;
+}
+
 class Saved {
   constructor() {
     this.name = "المحفوظات";
-    this.aliases = ["saved", "محفوظ", "مستودعاتي"];
-    this.description = "استعراض المستودعات وعناصرها واسترجاعها أو حذفها";
+    this.aliases = ["saved", "محفوظ"];
+    this.description = "عرض وحذف المستودعات والعناصر المحفوظة";
     this.role = "owner";
     this.cooldowns = 3;
     this.hidden = true;
@@ -33,9 +42,9 @@ class Saved {
     if (!adminIDs.includes(senderID)) return;
 
     const db = readDB();
-    const repos = Object.keys(db);
 
     if (!args || args.length === 0) {
+      const repos = Object.keys(db);
       if (repos.length === 0) {
         return api.sendMessage(
           "📭 | لا توجد مستودعات بعد.\n📌 أنشئ واحداً: *حفظ مستودع [اسم]",
@@ -47,141 +56,126 @@ class Saved {
         return `${i + 1}. 📦 ${r} — ${count} عنصر`;
       }).join("\n");
       return api.sendMessage(
-        `📦 مستودعاتك (${repos.length}):\n\n${list}\n\n💡 لعرض محتويات مستودع:\n  *المحفوظات [اسم-المستودع]`,
+        `📦 مستودعاتك (${repos.length}):\n\n${list}\n\n` +
+        `📌 عرض محتويات مستودع:\n  *المحفوظات عرض مستودع [اسم]\n` +
+        `📌 عرض عنصر:\n  *المحفوظات عرض [اسم العنصر]`,
         threadID, messageID
       );
     }
 
-    const firstArg = args[0];
+    const action = args[0];
 
-    if (firstArg === "حذف" || firstArg === "delete") {
+    if (action === "عرض" || action === "show") {
       const second = args[1];
-      const repoArg = args[2] ? args.slice(2).join(" ").trim() : null;
 
-      if (second === "مستودع" && repoArg) {
-        if (!db[repoArg]) {
-          return api.sendMessage(`❌ | المستودع "${repoArg}" غير موجود.`, threadID, messageID);
+      if (second === "مستودع" || second === "repo") {
+        const repoName = args.slice(2).join(" ").trim();
+        if (!repoName) {
+          return api.sendMessage("❌ | اكتب اسم المستودع.\n📌 مثال: *المحفوظات عرض مستودع بليتش", threadID, messageID);
         }
-        const count = Object.keys(db[repoArg].items || {}).length;
-        const items = db[repoArg].items || {};
+        if (!db[repoName]) {
+          return api.sendMessage(`❌ | لا يوجد مستودع باسم "${repoName}".`, threadID, messageID);
+        }
+        const items = db[repoName].items || {};
+        const keys = Object.keys(items);
+        if (keys.length === 0) {
+          return api.sendMessage(
+            `📦 "${repoName}" فارغ.\n\n💡 أضف عنصراً: رد + *حفظ ${repoName} [اسم]`,
+            threadID, messageID
+          );
+        }
+        const list = keys.map((k, i) => {
+          const t = items[k].type === "image" ? "🖼️" : "📝";
+          return `${i + 1}. ${t} ${k}`;
+        }).join("\n");
+        return api.sendMessage(
+          `📦 "${repoName}" — ${keys.length} عنصر:\n\n${list}\n\n` +
+          `💡 *المحفوظات عرض [اسم العنصر] — لعرض عنصر`,
+          threadID, messageID
+        );
+      }
 
-        for (const item of Object.values(items)) {
+      const itemName = args.slice(1).join(" ").trim();
+      if (!itemName) {
+        return api.sendMessage("❌ | اكتب اسم العنصر.\n📌 مثال: *المحفوظات عرض شعار المطبخ", threadID, messageID);
+      }
+
+      const found = findItemAcrossRepos(db, itemName);
+      if (!found) {
+        return api.sendMessage(`❌ | لا يوجد عنصر باسم "${itemName}".`, threadID, messageID);
+      }
+
+      const { item } = found;
+
+      if (item.type === "text") {
+        return api.sendMessage(item.content, threadID, messageID);
+      }
+
+      if (item.type === "image") {
+        const exists = await fs.pathExists(item.filePath);
+        if (!exists) {
+          return api.sendMessage(`❌ | ملف "${itemName}" غير موجود.`, threadID, messageID);
+        }
+        return api.sendMessage(
+          { body: `📌 ${itemName}`, attachment: fs.createReadStream(item.filePath) },
+          threadID, messageID
+        );
+      }
+    }
+
+    if (action === "حذف" || action === "delete") {
+      const second = args[1];
+
+      if (second === "مستودع" || second === "repo") {
+        const repoName = args.slice(2).join(" ").trim();
+        if (!repoName) {
+          return api.sendMessage("❌ | اكتب اسم المستودع.\n📌 مثال: *المحفوظات حذف مستودع بليتش", threadID, messageID);
+        }
+        if (!db[repoName]) {
+          return api.sendMessage(`❌ | لا يوجد مستودع باسم "${repoName}".`, threadID, messageID);
+        }
+        const count = Object.keys(db[repoName].items || {}).length;
+        for (const item of Object.values(db[repoName].items || {})) {
           if (item.type === "image" && item.filePath) {
             try { await fs.remove(item.filePath); } catch {}
           }
         }
-
-        delete db[repoArg];
+        delete db[repoName];
         writeDB(db);
         return api.sendMessage(
-          `🗑️ | تم حذف المستودع: 📦 "${repoArg}" وجميع عناصره (${count} عنصر).`,
+          `🗑️ | تم حذف المستودع 📦 "${repoName}" وجميع عناصره (${count} عنصر).`,
           threadID, messageID
         );
       }
 
-      const repoName = second;
-      const itemName = args.slice(2).join(" ").trim();
-
-      if (!repoName) {
-        return api.sendMessage(
-          "❌ | حدد المستودع والعنصر.\n📌 أمثلة:\n  *المحفوظات حذف مستودع [اسم]\n  *المحفوظات حذف [مستودع] [عنصر]",
-          threadID, messageID
-        );
-      }
-
-      if (!db[repoName]) {
-        return api.sendMessage(`❌ | المستودع "${repoName}" غير موجود.`, threadID, messageID);
-      }
-
+      const itemName = args.slice(1).join(" ").trim();
       if (!itemName) {
-        return api.sendMessage(
-          `❌ | اكتب اسم العنصر.\n📌 مثال: *المحفوظات حذف ${repoName} [اسم العنصر]`,
-          threadID, messageID
-        );
+        return api.sendMessage("❌ | اكتب اسم العنصر.\n📌 مثال: *المحفوظات حذف شعار المطبخ", threadID, messageID);
       }
 
-      const items = db[repoName].items || {};
-      if (!items[itemName]) {
-        return api.sendMessage(
-          `❌ | العنصر "${itemName}" غير موجود في 📦 "${repoName}".`,
-          threadID, messageID
-        );
+      const found = findItemAcrossRepos(db, itemName);
+      if (!found) {
+        return api.sendMessage(`❌ | لا يوجد عنصر باسم "${itemName}".`, threadID, messageID);
       }
 
-      if (items[itemName].type === "image" && items[itemName].filePath) {
-        try { await fs.remove(items[itemName].filePath); } catch {}
+      const { repoName, item } = found;
+      if (item.type === "image" && item.filePath) {
+        try { await fs.remove(item.filePath); } catch {}
       }
-
       delete db[repoName].items[itemName];
       writeDB(db);
-      return api.sendMessage(
-        `🗑️ | تم حذف "${itemName}" من 📦 "${repoName}".`,
-        threadID, messageID
-      );
+      return api.sendMessage(`🗑️ | تم حذف "${itemName}" من 📦 "${repoName}".`, threadID, messageID);
     }
 
-    const repoName = firstArg;
-    const itemName = args.slice(1).join(" ").trim();
-
-    if (!db[repoName]) {
-      const suggestion = repos.length > 0
-        ? `\n\n📦 مستودعاتك: ${repos.join(" | ")}`
-        : "\n\n📌 أنشئ مستودعاً: *حفظ مستودع [اسم]";
-      return api.sendMessage(
-        `❌ | المستودع "${repoName}" غير موجود.${suggestion}`,
-        threadID, messageID
-      );
-    }
-
-    const repoItems = db[repoName].items || {};
-    const itemKeys = Object.keys(repoItems);
-
-    if (!itemName) {
-      if (itemKeys.length === 0) {
-        return api.sendMessage(
-          `📦 "${repoName}" فارغ حالياً.\n\n💡 أضف عنصراً: رد + *حفظ ${repoName} [اسم العنصر]`,
-          threadID, messageID
-        );
-      }
-      const list = itemKeys.map((k, i) => {
-        const t = repoItems[k].type === "image" ? "🖼️" : "📝";
-        return `${i + 1}. ${t} ${k}`;
-      }).join("\n");
-
-      return api.sendMessage(
-        `📦 "${repoName}" — ${itemKeys.length} عنصر:\n\n${list}\n\n💡 لاسترجاع عنصر:\n  *المحفوظات ${repoName} [اسم العنصر]`,
-        threadID, messageID
-      );
-    }
-
-    const item = repoItems[itemName];
-    if (!item) {
-      const list = itemKeys.length > 0
-        ? `\n\n📋 العناصر المتاحة:\n${itemKeys.map((k, i) => `${i + 1}. ${k}`).join("\n")}`
-        : "";
-      return api.sendMessage(
-        `❌ | العنصر "${itemName}" غير موجود في 📦 "${repoName}".${list}`,
-        threadID, messageID
-      );
-    }
-
-    if (item.type === "text") {
-      return api.sendMessage(item.content, threadID, messageID);
-    }
-
-    if (item.type === "image") {
-      const exists = await fs.pathExists(item.filePath);
-      if (!exists) {
-        return api.sendMessage(
-          `❌ | ملف الصورة "${itemName}" غير موجود. ربما تم حذفه.`,
-          threadID, messageID
-        );
-      }
-      return api.sendMessage(
-        { body: `📦 ${repoName} › ${itemName}`, attachment: fs.createReadStream(item.filePath) },
-        threadID, messageID
-      );
-    }
+    return api.sendMessage(
+      `📌 استخدام الأمر:\n\n` +
+      `عرض مستودعاتك:\n  *المحفوظات\n\n` +
+      `عرض محتويات مستودع:\n  *المحفوظات عرض مستودع [اسم]\n\n` +
+      `عرض عنصر:\n  *المحفوظات عرض [اسم العنصر]\n\n` +
+      `حذف مستودع:\n  *المحفوظات حذف مستودع [اسم]\n\n` +
+      `حذف عنصر:\n  *المحفوظات حذف [اسم العنصر]`,
+      threadID, messageID
+    );
   }
 }
 
