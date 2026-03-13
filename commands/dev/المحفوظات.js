@@ -5,7 +5,9 @@ const dbPath = "./database/saved.json";
 
 function readSaved() {
   try {
-    return JSON.parse(fs.readFileSync(dbPath, "utf-8"));
+    const data = JSON.parse(fs.readFileSync(dbPath, "utf-8"));
+    if (Array.isArray(data)) return {};
+    return data;
   } catch {
     return {};
   }

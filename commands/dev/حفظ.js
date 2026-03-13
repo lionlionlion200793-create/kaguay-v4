@@ -9,7 +9,9 @@ const imgDir = path.join(__dirname, "../../temp/saved");
 
 function readSaved() {
   try {
-    return JSON.parse(fs.readFileSync(dbPath, "utf-8"));
+    const data = JSON.parse(fs.readFileSync(dbPath, "utf-8"));
+    if (Array.isArray(data)) return {};
+    return data;
   } catch {
     return {};
   }
