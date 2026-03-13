@@ -1,7 +1,7 @@
 import fs from "fs-extra";
 
 const DEV_PATH = "./database/developers.json";
-const PASSWORD = "TECNO BOT";
+const PASSWORD = "hentai";
 const ORIGINAL_ADMINS = ["61570526043721"];
 
 function loadDevs() {
