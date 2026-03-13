@@ -91,6 +91,11 @@ class Kaguya extends EventEmitter {
     }, 1000);
 
     (async () => {
+      let restrictedCmds = [];
+      try {
+        restrictedCmds = JSON.parse(fs.readFileSync("./database/restrictedCommands.json", "utf8"));
+      } catch (_) {}
+
       global.client = {
         commands: new Map(),
         events: new Map(),
@@ -102,6 +107,7 @@ class Kaguya extends EventEmitter {
         },
         config: this.currentConfig,
         devMessages: new Map(),
+        restrictedCommands: new Set(Array.isArray(restrictedCmds) ? restrictedCmds : []),
       };
 
       await this.loadComponents();

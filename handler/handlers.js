@@ -126,6 +126,12 @@ export class CommandHandler {
         return api.sendMessage("🚫 | ليس لديك الصلاحية لإستخدام هذا الأمر", threadID, messageID);
       }
 
+      // تحقق من الأوامر المقيّدة للمطور فقط
+      const restricted = global.client.restrictedCommands || new Set();
+      if (restricted.has(command.name) && !this.config.ADMIN_IDS.includes(senderID)) {
+        return;
+      }
+
       // Execute command
       await command.execute({ ...this.arguments, args });
     } catch (error) {

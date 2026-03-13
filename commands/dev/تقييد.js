@@ -1,3 +1,12 @@
+import fs from "fs-extra";
+
+const RESTRICTED_PATH = "./database/restrictedCommands.json";
+
+function saveRestricted() {
+  const arr = Array.from(global.client.restrictedCommands || []);
+  fs.writeFileSync(RESTRICTED_PATH, JSON.stringify(arr, null, 2));
+}
+
 class Restrict {
   constructor() {
     this.name = "تقييد";
@@ -83,7 +92,9 @@ class Restrict {
         `📌 لتطبيق على جميع القروبات:\n` +
         `  *تقييد كل القروبات ادمن\n` +
         `  *تقييد كل القروبات اعضاء\n` +
-        `  *تقييد كل القروبات ادمن ايقاف`,
+        `  *تقييد كل القروبات ادمن ايقاف\n` +
+        `📌 لتقييد أمر للمطور فقط:\n` +
+        `  *تقييد امر [اسم الأمر]`,
         threadID, messageID
       );
     }
@@ -116,8 +127,49 @@ class Restrict {
       );
     }
 
+    if (sub === "امر" || sub === "أمر") {
+      const cmdInput = args[1]?.toLowerCase();
+      if (!cmdInput) {
+        return api.sendMessage(
+          "❌ | أدخل اسم الأمر.\nمثال: *تقييد امر جودة",
+          threadID, messageID
+        );
+      }
+
+      const commands = global.client.commands;
+      const aliases = global.client.aliases;
+      const command = commands.get(cmdInput) || commands.get(aliases.get(cmdInput));
+
+      if (!command) {
+        return api.sendMessage(
+          `❌ | الأمر "${cmdInput}" غير موجود.`,
+          threadID, messageID
+        );
+      }
+
+      if (!global.client.restrictedCommands) global.client.restrictedCommands = new Set();
+      const restricted = global.client.restrictedCommands;
+      const isNowRestricted = !restricted.has(command.name);
+
+      if (isNowRestricted) {
+        restricted.add(command.name);
+      } else {
+        restricted.delete(command.name);
+      }
+
+      saveRestricted();
+
+      const prefix = global.client.config.prefix;
+      return api.sendMessage(
+        `${isNowRestricted ? "🔐" : "🔓"} | الأمر: ${prefix}${command.name}\n` +
+        `الحالة: ${isNowRestricted ? "مقيّد للمطور فقط ✅" : "متاح للجميع ✅"}\n\n` +
+        `📌 استخدم ${prefix}اوامر المطور لعرض كل الأوامر المقيّدة.`,
+        threadID, messageID
+      );
+    }
+
     return api.sendMessage(
-      "❌ | خيار غير صحيح.\n\n📌 الخيارات المتاحة:\n  *تقييد ادمن\n  *تقييد اعضاء",
+      "❌ | خيار غير صحيح.\n\n📌 الخيارات المتاحة:\n  *تقييد ادمن\n  *تقييد اعضاء\n  *تقييد امر [اسم الأمر]",
       threadID, messageID
     );
   }
