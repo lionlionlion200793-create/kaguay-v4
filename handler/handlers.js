@@ -188,7 +188,7 @@ async function detectCommandIntent(input, commands) {
       `https://text.pollinations.ai/${encodeURIComponent(input)}`,
       {
         params: {
-          model: "openai-large",
+          model: "openai",
           system: systemPrompt,
           json: "true",
           seed: 42,

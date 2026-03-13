@@ -73,7 +73,7 @@ async function callYukoAI(input, history) {
     `https://text.pollinations.ai/${encodeURIComponent(input)}`,
     {
       params: {
-        model: "openai-large",
+        model: "openai",
         system: fullSystem,
         seed: Math.floor(Math.random() * 99999),
         private: "true",
@@ -149,7 +149,8 @@ async function processReply(api, event, senderID, threadID, messageID, input, or
     }, messageID);
 
   } catch (err) {
-    console.error("[يوكو] خطأ:", err.message);
+    const detail = err.response?.data ? JSON.stringify(err.response.data).slice(0, 200) : err.message;
+    console.error("[يوكو] خطأ:", detail);
     api.setMessageReaction("❌", origin || messageID, () => {}, true);
     return api.sendMessage("😅 | مشكلة صغيرة، حاول مرة ثانية!", threadID, messageID);
   }
