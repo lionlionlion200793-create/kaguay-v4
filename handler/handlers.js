@@ -3,8 +3,18 @@ import path from 'path';
 import axios from 'axios';
 import { log } from "../logger/index.js";
 
+function buildCommandList(commands) {
+  const lines = [];
+  commands.forEach((cmd) => {
+    const desc = cmd.description || "";
+    const aliases = cmd.aliases?.length ? ` (مرادفات: ${cmd.aliases.join("، ")})` : "";
+    lines.push(`- ${cmd.name}${aliases}: ${desc}`);
+  });
+  return lines.join("\n");
+}
+
 async function detectCommandIntent(input, commands) {
-  const commandNames = Array.from(commands.keys()).join("، ");
+  const commandList = buildCommandList(commands);
   try {
     const res = await axios.post(
       "https://text.pollinations.ai/",
@@ -12,37 +22,67 @@ async function detectCommandIntent(input, commands) {
         messages: [
           {
             role: "system",
-            content: `أنت محلل نوايا لبوت محادثة. مهمتك تحديد إذا كانت الرسالة تطلب تنفيذ أمر بوت محدد.
+            content: `أنت مساعد ذكي متخصص في تحليل نوايا المستخدمين لبوت مجموعات فيسبوك ماسنجر.
+مهمتك الوحيدة: تحديد إذا كانت الرسالة تطلب تنفيذ أمر بوت، وإرجاع JSON.
 
-الأوامر المتاحة: ${commandNames}
+الأوامر المتاحة مع وصفها:
+${commandList}
 
-قواعد:
-- إذا كانت الرسالة تطلب تنفيذ أمر من الأوامر المتاحة، ردّ بالاسم الدقيق للأمر.
-- إذا كانت محادثة عادية أو سؤال أو لا تطلب أمراً، ردّ بـ none.
-- ردّ بـ JSON صالح فقط بدون أي نص آخر.
+قواعد صارمة:
+1. إذا كانت الرسالة تطلب تنفيذ أحد الأوامر أعلاه (بأي صياغة عربية أو إنجليزية)، أرجع {"intent":"اسم_الأمر_بالضبط","args":[...]}
+2. الـ args تحتوي على المعطيات الإضافية فقط (مثل الاسم في أمر الحفظ)، وإلا أرجع []
+3. إذا كانت محادثة عادية أو سؤال أو لا علاقة لها بأمر، أرجع {"intent":"none"}
+4. ردّ بـ JSON فقط، لا تضف أي نص آخر.
 
-أمثلة:
-- "اطرد هذا الشخص" → {"intent":"طرد","args":[]}
-- "اضف هذا الشخص للقروب" → {"intent":"اضافة","args":[]}
-- "كيف حالك؟" → {"intent":"none"}
-- "احفظ هذي الرسالة اسمها رتب اقليم" → {"intent":"حفظ","args":["رتب اقليم"]}
-- "شوفلي ايدي هذا الشخص" → {"intent":"ايدي","args":[]}`,
+أمثلة شاملة:
+"اطرده" → {"intent":"طرد","args":[]}
+"ابعده من القروب" → {"intent":"طرد","args":[]}
+"طرد هذا الشخص" → {"intent":"طرد","args":[]}
+"kick him" → {"intent":"طرد","args":[]}
+"ضيفه للقروب" → {"intent":"اضافة","args":[]}
+"اضفه" → {"intent":"اضافة","args":[]}
+"add him" → {"intent":"اضافة","args":[]}
+"شوفلي ايدي هذا" → {"intent":"ايدي","args":[]}
+"جيبلي معرف القروب" → {"intent":"ايدي","args":["قروب"]}
+"ايش هي الاوامر" → {"intent":"اوامر","args":[]}
+"شو يقدر يسوي البوت" → {"intent":"اوامر","args":[]}
+"احفظ هذي الرسالة باسم رتب اقليم" → {"intent":"حفظ","args":["رتب اقليم"]}
+"خزن هذا باسم القوانين" → {"intent":"حفظ","args":["القوانين"]}
+"اعطيني المحفوظات" → {"intent":"المحفوظات","args":[]}
+"جيبلي رتب اقليم المافيا" → {"intent":"المحفوظات","args":["رتب اقليم المافيا"]}
+"احذف رسالته" → {"intent":"حذف","args":[]}
+"امسح هذي الرسالة" → {"intent":"حذف","args":[]}
+"سويه ادمن" → {"intent":"ادمن","args":[]}
+"خليه ادمن للقروب" → {"intent":"ادمن","args":[]}
+"احظره" → {"intent":"ممنوع","args":[]}
+"بانه من البوت" → {"intent":"ممنوع","args":[]}
+"شو صلاحياتي" → {"intent":"صلاحياتي","args":[]}
+"عطل البوت في كل القروبات" → {"intent":"تعطيل-الكل","args":[]}
+"فعل البوت في كل القروبات" → {"intent":"تعطيل-الكل","args":["تفعيل"]}
+"قيد الذكاء في القروب" → {"intent":"تقييد-ذكاء","args":["تقييد"]}
+"ارفع التقييد عن الذكاء" → {"intent":"تقييد-ذكاء","args":["رفع"]}
+"فعل البوت في هذا القروب" → {"intent":"تفعيل","args":[]}
+"حسن جودة الصورة" → {"intent":"جودة","args":[]}
+"كيف حالك؟" → {"intent":"none"}
+"وش رأيك بالأنمي" → {"intent":"none"}`,
           },
           { role: "user", content: input },
         ],
-        model: "openai",
+        model: "openai-large",
         private: true,
         jsonMode: true,
       },
-      { timeout: 8000 }
+      { timeout: 10000 }
     );
 
     const raw = (typeof res.data === "string"
       ? res.data
       : res.data?.choices?.[0]?.message?.content || ""
     ).trim();
-    const cleaned = raw.replace(/```json|```/g, "").trim();
-    return JSON.parse(cleaned);
+    const cleaned = raw.replace(/```json[\s\S]*?```|```/g, "").trim();
+    const parsed = JSON.parse(cleaned);
+    if (!parsed.intent) return { intent: "none" };
+    return parsed;
   } catch {
     return { intent: "none" };
   }
