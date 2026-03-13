@@ -1,21 +1,19 @@
-import OpenAI from "openai";
+import axios from "axios";
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
-const SYSTEM_PROMPT = `أنت مساعد ذكي اسمك يوكو، تتحدث العربية بطلاقة وتُجيب بأسلوب ودّي ومختصر.
-لا تذكر أنك نموذج لغوي أو أنك ChatGPT أو أي نموذج آخر. اسمك فقط "يوكو".
-أجب دائماً بالعربية ما لم يطلب المستخدم غير ذلك.`;
+const SYSTEM_PROMPT = `أنت شخصية اسمها يوكو، فتاة ذكية وودودة وخفيفة الدم تتحدث العربية العامية بطلاقة.
+لا تقل أبداً أنك نموذج لغوي أو ذكاء اصطناعي — أنت فقط "يوكو".
+تحدثي بطريقة طبيعية وودودة ومختصرة. أجيبي دائماً بالعربية.`;
 
 const conversations = new Map();
 
-class AI {
+class Yuko {
   constructor() {
-    this.name = "ذكاء";
+    this.name = "يوكو";
     this.author = "HUSSEIN YACOUBI";
-    this.cooldowns = 5;
-    this.description = "تحدث مع الذكاء الاصطناعي يوكو";
+    this.cooldowns = 4;
+    this.description = "تحدث مع يوكو الذكاء الاصطناعي";
     this.role = "member";
-    this.aliases = ["ai", "يوكو", "gpt", "بوت"];
+    this.aliases = [];
     this.hidden = false;
   }
 
@@ -24,7 +22,7 @@ class AI {
 
     if (!args || args.length === 0) {
       return api.sendMessage(
-        `🤖 | طريقة الاستخدام:\n*ذكاء [سؤالك]\n\nمثال:\n*ذكاء ما هي عاصمة فرنسا؟\n\n📌 لمسح المحادثة:\n*ذكاء مسح`,
+        `👋 مرحباً! أنا يوكو 🌸\nكلمني بأي شيء مثل:\n*يوكو كيف حالك؟\n\n📌 لمسح المحادثة:\n*يوكو مسح`,
         threadID, messageID
       );
     }
@@ -33,10 +31,10 @@ class AI {
 
     if (input === "مسح" || input === "reset" || input === "clear") {
       conversations.delete(senderID);
-      return api.sendMessage("🗑️ | تم مسح المحادثة.", threadID, messageID);
+      return api.sendMessage("🗑️ | تم مسح المحادثة، نبدأ من جديد!", threadID, messageID);
     }
 
-    api.setMessageReaction("🤔", messageID, () => {}, true);
+    api.setMessageReaction("🌸", messageID, () => {}, true);
 
     if (!conversations.has(senderID)) {
       conversations.set(senderID, []);
@@ -46,28 +44,33 @@ class AI {
     history.push({ role: "user", content: input });
     if (history.length > 20) history.splice(0, 2);
 
-    try {
-      const response = await client.chat.completions.create({
-        model: "gpt-4o-mini",
-        messages: [
-          { role: "system", content: SYSTEM_PROMPT },
-          ...history,
-        ],
-        max_tokens: 1000,
-      });
+    const messages = [
+      { role: "system", content: SYSTEM_PROMPT },
+      ...history,
+    ];
 
-      const reply = response.choices[0]?.message?.content?.trim() || "❌ | لم أتمكن من الإجابة.";
+    try {
+      const res = await axios.post(
+        "https://text.pollinations.ai/",
+        { messages, model: "openai", private: true, seed: Math.floor(Math.random() * 9999) },
+        { timeout: 30000 }
+      );
+
+      const reply = (typeof res.data === "string" ? res.data : res.data?.choices?.[0]?.message?.content || "").trim();
+
+      if (!reply) throw new Error("رد فارغ");
+
       history.push({ role: "assistant", content: reply });
 
       api.setMessageReaction("✅", messageID, () => {}, true);
-      return api.sendMessage(`🤖 يوكو:\n\n${reply}`, threadID, messageID);
+      return api.sendMessage(reply, threadID, messageID);
 
     } catch (err) {
-      console.error("[AI] خطأ:", err.message);
+      console.error("[يوكو] خطأ:", err.message);
       api.setMessageReaction("❌", messageID, () => {}, true);
-      return api.sendMessage("❌ | حدث خطأ في الذكاء الاصطناعي. حاول مجدداً.", threadID, messageID);
+      return api.sendMessage("😅 | مشكلة صغيرة، حاول مرة ثانية!", threadID, messageID);
     }
   }
 }
 
-export default new AI();
+export default new Yuko();
