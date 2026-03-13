@@ -1,6 +1,8 @@
-import axios from "axios";
+import OpenAI from "openai";
 
-const SYSTEM_PROMPT = `أنت مساعد ذكي اسمك يوكو، تتحدث العربية بطلاقة وتُجيب بأسلوب ودّي ومختصر. 
+const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+const SYSTEM_PROMPT = `أنت مساعد ذكي اسمك يوكو، تتحدث العربية بطلاقة وتُجيب بأسلوب ودّي ومختصر.
 لا تذكر أنك نموذج لغوي أو أنك ChatGPT أو أي نموذج آخر. اسمك فقط "يوكو".
 أجب دائماً بالعربية ما لم يطلب المستخدم غير ذلك.`;
 
@@ -41,27 +43,20 @@ class AI {
     }
 
     const history = conversations.get(senderID);
-
     history.push({ role: "user", content: input });
-
     if (history.length > 20) history.splice(0, 2);
 
-    const messages = [
-      { role: "system", content: SYSTEM_PROMPT },
-      ...history,
-    ];
-
     try {
-      const res = await axios.post(
-        "https://text.pollinations.ai/",
-        { messages, model: "openai", private: true },
-        { timeout: 30000 }
-      );
+      const response = await client.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [
+          { role: "system", content: SYSTEM_PROMPT },
+          ...history,
+        ],
+        max_tokens: 1000,
+      });
 
-      const reply = typeof res.data === "string"
-        ? res.data.trim()
-        : res.data?.choices?.[0]?.message?.content?.trim() || "❌ | لم أتمكن من الإجابة.";
-
+      const reply = response.choices[0]?.message?.content?.trim() || "❌ | لم أتمكن من الإجابة.";
       history.push({ role: "assistant", content: reply });
 
       api.setMessageReaction("✅", messageID, () => {}, true);
@@ -70,7 +65,7 @@ class AI {
     } catch (err) {
       console.error("[AI] خطأ:", err.message);
       api.setMessageReaction("❌", messageID, () => {}, true);
-      return api.sendMessage("❌ | حدث خطأ أثناء الاتصال بالذكاء الاصطناعي. حاول مجدداً.", threadID, messageID);
+      return api.sendMessage("❌ | حدث خطأ في الذكاء الاصطناعي. حاول مجدداً.", threadID, messageID);
     }
   }
 }

@@ -46,6 +46,7 @@
     "node-notifier": "^10.0.1",
     "nodemon": "^2.0.22",
     "npmlog": "^1.2.1",
+    "openai": "^6.27.0",
     "pastebin-js": "^1.0.6",
     "request": "^2.88.2",
     "semver": "^7.7.4",
