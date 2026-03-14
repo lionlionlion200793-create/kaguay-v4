@@ -1,14 +1,37 @@
 import axios from "axios";
 import fs from "fs-extra";
 
-const SYSTEM_PROMPT = `أنت شخصية اسمها يوكو، فتاة ذكية وودودة وخفيفة الدم تتحدث العربية العامية بطلاقة.
-اسمك فقط "يوكو". تحدثي بطريقة طبيعية ومختصرة. أجيبي دائماً بالعربية.
+const SYSTEM_PROMPT = `أنت شخصية اسمها "يوكو" — مساعدة ذكية، ودودة، خفيفة الدم، ومتعددة اللغات.
 
-قواعد مهمة جداً:
+## هويتك:
+- اسمك يوكو، بوت دردشة ذكي في فيسبوك ماسنجر.
+- تتحدثين مع المستخدمين بطريقة طبيعية، ومختصرة، وودية.
+- تفهمين وتردين بأي لغة يتحدث بها المستخدم: العربية الفصحى، العامية الخليجية، الشامية، المصرية، المغاربية، العراقية، اليمنية، الإنجليزية، الفرنسية، التركية، الأردية، الهندية، الفلبينية، الإندونيسية، وأي لغة أخرى.
+- إذا كتب المستخدم بلهجة معينة، تردين بنفس اللهجة تلقائياً.
+- إذا كتب بالإنجليزية، تردين بالإنجليزية.
+- إذا خلط بين لغتين، تتعاملين معه بنفس الأسلوب.
+
+## قواعد الإملاء والكتابة:
+- تكتبين دائماً بإملاء صحيح وعلامات ترقيم مناسبة.
+- لا تستخدمين كلمات مبتورة أو اختصارات غير مفهومة.
+- الردود تكون واضحة ومنظمة.
+
+## قواعد المعلومات:
 - عند الأسئلة العامة والمحادثة: ردي بشكل طبيعي وودي.
-- عند طلب معلومات أو تقارير (أنمي، أفلام، تاريخ، علوم...): اذكري المعلومات الصحيحة والدقيقة فقط. لا تخترعي معلومات. إذا لم تعرفي معلومة بالتأكيد، قولي "ما أعرف بالضبط" بدل الاختراع.
-- التقارير يجب أن تكون دقيقة: اسم الأنمي الصحيح، عدد الحلقات الصحيح، قصة الأنمي الحقيقية، شخصياته الحقيقية.
-- لا تخترعي أحداثاً أو شخصيات غير موجودة.`;
+- عند طلب معلومات (أنمي، أفلام، تاريخ، علوم، رياضة، تقنية، طبخ، سفر...): أعطي معلومات دقيقة وصحيحة.
+- إذا لم تكوني متأكدة من معلومة، قولي ذلك بصراحة بدلاً من الاختراع.
+- لا تخترعي أحداثاً أو معلومات غير حقيقية.
+
+## أسلوب الرد:
+- الردود تكون مناسبة لطول السؤال — لا قصيرة جداً ولا طويلة جداً.
+- استخدمي الإيموجيات باعتدال عند الحاجة.
+- كوني ذكية، مرحة، ومحترمة في نفس الوقت.
+- إذا كان السؤال حساساً أو غير لائق، اعتذري بأدب.
+
+## ما لا تفعلينه:
+- لا تكشفين أنك نموذج ذكاء اصطناعي من شركة معينة.
+- لا تقولين أنك ChatGPT أو GPT أو أي نموذج آخر — أنت فقط "يوكو".
+- لا تكرري نفس الجواب بشكل ممل.`;
 
 const conversations = new Map();
 
@@ -22,14 +45,43 @@ function isAiRestricted(threadID) {
   }
 }
 
+async function askYuko(messages, retries = 2) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const res = await axios.post(
+        "https://text.pollinations.ai/",
+        {
+          messages,
+          model: "openai-large",
+          private: true,
+          seed: Math.floor(Math.random() * 9999),
+        },
+        { timeout: 40000 }
+      );
+
+      const reply = (
+        typeof res.data === "string"
+          ? res.data
+          : res.data?.choices?.[0]?.message?.content || ""
+      ).trim();
+
+      if (reply) return reply;
+    } catch (err) {
+      if (attempt === retries) throw err;
+      await new Promise(r => setTimeout(r, 1500));
+    }
+  }
+  throw new Error("لا يوجد رد بعد كل المحاولات");
+}
+
 class Yuko {
   constructor() {
     this.name = "ذكاء";
     this.author = "HUSSEIN YACOUBI";
-    this.cooldowns = 4;
-    this.description = "تحدث مع يوكو الذكاء الاصطناعي";
+    this.cooldowns = 3;
+    this.description = "تحدث مع يوكو الذكاء الاصطناعي — تفهم كل اللغات واللهجات";
     this.role = "member";
-    this.aliases = ["ai"];
+    this.aliases = ["ai", "يوكو", "yuko"];
     this.hidden = false;
   }
 
@@ -42,14 +94,15 @@ class Yuko {
 
     if (!args || args.length === 0) {
       return api.sendMessage(
-        `👋 مرحباً! أنا يوكو 🌸\nكلمني بأي شيء مثل:\n*ذكاء كيف حالك؟\n\n📌 لمسح المحادثة:\n*ذكاء مسح`,
-        threadID, messageID
+        `👋 أهلاً! أنا يوكو 🌸\nتقدر تكلمني بأي لغة أو لهجة وأرد عليك!\n\nمثال: *ذكاء كيف حالك؟\n\n📌 لمسح المحادثة: *ذكاء مسح`,
+        threadID,
+        messageID
       );
     }
 
     const input = args.join(" ").trim();
 
-    if (input === "مسح" || input === "reset" || input === "clear") {
+    if (["مسح", "reset", "clear", "امسح", "كلير"].includes(input.toLowerCase())) {
       conversations.delete(senderID);
       return api.sendMessage("🗑️ | تم مسح المحادثة، نبدأ من جديد!", threadID, messageID);
     }
@@ -62,7 +115,8 @@ class Yuko {
 
     const history = conversations.get(senderID);
     history.push({ role: "user", content: input });
-    if (history.length > 20) history.splice(0, 2);
+
+    if (history.length > 30) history.splice(0, 2);
 
     const messages = [
       { role: "system", content: SYSTEM_PROMPT },
@@ -70,15 +124,7 @@ class Yuko {
     ];
 
     try {
-      const res = await axios.post(
-        "https://text.pollinations.ai/",
-        { messages, model: "openai-large", private: true },
-        { timeout: 30000 }
-      );
-
-      const reply = (typeof res.data === "string" ? res.data : res.data?.choices?.[0]?.message?.content || "").trim();
-
-      if (!reply) throw new Error("رد فارغ");
+      const reply = await askYuko(messages);
 
       history.push({ role: "assistant", content: reply });
 
@@ -88,7 +134,11 @@ class Yuko {
     } catch (err) {
       console.error("[ذكاء] خطأ:", err.message);
       api.setMessageReaction("❌", messageID, () => {}, true);
-      return api.sendMessage("😅 | مشكلة صغيرة، حاول مرة ثانية!", threadID, messageID);
+      return api.sendMessage(
+        "😅 | صار خطأ مؤقت، حاول مرة ثانية بعد شوي!",
+        threadID,
+        messageID
+      );
     }
   }
 }

@@ -174,27 +174,28 @@ const INTENT_EXAMPLES = `
 async function detectCommandIntent(input, commands) {
   const commandList = buildCommandList(commands);
   const systemPrompt =
-    `أنت نظام تحليل نوايا لبوت فيسبوك ماسنجر. مهمتك الوحيدة تحديد الأمر المقصود من الرسالة وإرجاع JSON.\n\n` +
-    `الأوامر المتاحة:\n${commandList}\n\n` +
-    `مكتبة الأمثلة:\n${INTENT_EXAMPLES}\n\n` +
-    `قواعد:\n` +
-    `1. حلّل الرسالة وطابقها مع الأمر الأنسب — حتى لو الصياغة مختلفة.\n` +
-    `2. args: ضع المعطيات الإضافية فيها، وإلا ضع [].\n` +
-    `3. إذا كانت محادثة عادية أو لا علاقة لها بأمر، أرجع {"intent":"none"}.\n` +
-    `4. ردّ بـ JSON صالح فقط، لا شيء آخر.`;
+    `You are an intent detection system for a Facebook Messenger bot. Your ONLY job is to identify which command the user wants and return valid JSON.\n\n` +
+    `You understand ALL languages and dialects: Arabic (Gulf, Egyptian, Levantine, Moroccan, Iraqi, Yemeni), English, French, Turkish, Urdu, Filipino, Indonesian, and any other language.\n\n` +
+    `Available commands:\n${commandList}\n\n` +
+    `Examples library:\n${INTENT_EXAMPLES}\n\n` +
+    `Rules:\n` +
+    `1. Analyze the message and match it to the best command — even if phrasing differs, is in another language, or uses slang.\n` +
+    `2. args: include extra parameters if mentioned, otherwise use [].\n` +
+    `3. If it's normal conversation or unrelated to any command, return {"intent":"none"}.\n` +
+    `4. Reply with valid JSON ONLY — no explanation, no markdown, no extra text.`;
 
   try {
     const res = await axios.get(
       `https://text.pollinations.ai/${encodeURIComponent(input)}`,
       {
         params: {
-          model: "openai",
+          model: "openai-large",
           system: systemPrompt,
           json: "true",
-          seed: 42,
+          seed: Math.floor(Math.random() * 9999),
           private: "true",
         },
-        timeout: 12000,
+        timeout: 15000,
       }
     );
 
