@@ -129,10 +129,69 @@ class Yuko {
       history.push({ role: "assistant", content: reply });
 
       api.setMessageReaction("✅", messageID, () => {}, true);
-      return api.sendMessage(reply, threadID, messageID);
+      return api.sendMessage(reply, threadID, (err, info) => {
+        if (!err && info?.messageID) {
+          global.client?.handler?.reply?.set(info.messageID, {
+            name: "ذكاء",
+            senderID,
+            threadID,
+          });
+        }
+      }, messageID);
 
     } catch (err) {
       console.error("[ذكاء] خطأ:", err.message);
+      api.setMessageReaction("❌", messageID, () => {}, true);
+      return api.sendMessage(
+        "😅 | صار خطأ مؤقت، حاول مرة ثانية بعد شوي!",
+        threadID,
+        messageID
+      );
+    }
+  }
+
+  async onReply({ api, event }) {
+    const { threadID, messageID, senderID, body } = event;
+
+    if (isAiRestricted(threadID)) return;
+
+    const input = (body || "").trim();
+    if (!input) return;
+
+    api.setMessageReaction("🌸", messageID, () => {}, true);
+
+    if (!conversations.has(senderID)) {
+      conversations.set(senderID, []);
+    }
+
+    const history = conversations.get(senderID);
+    history.push({ role: "user", content: input });
+
+    if (history.length > 30) history.splice(0, 2);
+
+    const messages = [
+      { role: "system", content: SYSTEM_PROMPT },
+      ...history,
+    ];
+
+    try {
+      const reply = await askYuko(messages);
+
+      history.push({ role: "assistant", content: reply });
+
+      api.setMessageReaction("✅", messageID, () => {}, true);
+      return api.sendMessage(reply, threadID, (err, info) => {
+        if (!err && info?.messageID) {
+          global.client?.handler?.reply?.set(info.messageID, {
+            name: "ذكاء",
+            senderID,
+            threadID,
+          });
+        }
+      }, messageID);
+
+    } catch (err) {
+      console.error("[ذكاء onReply] خطأ:", err.message);
       api.setMessageReaction("❌", messageID, () => {}, true);
       return api.sendMessage(
         "😅 | صار خطأ مؤقت، حاول مرة ثانية بعد شوي!",
