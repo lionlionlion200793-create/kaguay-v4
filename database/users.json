@@ -1539,7 +1539,11 @@
       "isFriend": false,
       "isBirthday": false,
       "gender": "Nam",
-      "other": {}
+      "other": {
+        "grantedCommands": [
+          "حذف"
+        ]
+      }
     }
   },
   {
@@ -5171,6 +5175,52 @@
       "avatar": "https://graph.facebook.com/100090682417512/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
       "type": "user",
       "profileUrl": "https://www.facebook.com/kumi.287022",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61559760174892",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "スタトゥイ リンダ",
+      "firstName": "リンダ",
+      "vanity": "linda.settatoua",
+      "avatar": "https://graph.facebook.com/61559760174892/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/linda.settatoua",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nữ",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61557736868299",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "Lucy Mka",
+      "firstName": "Lucy",
+      "vanity": "lucy.mka.2025",
+      "avatar": "https://graph.facebook.com/61557736868299/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/lucy.mka.2025",
       "isFriend": false,
       "isBirthday": false,
       "gender": "Nam",

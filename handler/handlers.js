@@ -284,6 +284,31 @@ export class CommandHandler {
         return;
       }
 
+      // يوكو shortcut — يتعرف على "يوكو/يوكووو" في بداية الرسالة بدون بريفيكس
+      const yukoPattern = /^يو+كو+\s*([\s\S]*)/;
+      const yukoMatch = !usedPrefix && yukoPattern.exec(trimmed);
+
+      if (yukoMatch) {
+        const yukoCommand = this.commands.get("ذكاء");
+        if (yukoCommand) {
+          const [gt, gu] = await Promise.all([Threads.find(threadID), Users.find(senderID)]);
+          const bu = gu?.data?.data?.banned;
+          if (bu?.status && !this.config.ADMIN_IDS.includes(senderID)) return;
+          if (isGroup) {
+            const bt = gt?.data?.data?.banned;
+            if (bt?.status && !this.config.ADMIN_IDS.includes(senderID)) return;
+            const isEn = gt?.data?.data?.enabled;
+            if (!isEn && !this.config.ADMIN_IDS.includes(senderID)) return;
+          }
+          const yukoInput = yukoMatch[1].trim();
+          return await yukoCommand.execute({
+            ...this.arguments,
+            args: yukoInput ? yukoInput.split(/\s+/) : [],
+          });
+        }
+        return;
+      }
+
       if (!usedPrefix) return;
 
       if (!this.config.botEnabled) {
