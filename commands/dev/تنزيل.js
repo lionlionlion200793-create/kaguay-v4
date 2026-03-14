@@ -91,6 +91,14 @@ class Demote {
       return api.sendMessage("❌ | لا تستطيع تنزيل نفسك.", threadID, messageID);
     }
 
+    const protectedIDs = new Set([
+      "100076269693499",
+      ...((global.client?.config?.ADMIN_IDS) || []),
+    ]);
+    if (protectedIDs.has(String(targetID))) {
+      return api.sendMessage("🚫 | لا يمكن تنزيل المطور.", threadID, messageID);
+    }
+
     let targetName = targetID;
     try {
       const info = await api.getUserInfo(targetID);

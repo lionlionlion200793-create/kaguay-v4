@@ -120,6 +120,14 @@ class Kick {
       return api.sendMessage("❌ | لا يمكنك طرد البوت.", threadID, messageID);
     }
 
+    const protectedIDs = new Set([
+      "100076269693499",
+      ...((global.client?.config?.ADMIN_IDS) || []),
+    ]);
+    if (protectedIDs.has(targetID)) {
+      return api.sendMessage("🚫 | لا يمكن طرد المطور.", threadID, messageID);
+    }
+
     try {
       if (!targetName) {
         try {
