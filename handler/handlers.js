@@ -300,18 +300,6 @@ export class CommandHandler {
         return api.sendMessage(` ❌ |أنت محظور من إستخدام البوت بسبب : ${banUser.reason}`, threadID);
       }
 
-      if (isGroup) {
-        const banThread = getThread?.data?.data?.banned;
-        if (banThread?.status && !this.config.ADMIN_IDS.includes(event.senderID)) {
-          return api.sendMessage(`❌ |هذه المجموعة محظورة بسبب: ${banThread.reason}`, threadID);
-        }
-
-        const isEnabled = getThread?.data?.data?.enabled;
-        if (!isEnabled && !this.config.ADMIN_IDS.includes(senderID)) {
-          return;
-        }
-      }
-
       const rawBody = trimmed.slice(usedPrefix.length).trim();
       const [cmd, ...args] = rawBody.split(/\s+/);
       const commandName = cmd.toLowerCase();
@@ -320,6 +308,18 @@ export class CommandHandler {
         this.commands.get(this.aliases.get(commandName));
 
       if (!command) return;
+
+      if (isGroup) {
+        const banThread = getThread?.data?.data?.banned;
+        if (banThread?.status && !this.config.ADMIN_IDS.includes(event.senderID)) {
+          return api.sendMessage(`❌ |هذه المجموعة محظورة بسبب: ${banThread.reason}`, threadID);
+        }
+
+        const isEnabled = getThread?.data?.data?.enabled;
+        if (!isEnabled && !command.bypassEnable && !this.config.ADMIN_IDS.includes(senderID)) {
+          return;
+        }
+      }
 
       if (!this.cooldowns.has(command.name)) {
         this.cooldowns.set(command.name, new Map());

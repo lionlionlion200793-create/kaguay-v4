@@ -4969,5 +4969,97 @@
       "gender": "Nam",
       "other": {}
     }
+  },
+  {
+    "uid": "100058737267079",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "الہٰٰ ـﹷٰٰﹷٰ۪۫ﹷٰٰـوقہٰٰارٰ۪۫ۦ",
+      "firstName": "الہٰٰ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/100058737267079/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=100058737267079",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "100036824028143",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ᎫᎥᏁ ᏔᏫᏫ",
+      "firstName": "ᎫᎥᏁ",
+      "vanity": "jin.woo.2017",
+      "avatar": "https://graph.facebook.com/100036824028143/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/jin.woo.2017",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61550980829500",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ヾꕥ.くꪀꪖꪀꪮ ꜝꜝぐあ",
+      "firstName": "ヾꕥ.くꪀꪖꪀꪮ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61550980829500/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61550980829500",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61588372847030",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "Naru Pirates",
+      "firstName": "Naru",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61588372847030/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61588372847030",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nữ",
+      "other": {}
+    }
   }
 ]

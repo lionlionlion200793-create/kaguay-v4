@@ -36,6 +36,7 @@ class MyMessages {
     this.role = "member";
     this.aliases = ["mymsg", "msgme", "عد-رسائلي"];
     this.hidden = false;
+    this.bypassEnable = true;
   }
 
   async execute({ api, event }) {

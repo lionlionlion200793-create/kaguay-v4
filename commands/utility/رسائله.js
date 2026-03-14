@@ -29,6 +29,7 @@ class MessageCount {
     this.role = "member";
     this.aliases = ["msgcount", "عد-رسائله", "رسائل"];
     this.hidden = false;
+    this.bypassEnable = true;
   }
 
   async execute({ api, event }) {

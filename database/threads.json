@@ -109,7 +109,7 @@
     "data": {
       "name": "✯⇡╽✰ مــقــر ঌ اقــلـيــم ঌ بـلـيـتـش ✰╿⇣⁦⁦⁦✯",
       "threadThumbnail": "https://scontent-sea1-1.xx.fbcdn.net/v/t1.15752-9/627258513_910294911741365_2578940812336845498_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=935a9d&_nc_ohc=jJ0LLnWblCYQ7kNvwFnLU4V&_nc_oc=AdnlabAGVpVxrgjVlAvmbf3HA03U_296PgrS3Oo4a9UD6pFMgsP6_HEr3EM8kr99h7Y&_nc_zt=23&_nc_ht=scontent-sea1-1.xx&_nc_ss=8&oh=03_Q7cD4wElP875SCr5MAXIH5A_fIHNsN66GGoMge1ExoXOB_nLiQ&oe=69D98CA8",
-      "members": 74,
+      "members": 73,
       "adminIDs": [
         "61556259310617",
         "61557355315547",
@@ -845,6 +845,37 @@
       "anti": {
         "nameBox": false,
         "imageBox": false
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      },
+      "enabled": false
+    }
+  },
+  {
+    "threadID": "5201372733288930",
+    "data": {
+      "name": "✦͙͙͙*͙*❥⃝∗⁎ ادارة أڹــمُـي ڠــوٌڷــڍ .⁎∗❥⃝**͙✦͙͙͙",
+      "threadThumbnail": "https://scontent-lga3-3.xx.fbcdn.net/v/t1.15752-9/454807741_381795848022117_7501085725656637705_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=935a9d&_nc_ohc=XEiombovxBsQ7kNvwHYGrMs&_nc_oc=Adn-mPRnnM4jC4rpcawd4JuM49sF8a2uh0SdVFLT0zdNf96O9vSubYHfYHy19VF6Edw&_nc_zt=23&_nc_ht=scontent-lga3-3.xx&_nc_ss=8&oh=03_Q7cD4wFXLDeRrYvkSldh14fL2P9Tp21K2y0MJJ8iLoKTS675dA&oe=69DC273C",
+      "members": 58,
+      "adminIDs": [
+        "1661725739",
+        "100009527409737",
+        "100036753212489",
+        "100058737267079",
+        "100064344012478",
+        "100076939410411",
+        "100082012853333",
+        "100087522507821"
+      ],
+      "emoji": "⚙️",
+      "prefix": null,
+      "approvalMode": false,
+      "anti": {
+        "nameBox": true,
+        "imageBox": true
       },
       "banned": {
         "status": false,
