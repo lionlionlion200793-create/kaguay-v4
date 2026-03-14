@@ -2,16 +2,6 @@ import { CommandHandler } from "../handler/handlers.js";
 import { threadsController, usersController, economyControllers, expControllers } from "../database/controllers/index.js";
 import { utils } from "../helper/index.js";
 
-/**
- * Create an event handler with specific objects and arguments.
- * @param {object} api - API object.
- * @param {object} event - Specific event.
- * @param {object} User - User object.
- * @param {object} Thread - Thread object.
- * @param {object} Economy - Economy object.
- * @param {object} Exp - Experience object.
- * @returns {CommandHandler} - Command handler.
- */
 const createHandler = (api, event, User, Thread, Economy, Exp) => {
   const args = { api, event, Users: User, Threads: Thread, Economy, Exp };
   return new CommandHandler(args);
@@ -19,10 +9,23 @@ const createHandler = (api, event, User, Thread, Economy, Exp) => {
 
 const processedMessages = new Set();
 
-/**
- * Handle the main event.
- * @param {object} options - Event handling options.
- */
+function getLibyaDate() {
+  return new Date().toLocaleDateString("en-CA", { timeZone: "Africa/Tripoli" });
+}
+
+function trackUserMessage(threadID, senderID) {
+  if (!global.client.userMsgStats) global.client.userMsgStats = new Map();
+  const key = `${threadID}_${senderID}`;
+  const today = getLibyaDate();
+  const current = global.client.userMsgStats.get(key) || { count: 0, date: today };
+  if (current.date !== today) {
+    current.count = 0;
+    current.date = today;
+  }
+  current.count += 1;
+  global.client.userMsgStats.set(key, current);
+}
+
 const listen = async ({ api, event }) => {
   try {
     const { threadID, senderID, type, userID, from, isGroup } = event;
@@ -45,6 +48,9 @@ const listen = async ({ api, event }) => {
           if (!global.client.messageStats) global.client.messageStats = new Map();
           const prev = global.client.messageStats.get(threadID) || 0;
           global.client.messageStats.set(threadID, prev + 1);
+
+          const uid = senderID || userID || from;
+          if (uid) trackUserMessage(threadID, uid);
         }
       }
       await User.create(senderID || userID || from);
@@ -52,7 +58,6 @@ const listen = async ({ api, event }) => {
 
     global.kaguya = utils({ api, event });
 
-    // إعادة توجيه الردود على رسائل المطور
     if (type === "message_reply" && event.messageReply) {
       if (!global.client.devMessages) global.client.devMessages = new Map();
       const devMsg = global.client.devMessages.get(event.messageReply.messageID);
