@@ -716,5 +716,38 @@
       },
       "enabled": false
     }
+  },
+  {
+    "threadID": "28090064073972267",
+    "data": {
+      "name": "✧ ̊. ༅  𝐂𝐇𝐀𝐓 𝟗𝐒𝐑𝐀 𝟐𝟎𝟐𝟔  くふ",
+      "threadThumbnail": "https://scontent-lga3-2.xx.fbcdn.net/v/t1.15752-9/623258316_2078908549623397_8277853564423769371_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=935a9d&_nc_ohc=EBQMhzw6p00Q7kNvwGj9XAx&_nc_oc=AdkPainnD7-9NMGbBOHQboP3q-RN7l-bfZRVEKrihEkix5s7eqqibMZaF55tTdLoY4M&_nc_zt=23&_nc_ht=scontent-lga3-2.xx&_nc_ss=8&oh=03_Q7cD4wGC1hKNhXpgmdPCNqk7W37q_YVqm1ekC1AzlLIgkMTEZw&oe=69DC26D5",
+      "members": 230,
+      "adminIDs": [
+        "61560900583333",
+        "61566331799404",
+        "61568760943934",
+        "61570526043721",
+        "61572238902398",
+        "61580376967314",
+        "61585040161467",
+        "100085865773805",
+        "100090682417512",
+        "100090831721070"
+      ],
+      "emoji": null,
+      "prefix": null,
+      "approvalMode": false,
+      "anti": {
+        "nameBox": false,
+        "imageBox": false
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      },
+      "enabled": false
+    }
   }
 ]
