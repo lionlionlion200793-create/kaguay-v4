@@ -360,6 +360,17 @@ export class CommandHandler {
         }
       }
 
+      if (isGroup) {
+        const modsOnly = getThread?.data?.data?.restrict?.modsOnly;
+        if (
+          modsOnly &&
+          !threadAdminIDs.includes(senderID) &&
+          !this.config.ADMIN_IDS.includes(senderID)
+        ) {
+          return api.setMessageReaction("🔒", messageID, () => {}, true);
+        }
+      }
+
       const grantedCommands = banUserData?.data?.data?.other?.grantedCommands || [];
       const hasGrantedPermission = grantedCommands.includes(command.name);
 
