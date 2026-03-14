@@ -1,7 +1,7 @@
 class Kick {
   constructor() {
     this.name = "طرد";
-    this.author = "Kaguya Project";
+    this.author = "HUSSEIN YACOUBI";
     this.cooldowns = 5;
     this.description = "طرد عضو من المجموعة عن طريق الرد أو التاج أو المعرف أو رابط الحساب";
     this.role = "admin";
@@ -56,10 +56,23 @@ class Kick {
     if (messageReply) {
       targetID = String(messageReply.senderID);
     } else {
+      // استخراج الـ mentions بطريقة أكثر موثوقية
       const mentions = event.mentions;
-      const mentionIDs = mentions && typeof mentions === "object"
-        ? Object.keys(mentions).filter(id => /^\d+$/.test(id))
-        : [];
+      let mentionIDs = [];
+
+      if (mentions && typeof mentions === "object") {
+        if (Array.isArray(mentions)) {
+          mentionIDs = mentions.map(m => String(m.id || m.userID || "")).filter(id => /^\d+$/.test(id));
+        } else {
+          mentionIDs = Object.keys(mentions).filter(id => /^\d+$/.test(id));
+          if (!mentionIDs.length) {
+            // بعض الإصدارات تخزن القيم كـ IDs
+            mentionIDs = Object.values(mentions)
+              .map(v => String(v))
+              .filter(id => /^\d+$/.test(id));
+          }
+        }
+      }
 
       if (mentionIDs.length > 0) {
         targetID = mentionIDs[0];
@@ -90,7 +103,7 @@ class Kick {
     if (!targetID) {
       return api.sendMessage(
         "❌ | يرجى تحديد الشخص المراد طرده بإحدى الطرق التالية:\n" +
-        "📌 رد على رسالته + طرد\n" +
+        "📌 رد على رسالته\n" +
         "📌 طرد @اسم\n" +
         "📌 طرد [معرف الحساب]\n" +
         "📌 طرد [رابط الحساب]",
@@ -109,13 +122,19 @@ class Kick {
 
     try {
       if (!targetName) {
-        const userInfo = await api.getUserInfo(targetID);
-        targetName = userInfo?.[targetID]?.name || targetID;
+        try {
+          const userInfo = await api.getUserInfo(targetID);
+          targetName = userInfo?.[targetID]?.name || targetID;
+        } catch {
+          targetName = targetID;
+        }
       }
 
       await api.removeUserFromGroup(targetID, threadID);
+      return api.sendMessage(`✅ | تم طرد ${targetName} من المجموعة.`, threadID, messageID);
+
     } catch (err) {
-      await api.sendMessage(
+      return api.sendMessage(
         "❌ | فشل طرد العضو. تأكد من أن البوت لديه صلاحيات الإدارة.",
         threadID,
         messageID
