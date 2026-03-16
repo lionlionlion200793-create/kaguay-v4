@@ -68,7 +68,10 @@ class Edit {
 
     // اختار فيديو عشوائي من أول 5 نتائج
     const picked = videos[Math.floor(Math.random() * Math.min(videos.length, 5))];
-    const videoUrl = picked.play || picked.wmplay;
+    const rawUrl = picked.play || picked.wmplay;
+    const videoUrl = rawUrl
+      ? (rawUrl.startsWith("http") ? rawUrl : `https://tikwm.com${rawUrl}`)
+      : null;
 
     if (!videoUrl) {
       api.setMessageReaction("❌", messageID, () => {}, true);

@@ -4447,7 +4447,11 @@
       "isFriend": false,
       "isBirthday": false,
       "gender": "Nam",
-      "other": {}
+      "other": {
+        "grantedCommands": [
+          "المطور"
+        ]
+      }
     }
   },
   {
