@@ -300,6 +300,10 @@ export class CommandHandler {
             const isEn = gt?.data?.data?.enabled;
             if (!isEn && !this.config.ADMIN_IDS.includes(senderID)) return;
           }
+          const allowed = this.config.allowedCommands;
+          if (Array.isArray(allowed) && allowed.length > 0 && !allowed.includes(yukoCommand.name)) {
+            return;
+          }
           const yukoInput = yukoMatch[1].trim();
           return await yukoCommand.execute({
             ...this.arguments,
@@ -333,6 +337,16 @@ export class CommandHandler {
         this.commands.get(this.aliases.get(commandName));
 
       if (!command) return;
+
+      // تحقق من قائمة الأوامر المسموح بها للمستخدمين العاديين
+      const allowedList = this.config.allowedCommands;
+      if (
+        Array.isArray(allowedList) && allowedList.length > 0 &&
+        !allowedList.includes(command.name) &&
+        !isOwner
+      ) {
+        return;
+      }
 
       if (isGroup) {
         const banThread = getThread?.data?.data?.banned;
