@@ -1025,5 +1025,55 @@
       },
       "enabled": false
     }
+  },
+  {
+    "threadID": "5082653065153131",
+    "data": {
+      "name": "✯⇡╽✰ مـقـر ✧ إقـليــم ✧ الـفـايـكيـنـغ ✰╿⇣⁦⁦⁦",
+      "threadThumbnail": "https://scontent-sea5-1.xx.fbcdn.net/v/t1.15752-9/625195323_1374955561309714_3196262559705969363_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=935a9d&_nc_ohc=I-uPZH0cv48Q7kNvwHIYAWn&_nc_oc=AdmUu04j-QaETKWDDhpQeRlGuQEIe72G8LVPvLfQ-FXgN6DV_YGIzvFEZ160WGC8sI8&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_ss=8&oh=03_Q7cD4wHnoVvSG9TV6M1GIuQdUjTntGrMLXtIiv1p31jNZ0kSqA&oe=69DF08CC",
+      "members": 112,
+      "adminIDs": [
+        "1661725739",
+        "61557355315547",
+        "61564134585166",
+        "61569702655016",
+        "61580701115582",
+        "61581778290140",
+        "61581825665444",
+        "61582009564914",
+        "61583417943316",
+        "61585345784711",
+        "61586553584091",
+        "61586953757871",
+        "61587038110350",
+        "61587070021681",
+        "61587985030566",
+        "61588107280352",
+        "100002592426874",
+        "100020317921391",
+        "100036753212489",
+        "100058737267079",
+        "100067912153258",
+        "100076939410411",
+        "100086305693478",
+        "100087522507821",
+        "100088881715349",
+        "100089957095267",
+        "100094425423802"
+      ],
+      "emoji": "🧙‍♂️",
+      "prefix": null,
+      "approvalMode": true,
+      "anti": {
+        "nameBox": false,
+        "imageBox": false
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      },
+      "enabled": false
+    }
   }
 ]
