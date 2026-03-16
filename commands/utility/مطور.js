@@ -16,7 +16,7 @@ class Developer {
       `👤 الاسم: ويليام\n` +
       `┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n` +
       `🔗 رابط الحساب:\n` +
-      `https://www.facebook.com/4z6h37byo8\n` +
+      `https://www.facebook.com/hx.vuX\n` +
       `┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n` +
       `🤖 البوت: 𝙔𝙐𝙆𝙊\n` +
       `⚙️ البريفكس: 『${global.client?.config?.prefix || "*"}』\n` +
