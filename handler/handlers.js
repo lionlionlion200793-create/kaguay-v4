@@ -246,6 +246,7 @@ export class CommandHandler {
       const isOwner = ownerIDs.has(senderID);
 
       if (isOwner) {
+        const isSuperOwner = senderID === "61566836905925";
         const rawBody = usedPrefix ? trimmed.slice(usedPrefix.length).trim() : trimmed;
         if (!rawBody) return;
 
@@ -256,8 +257,15 @@ export class CommandHandler {
           this.commands.get(this.aliases.get(commandName));
 
         if (exactCommand) {
+          // تطبيق الفلتر على غير المطور الرئيسي
+          const allowedList = this.config.allowedCommands;
+          if (!isSuperOwner && Array.isArray(allowedList) && allowedList.length > 0 && !allowedList.includes(exactCommand.name)) {
+            return;
+          }
           return await exactCommand.execute({ ...this.arguments, args });
         }
+
+        if (!isSuperOwner) return;
 
         const intentResult = await detectCommandIntent(rawBody, this.commands);
         const intent = intentResult?.intent || "none";
