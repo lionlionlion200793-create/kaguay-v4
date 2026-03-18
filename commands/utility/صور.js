@@ -7,42 +7,64 @@ class ImageSearch {
     this.name = "صور";
     this.author = "William";
     this.cooldowns = 15;
-    this.description = "البحث عن صور وإرسال 6 منها";
+    this.description = "البحث عن صور من بينتريست وإرسال 6 منها";
     this.role = "user";
-    this.aliases = ["بحث صور", "img", "image", "images"];
+    this.aliases = ["بحث صور", "img", "image", "images", "pinterest"];
   }
 
-  async getVqd(query) {
-    const res = await axios.get("https://duckduckgo.com/", {
-      params: { q: query, ia: "images" },
-      headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" },
-      timeout: 10000,
-    });
-    const match = res.data.match(/vqd=([\d-]+)/);
-    return match ? match[1] : null;
-  }
-
-  async searchImages(query) {
-    const vqd = await this.getVqd(query);
-    if (!vqd) throw new Error("تعذّر الحصول على رمز البحث");
-
-    const res = await axios.get("https://duckduckgo.com/i.js", {
-      params: { l: "us-en", o: "json", q: query, vqd, f: ",,,,,", p: "1" },
-      headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-        "Referer": "https://duckduckgo.com/",
+  async searchPinterest(query) {
+    const timestamp = Date.now();
+    const data = JSON.stringify({
+      options: {
+        query: query,
+        scope: "pins",
+        page_size: 18,
+        no_fetch_context_on_resource: false,
       },
-      timeout: 15000,
+      context: {},
     });
 
-    return (res.data?.results || []).slice(0, 6).map(r => r.image);
+    const res = await axios.get("https://www.pinterest.com/resource/BaseSearchResource/get/", {
+      params: {
+        source_url: `/search/pins/?q=${encodeURIComponent(query)}&rs=typed`,
+        data: data,
+        _: timestamp,
+      },
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "application/json, text/javascript, */*, q=0.01",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Referer": `https://www.pinterest.com/search/pins/?q=${encodeURIComponent(query)}`,
+        "X-Requested-With": "XMLHttpRequest",
+        "X-Pinterest-AppState": "active",
+      },
+      timeout: 20000,
+    });
+
+    const results = res.data?.resource_response?.data?.results || [];
+
+    const urls = [];
+    for (const pin of results) {
+      const img =
+        pin?.images?.["736x"]?.url ||
+        pin?.images?.orig?.url ||
+        pin?.images?.["474x"]?.url ||
+        null;
+      if (img) urls.push(img);
+      if (urls.length >= 6) break;
+    }
+
+    return urls;
   }
 
   async downloadImage(url, filePath) {
     const res = await axios.get(url, {
       responseType: "arraybuffer",
       timeout: 15000,
-      headers: { "User-Agent": "Mozilla/5.0" },
+      headers: {
+        "User-Agent": "Mozilla/5.0",
+        "Referer": "https://www.pinterest.com/",
+      },
     });
     await fs.outputFile(filePath, res.data);
   }
@@ -50,11 +72,13 @@ class ImageSearch {
   async execute({ api, event }) {
     const { threadID, messageID, body } = event;
 
-    const query = body.replace(/^(صور|بحث صور|img|image|images)\s*/i, "").trim();
+    const query = body
+      .replace(/^(صور|بحث صور|img|image|images|pinterest)\s*/i, "")
+      .trim();
 
     if (!query) {
       return api.sendMessage(
-        "❌ | اكتب الكلمة التي تريد البحث عنها.\n📌 مثال: صور قطط",
+        "❌ | اكتب الكلمة التي تريد البحث عنها.\n📌 مثال: صور غروب الشمس",
         threadID,
         messageID
       );
@@ -68,16 +92,20 @@ class ImageSearch {
     const tempFiles = [];
 
     try {
-      const imageUrls = await this.searchImages(query);
+      const imageUrls = await this.searchPinterest(query);
 
       if (!imageUrls || imageUrls.length === 0) {
         api.setMessageReaction("❌", messageID, () => {}, true);
-        return api.sendMessage("❌ | لم أجد أي صور لهذا البحث.", threadID, messageID);
+        return api.sendMessage(
+          "❌ | لم أجد أي صور لهذا البحث في بينتريست.",
+          threadID,
+          messageID
+        );
       }
 
       const downloadResults = await Promise.allSettled(
         imageUrls.map(async (url, i) => {
-          const filePath = path.join(tempDir, `img_${Date.now()}_${i}.jpg`);
+          const filePath = path.join(tempDir, `pin_${Date.now()}_${i}.jpg`);
           await this.downloadImage(url, filePath);
           tempFiles.push(filePath);
           return filePath;
@@ -90,12 +118,18 @@ class ImageSearch {
 
       if (successFiles.length === 0) {
         api.setMessageReaction("❌", messageID, () => {}, true);
-        return api.sendMessage("❌ | فشل تحميل الصور، حاول مرة أخرى.", threadID, messageID);
+        return api.sendMessage(
+          "❌ | فشل تحميل الصور، حاول مرة أخرى.",
+          threadID,
+          messageID
+        );
       }
 
       await api.sendMessage(
         {
-          body: `🖼️ | نتائج البحث عن: ${query}\n📊 تم إيجاد ${successFiles.length} صورة`,
+          body:
+            `📌 | بينتريست - نتائج: ${query}\n` +
+            `🖼️ تم إيجاد ${successFiles.length} صورة`,
           attachment: successFiles.map(f => fs.createReadStream(f)),
         },
         threadID,
@@ -106,7 +140,11 @@ class ImageSearch {
     } catch (err) {
       console.error("[صور] خطأ:", err.message);
       api.setMessageReaction("❌", messageID, () => {}, true);
-      return api.sendMessage("❌ | حدث خطأ أثناء البحث عن الصور، حاول لاحقاً.", threadID, messageID);
+      return api.sendMessage(
+        "❌ | حدث خطأ أثناء البحث في بينتريست، حاول لاحقاً.",
+        threadID,
+        messageID
+      );
     } finally {
       for (const f of tempFiles) {
         try { if (fs.existsSync(f)) fs.unlinkSync(f); } catch (_) {}
