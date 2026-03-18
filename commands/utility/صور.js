@@ -1,7 +1,8 @@
 import axios from "axios";
 import fs from "fs-extra";
 import path from "path";
-import * as cheerio from "cheerio";
+import pkg from "cheerio";
+const { load } = pkg;
 
 class ImageSearch {
   constructor() {
@@ -25,7 +26,7 @@ class ImageSearch {
       timeout: 20000,
     });
 
-    const $ = cheerio.load(res.data);
+    const $ = load(res.data);
     const urls = [];
 
     $("a.iusc").each((_, el) => {
