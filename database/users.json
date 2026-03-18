@@ -5460,5 +5460,120 @@
       "gender": "Nữ",
       "other": {}
     }
+  },
+  {
+    "uid": "100080235070673",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "Vani Tas",
+      "firstName": "Vani",
+      "vanity": "to.ji.625725",
+      "avatar": "https://graph.facebook.com/100080235070673/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/to.ji.625725",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61583417943316",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ᏕᏖᏗᏒᏦ ᏕᏗᎷᏗ",
+      "firstName": "ᏕᏖᏗᏒᏦ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61583417943316/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61583417943316",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61564344015172",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "Jason Salvator",
+      "firstName": "Jason",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61564344015172/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61564344015172",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61586245792935",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "آلَزعہيہمہ كہآمہؤُرآ نہؤُفلَ",
+      "firstName": "آلَزعہيہمہ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61586245792935/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61586245792935",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61578541167634",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "آلمہٰ۪۫ﹷٰٰﹷقدوره عہٰ۪۫ﹷٰٰﹷسہٰ۪۫ﹷٰٰﹷوله",
+      "firstName": "آلمہٰ۪۫ﹷٰٰﹷقدوره",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61578541167634/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61578541167634",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nữ",
+      "other": {}
+    }
   }
 ]
