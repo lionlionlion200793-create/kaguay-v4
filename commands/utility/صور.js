@@ -9,7 +9,7 @@ class ImageSearch {
     this.cooldowns = 15;
     this.description = "البحث عن صور من بينتريست وإرسال 6 منها";
     this.role = "user";
-    this.aliases = ["بحث صور", "img", "image", "images", "pinterest"];
+    this.aliases = ["بحث صور", "img", "image", "images", "pinterest", "بينتريست"];
   }
 
   async searchPinterest(query) {
@@ -73,7 +73,7 @@ class ImageSearch {
     const { threadID, messageID, body } = event;
 
     const query = body
-      .replace(/^(صور|بحث صور|img|image|images|pinterest)\s*/i, "")
+      .replace(/^(صور|بحث صور|img|image|images|pinterest|بينتريست)\s*/i, "")
       .trim();
 
     if (!query) {
