@@ -4355,7 +4355,11 @@
       "isFriend": false,
       "isBirthday": false,
       "gender": "Nam",
-      "other": {}
+      "other": {
+        "grantedCommands": [
+          "صور"
+        ]
+      }
     }
   },
   {
@@ -5665,7 +5669,11 @@
       "isFriend": false,
       "isBirthday": false,
       "gender": "Nam",
-      "other": {}
+      "other": {
+        "grantedCommands": [
+          "صور"
+        ]
+      }
     }
   },
   {
@@ -5685,6 +5693,52 @@
       "avatar": "https://graph.facebook.com/100090373367777/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
       "type": "user",
       "profileUrl": "https://www.facebook.com/profile.php?id=100090373367777",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61578499971943",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "الـــزهــْرة البــٓيضــَاء",
+      "firstName": "الـــزهــْرة",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61578499971943/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61578499971943",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nữ",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61588625862658",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ᎡᏫᏰᎬᎡᎿ ᏨᎻᎡᏫᏞᏞᏫ ᏚᎯᎷᎯ",
+      "firstName": "ᎡᏫᏰᎬᎡᎿ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61588625862658/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61588625862658",
       "isFriend": false,
       "isBirthday": false,
       "gender": "Nam",

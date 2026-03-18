@@ -1073,6 +1073,85 @@
         "reason": null,
         "time": null
       },
+      "enabled": false,
+      "restrict": {
+        "modsOnly": true
+      }
+    }
+  },
+  {
+    "threadID": "1010138968852925",
+    "data": {
+      "name": "°> ┊❖『  فـندق ⑤ ⭐⭐⭐⭐⭐ ²⁰²⁶ 』❖┊ <°",
+      "threadThumbnail": "https://scontent-iad3-1.xx.fbcdn.net/v/t1.15752-9/649602801_982064334252008_2317656269015912791_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=935a9d&_nc_ohc=lgzkFBtsBxYQ7kNvwE0fMhc&_nc_oc=Adl1fzD9OfyL9DKX1qg8KvuW9ulGiZdOzYdAcSKB-DK_Jd-yjZWKS_L4V-84Ovgcz84&_nc_zt=23&_nc_ht=scontent-iad3-1.xx&_nc_ss=8&oh=03_Q7cD4wH4eX5o3Ut4PDCJ0e0Uaq8hRl8OPoMGCFwG5aIoRlrp2w&oe=69E215DA",
+      "members": 221,
+      "adminIDs": [
+        "61555344820797",
+        "61555985176768",
+        "61556242695760",
+        "61559193200061",
+        "61566836905925",
+        "61577947334251",
+        "61579201437438",
+        "61580664682833",
+        "61580713739395",
+        "61586328715291",
+        "61587332550125",
+        "61587658978003",
+        "61588035762125",
+        "100079145114568",
+        "100090018297159"
+      ],
+      "emoji": null,
+      "prefix": null,
+      "approvalMode": true,
+      "anti": {
+        "nameBox": false,
+        "imageBox": false
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      },
+      "enabled": false
+    }
+  },
+  {
+    "threadID": "1010138968852925",
+    "data": {
+      "name": "°> ┊❖『  فـندق ⑤ ⭐⭐⭐⭐⭐ ²⁰²⁶ 』❖┊ <°",
+      "threadThumbnail": "https://scontent-iad3-1.xx.fbcdn.net/v/t1.15752-9/649602801_982064334252008_2317656269015912791_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=935a9d&_nc_ohc=lgzkFBtsBxYQ7kNvwE0fMhc&_nc_oc=Adl1fzD9OfyL9DKX1qg8KvuW9ulGiZdOzYdAcSKB-DK_Jd-yjZWKS_L4V-84Ovgcz84&_nc_zt=23&_nc_ht=scontent-iad3-1.xx&_nc_ss=8&oh=03_Q7cD4wH4eX5o3Ut4PDCJ0e0Uaq8hRl8OPoMGCFwG5aIoRlrp2w&oe=69E215DA",
+      "members": 221,
+      "adminIDs": [
+        "61555344820797",
+        "61555985176768",
+        "61556242695760",
+        "61559193200061",
+        "61566836905925",
+        "61577947334251",
+        "61579201437438",
+        "61580664682833",
+        "61580713739395",
+        "61586328715291",
+        "61587332550125",
+        "61587658978003",
+        "61588035762125",
+        "100079145114568",
+        "100090018297159"
+      ],
+      "emoji": null,
+      "prefix": null,
+      "approvalMode": true,
+      "anti": {
+        "nameBox": false,
+        "imageBox": false
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      },
       "enabled": false
     }
   }
