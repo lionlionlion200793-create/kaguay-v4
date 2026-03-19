@@ -5843,5 +5843,28 @@
       "gender": "Nam",
       "other": {}
     }
+  },
+  {
+    "uid": "61583605807600",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "Thv Kha",
+      "firstName": "Thv",
+      "vanity": "victoryakd3",
+      "avatar": "https://graph.facebook.com/61583605807600/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "friend",
+      "profileUrl": "https://www.facebook.com/victoryakd3",
+      "isFriend": true,
+      "isBirthday": false,
+      "gender": "Nữ",
+      "other": {}
+    }
   }
 ]
