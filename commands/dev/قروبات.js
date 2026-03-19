@@ -112,6 +112,7 @@ class Groups {
       msg += `[4] 💬 إحصائيات الرسائل\n`;
       msg += `[5] ⚙️ الأوامر الشغالة\n`;
       msg += `[6] 📨 إرسال رسالة للقروب\n`;
+      msg += `[7] ➕ إضافتي للقروب\n`;
       msg += `┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n`;
       msg += `رُد برقم الخيار`;
 
@@ -137,8 +138,8 @@ class Groups {
       const botID = await api.getCurrentUserID();
       const adminIDs = cached?.data?.adminIDs || [];
 
-      if (isNaN(option) || option < 1 || option > 6) {
-        return api.sendMessage("❌ | اختر رقماً من 1 إلى 6.", threadID, messageID);
+      if (isNaN(option) || option < 1 || option > 7) {
+        return api.sendMessage("❌ | اختر رقماً من 1 إلى 7.", threadID, messageID);
       }
 
       // ── 1. قائمة الأدمن ──
@@ -285,6 +286,37 @@ class Groups {
           unsend: false,
         });
         return;
+      }
+
+      // ── 7. إضافتي للقروب ──
+      if (option === 7) {
+        try {
+          const threadInfo = await api.getThreadInfo(group.threadID);
+          const members = (threadInfo.participantIDs || []).map(String);
+
+          if (members.includes(String(senderID))) {
+            return api.sendMessage(
+              `⚠️ | أنت موجود بالفعل في القروب:\n🏷️ ${groupName}`,
+              threadID, messageID
+            );
+          }
+
+          await api.addUserToGroup(senderID, group.threadID);
+
+          return api.sendMessage(
+            `✅ | تمت إضافتك بنجاح!\n` +
+            `🏷️ القروب: ${groupName}\n` +
+            `🆔 المعرف: ${group.threadID}`,
+            threadID, messageID
+          );
+        } catch (err) {
+          const msg = String(err?.message || err || "");
+          let reason = "تأكد من أن البوت يملك صلاحية الإضافة في هذا القروب.";
+          if (msg.includes("permission") || String(err?.error) === "200") {
+            reason = "البوت لا يملك صلاحية الإضافة في هذا القروب.";
+          }
+          return api.sendMessage(`❌ | فشلت الإضافة\n⚠️ ${reason}`, threadID, messageID);
+        }
       }
     }
 
