@@ -2,7 +2,7 @@ export default {
     "prefix": "*", 
     "BOT_NAME": "𝙔𝙐𝙆𝙊",
     "ADMIN_IDS": ["61570526043721", "61566836905925"],
-    "allowedCommands": ["حماية", "ممنوع", "طرد", "اضافة", "تقييد", "ادت"],
+    "allowedCommands": [],
     "botEnabled": true,
     "autogreet": true, // تمت إضافة هذه الخاصية
     "options": {
