@@ -427,17 +427,27 @@ export class CommandHandler {
       const grantedCommands = banUserData?.data?.data?.other?.grantedCommands || [];
       const hasGrantedPermission = grantedCommands.includes(command.name);
 
+      const isBotOwner  = this.config.ADMIN_IDS.includes(senderID);
+      const isGroupAdmin = threadAdminIDs.includes(senderID);
+
+      if (command.role === "owner" && !isBotOwner) {
+        api.setMessageReaction("🚫", event.messageID, () => {}, true);
+        return api.sendMessage(
+          "🚫 | هذا الأمر للمطور فقط.",
+          threadID, messageID
+        );
+      }
+
       if (
-        (command.role === "admin" || command.role === "owner") &&
-        !threadAdminIDs.includes(senderID) &&
-        !this.config.ADMIN_IDS.includes(senderID) &&
+        command.role === "admin" &&
+        !isGroupAdmin &&
+        !isBotOwner &&
         !hasGrantedPermission
       ) {
-        api.setMessageReaction("🚫", event.messageID, (err) => {}, true);
+        api.setMessageReaction("🚫", event.messageID, () => {}, true);
         return api.sendMessage(
-          "🚫 | ليس لديك الصلاحية لإستخدام هذا الأمر",
-          threadID,
-          messageID
+          "🚫 | هذا الأمر للأدمن فقط.",
+          threadID, messageID
         );
       }
 
