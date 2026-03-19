@@ -217,8 +217,8 @@
       "prefix": null,
       "approvalMode": true,
       "anti": {
-        "nameBox": false,
-        "imageBox": false
+        "nameBox": true,
+        "imageBox": true
       },
       "banned": {
         "status": false,
@@ -1168,15 +1168,16 @@
       "prefix": null,
       "approvalMode": true,
       "anti": {
-        "nameBox": false,
-        "imageBox": false
+        "nameBox": true,
+        "imageBox": true
       },
       "banned": {
         "status": false,
         "reason": null,
         "time": null
       },
-      "enabled": false
+      "enabled": false,
+      "aiRestricted": false
     }
   },
   {
@@ -1197,6 +1198,84 @@
         "100088881715349"
       ],
       "emoji": "🐇",
+      "prefix": null,
+      "approvalMode": true,
+      "anti": {
+        "nameBox": true,
+        "imageBox": false
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      },
+      "enabled": false
+    }
+  },
+  {
+    "threadID": "1207291814197297",
+    "data": {
+      "name": "‏༆〄『 كـتـيـبة_بــوســايـدن』〄༆",
+      "threadThumbnail": "https://scontent-iad3-2.xx.fbcdn.net/v/t1.15752-9/597047890_1535455664324636_3241771490621222432_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=935a9d&_nc_eui2=AeGPkaXNCBnJVN8gKn7RLn8pVLXjht6H88tUteOG3ofzy5VoamlBI5cFe9dZ9MA5zmQHx7rH9RbkGpoI9IUMS1T5&_nc_ohc=uL6CRmhLrfMQ7kNvwF4JeOt&_nc_oc=AdqyhVQIw0PG1BoUG3BlX2s4NK9D0OVh7fGbXZdC4SCcz_1qenkOPcBgw7ve0YV2Cno&_nc_zt=23&_nc_ht=scontent-iad3-2.xx&_nc_ss=8&oh=03_Q7cD4wH8iSCekxADGd4BjypB6w_FGld8IOTOR2Ne2Bz-2EA9KQ&oe=69E38859",
+      "members": 142,
+      "adminIDs": [
+        "61566836905925",
+        "61566863620210",
+        "61578770805390",
+        "61579790140616",
+        "61580701115582",
+        "61582840574801",
+        "61583417943316",
+        "61584885505446",
+        "61586618074659",
+        "61586724321814",
+        "61586953757871",
+        "61587038110350",
+        "61587985030566",
+        "61588408397370",
+        "100002592426874",
+        "100081948980908"
+      ],
+      "emoji": "🧙‍♂️",
+      "prefix": null,
+      "approvalMode": true,
+      "anti": {
+        "nameBox": true,
+        "imageBox": true
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      },
+      "enabled": false
+    }
+  },
+  {
+    "threadID": "1207291814197297",
+    "data": {
+      "name": "‏༆〄『 كـتـيـبة_بــوســايـدن』〄༆",
+      "threadThumbnail": "https://scontent-iad3-2.xx.fbcdn.net/v/t1.15752-9/597047890_1535455664324636_3241771490621222432_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=935a9d&_nc_eui2=AeGPkaXNCBnJVN8gKn7RLn8pVLXjht6H88tUteOG3ofzy5VoamlBI5cFe9dZ9MA5zmQHx7rH9RbkGpoI9IUMS1T5&_nc_ohc=uL6CRmhLrfMQ7kNvwF4JeOt&_nc_oc=AdqyhVQIw0PG1BoUG3BlX2s4NK9D0OVh7fGbXZdC4SCcz_1qenkOPcBgw7ve0YV2Cno&_nc_zt=23&_nc_ht=scontent-iad3-2.xx&_nc_ss=8&oh=03_Q7cD4wH8iSCekxADGd4BjypB6w_FGld8IOTOR2Ne2Bz-2EA9KQ&oe=69E38859",
+      "members": 142,
+      "adminIDs": [
+        "61566836905925",
+        "61566863620210",
+        "61578770805390",
+        "61579790140616",
+        "61580701115582",
+        "61582840574801",
+        "61583417943316",
+        "61584885505446",
+        "61586618074659",
+        "61586724321814",
+        "61586953757871",
+        "61587038110350",
+        "61587985030566",
+        "61588408397370",
+        "100002592426874",
+        "100081948980908"
+      ],
+      "emoji": "🧙‍♂️",
       "prefix": null,
       "approvalMode": true,
       "anti": {
