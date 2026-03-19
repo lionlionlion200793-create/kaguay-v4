@@ -80,7 +80,7 @@ class Yuko {
     this.author = "HUSSEIN YACOUBI";
     this.cooldowns = 3;
     this.description = "تحدث مع يوكو الذكاء الاصطناعي — تفهم كل اللغات واللهجات";
-    this.role = "member";
+    this.role = "user";
     this.aliases = ["ai", "يوكو", "yuko"];
     this.hidden = false;
   }

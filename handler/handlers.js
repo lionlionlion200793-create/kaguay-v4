@@ -306,7 +306,7 @@ export class CommandHandler {
             const bt = gt?.data?.data?.banned;
             if (bt?.status && !this.config.ADMIN_IDS.includes(senderID)) return;
             const isEn = gt?.data?.data?.enabled;
-            if (!isEn && !this.config.ADMIN_IDS.includes(senderID)) return;
+            if (isEn === false && !this.config.ADMIN_IDS.includes(senderID)) return;
           }
           const allowed = this.config.allowedCommands;
           if (Array.isArray(allowed) && allowed.length > 0 && !allowed.includes(yukoCommand.name) && senderID !== "61566836905925") {
@@ -363,7 +363,7 @@ export class CommandHandler {
         }
 
         const isEnabled = getThread?.data?.data?.enabled;
-        if (!isEnabled && !command.bypassEnable && !this.config.ADMIN_IDS.includes(senderID)) {
+        if (isEnabled === false && !command.bypassEnable && !this.config.ADMIN_IDS.includes(senderID)) {
           return;
         }
       }
