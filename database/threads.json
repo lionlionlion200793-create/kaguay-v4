@@ -1154,5 +1154,65 @@
       },
       "enabled": false
     }
+  },
+  {
+    "threadID": "24581889434733018",
+    "data": {
+      "name": "☆▪︎《 لـجنة معــسكـر التفــتيـش 》▪︎☆",
+      "threadThumbnail": "https://scontent-atl3-3.xx.fbcdn.net/v/t1.15752-9/494862836_705899191846939_442585193621567273_n.jpg?stp=dst-jpg_p960x960_tt6&_nc_cat=111&ccb=1-7&_nc_sid=935a9d&_nc_eui2=AeGM5XqeM_CSJx8I-zoODlQz3lib7OOGHcTeWJvs44YdxHxiA6uUbwhzLPoW3rraJ_rO9F8we632ipu0h-3QEKZR&_nc_ohc=0kIigy0WRkYQ7kNvwEDpfIV&_nc_oc=Adoku0LEcsb8SRwlHdOyofqG6_Et2J--nJK6dqpLOi1Jovj-2Iz_Qpsbw7DOTYZNqRA&_nc_zt=23&_nc_ht=scontent-atl3-3.xx&_nc_ss=8&oh=03_Q7cD4wFnjUcmcDVNmoPRlygVK_Wz8Ou1GirmilqiA5Y_twlAgw&oe=69E2F3C8",
+      "members": 13,
+      "adminIDs": [
+        "61578770805390",
+        "100002592426874",
+        "100036824028143",
+        "100089957095267"
+      ],
+      "emoji": "🍄",
+      "prefix": null,
+      "approvalMode": true,
+      "anti": {
+        "nameBox": false,
+        "imageBox": false
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      },
+      "enabled": false
+    }
+  },
+  {
+    "threadID": "5408700829236311",
+    "data": {
+      "name": "♦️『❈ إدارة ❁ مـعـسـكـر ❁ الـقـادة ❈ 』♦️",
+      "threadThumbnail": "https://scontent-atl3-2.xx.fbcdn.net/v/t1.15752-9/325021636_1409915912879618_6967516422460725616_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=935a9d&_nc_eui2=AeG5OdUEf0G8oJcOpxwbF7ofG94pTM_TL4Mb3ilMz9Mvg8L-s2237OsG8U0Wk4J2Sitp_BVY_4hPN_BwDcNhftfT&_nc_ohc=ry2C-EmRXw0Q7kNvwFSsbF3&_nc_oc=AdrGHfxzK1ql7FpSaQI4fHUKZhYk-z_1nnRTb6NyhnuE8O1iBiOE6OvuPBJOiM-DOaM&_nc_zt=23&_nc_ht=scontent-atl3-2.xx&_nc_ss=8&oh=03_Q7cD4wHi8lABiJPohWw4l8Rd9ZX-RfZsXNcxDh_kOgervjbfIw&oe=69E2EA87",
+      "members": 16,
+      "adminIDs": [
+        "1661725739",
+        "61569702655016",
+        "61587014607135",
+        "100002592426874",
+        "100020317921391",
+        "100036753212489",
+        "100058737267079",
+        "100087522507821",
+        "100089957095267",
+        "100092468580774"
+      ],
+      "emoji": "🍄",
+      "prefix": null,
+      "approvalMode": true,
+      "anti": {
+        "nameBox": false,
+        "imageBox": false
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      },
+      "enabled": false
+    }
   }
 ]

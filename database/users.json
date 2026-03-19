@@ -1842,7 +1842,14 @@
       "isFriend": false,
       "isBirthday": false,
       "gender": "Nam",
-      "other": {}
+      "other": {
+        "grantedCommands": [
+          "يوكو",
+          "ممنوع",
+          "حماية",
+          "صلاحياتي"
+        ]
+      }
     }
   },
   {
@@ -5788,6 +5795,52 @@
       "isFriend": false,
       "isBirthday": false,
       "gender": "Nữ",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61581712183297",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "جوليا 'ے",
+      "firstName": "جوليا",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61581712183297/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61581712183297",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nữ",
+      "other": {}
+    }
+  },
+  {
+    "uid": "100002086988290",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ᎻᎥᎿᏚᏌᎶᎯᎽᎯ ᎿᏫᏨᎻᎥᎡᏌ",
+      "firstName": "ᎿᏫᏨᎻᎥᎡᏌ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/100002086988290/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=100002086988290",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
       "other": {}
     }
   }
