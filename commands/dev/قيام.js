@@ -13,6 +13,13 @@ class EnableCommand {
     this.hidden = true;
   }
 
+  findCommand(name) {
+    return global.client.commands.get(name) ||
+      [...global.client.commands.values()].find(c =>
+        c.aliases?.includes(name) || c.name === name
+      );
+  }
+
   async execute({ api, event, args }) {
     const { threadID, messageID } = event;
     const prefix = global.client?.config?.prefix || "*";
@@ -36,11 +43,7 @@ class EnableCommand {
         );
       }
 
-      const command = global.client.commands.get(cmdName) ||
-        [...global.client.commands.values()].find(c =>
-          c.aliases?.includes(cmdName) || c.name === cmdName
-        );
-
+      const command = this.findCommand(cmdName);
       if (!command) {
         return api.sendMessage(`❌ | الأمر "${cmdName}" غير موجود.`, threadID, messageID);
       }
@@ -52,12 +55,14 @@ class EnableCommand {
         );
       }
 
+      const originalRole = command.role;
       command.role = "member";
 
+      let roles = {};
+      try { roles = await fs.readJson(rolesPath); } catch (_) {}
+      roles[command.name] = { role: "member", originalRole };
+
       try {
-        let roles = {};
-        try { roles = await fs.readJson(rolesPath); } catch (_) {}
-        roles[command.name] = "member";
         await fs.outputJson(rolesPath, roles, { spaces: 2 });
       } catch (err) {
         console.error("[قيام] خطأ في حفظ الأدوار:", err.message);
@@ -65,17 +70,13 @@ class EnableCommand {
 
       return api.sendMessage(
         `✅ | تم منح الأمر "${command.name}" للأعضاء!\n` +
-        `📌 لإلغائه اكتب: ${prefix}فناء ${command.name}`,
+        `📌 لسحبه منهم: ${prefix}فناء اعضاء ${command.name}`,
         threadID, messageID
       );
     }
 
     const cmdName = args.join(" ").trim();
-
-    const command = global.client.commands.get(cmdName) ||
-      [...global.client.commands.values()].find(c =>
-        c.aliases?.includes(cmdName) || c.name === cmdName
-      );
+    const command = this.findCommand(cmdName);
 
     if (!command) {
       return api.sendMessage(`❌ | الأمر "${cmdName}" غير موجود.`, threadID, messageID);

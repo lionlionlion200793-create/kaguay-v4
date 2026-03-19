@@ -1065,8 +1065,8 @@
       "prefix": null,
       "approvalMode": true,
       "anti": {
-        "nameBox": false,
-        "imageBox": false
+        "nameBox": true,
+        "imageBox": true
       },
       "banned": {
         "status": false,

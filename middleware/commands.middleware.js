@@ -94,9 +94,9 @@ export const commandMiddleware = async () => {
     }
     try {
       const roles = await fs.readJson(rolesPath);
-      for (const [cmdName, role] of Object.entries(roles)) {
+      for (const [cmdName, entry] of Object.entries(roles)) {
         const cmd = global.client.commands.get(cmdName);
-        if (cmd) cmd.role = role;
+        if (cmd) cmd.role = typeof entry === "object" ? entry.role : entry;
       }
     } catch (_) {}
 
