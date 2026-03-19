@@ -33,7 +33,7 @@ class MyMessages {
     this.author = "HUSSEIN YACOUBI";
     this.cooldowns = 5;
     this.description = "عرض عدد رسائلك اليوم في هذا القروب";
-    this.role = "member";
+    this.role = "user";
     this.aliases = ["mymsg", "msgme", "عد-رسائلي"];
     this.hidden = false;
     this.bypassEnable = true;

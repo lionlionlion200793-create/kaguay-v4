@@ -1177,5 +1177,36 @@
       },
       "enabled": false
     }
+  },
+  {
+    "threadID": "903374679101503",
+    "data": {
+      "name": "‏༆〄『 كـتـيـبة_مـيـدوسا』〄༆",
+      "threadThumbnail": "https://scontent-atl3-1.xx.fbcdn.net/v/t1.15752-9/641632905_4323369264562192_2507648930388521859_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=935a9d&_nc_eui2=AeHXAZwgwfapVK1_bMzy1wymiDW5QJOaU2WINblAk5pTZVwRvv_XDrlTuEv3JZ1-KQDY4xEgMAp-dtRq-Kt0UOii&_nc_ohc=kTP92MSCXr0Q7kNvwE8tHvm&_nc_oc=AdrEjC_COS6iJj_QveHA7mvpX4720fOOJKI94-N7oD0B_1R-rwRMu7KBxII8ttq8fbE&_nc_zt=23&_nc_ht=scontent-atl3-1.xx&_nc_ss=8&oh=03_Q7cD4wGq0h60CkVYLLXnCv-ibXurvoz8l6XJndx1KCSCejWKvQ&oe=69E2E9B0",
+      "members": 127,
+      "adminIDs": [
+        "61580701115582",
+        "61581712183297",
+        "61581825665444",
+        "61583417943316",
+        "61586953757871",
+        "61587985030566",
+        "100002592426874",
+        "100088881715349"
+      ],
+      "emoji": "🐇",
+      "prefix": null,
+      "approvalMode": true,
+      "anti": {
+        "nameBox": false,
+        "imageBox": false
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      },
+      "enabled": false
+    }
   }
 ]

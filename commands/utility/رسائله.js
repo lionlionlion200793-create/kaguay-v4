@@ -26,7 +26,7 @@ class MessageCount {
     this.author = "HUSSEIN YACOUBI";
     this.cooldowns = 3;
     this.description = "عرض عدد رسائل شخص معين اليوم (رد على رسالته)";
-    this.role = "member";
+    this.role = "user";
     this.aliases = ["msgcount", "عد-رسائله", "رسائل"];
     this.hidden = false;
     this.bypassEnable = true;

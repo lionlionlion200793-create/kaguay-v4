@@ -8,7 +8,7 @@ class Help {
     this.author = "Kaguya Project";
     this.cooldowns = 60;
     this.description = "عرض قائمة الأوامر مع كيفية استعمال كل واحد!";
-    this.role = "member";
+    this.role = "user";
     this.aliases = ["أوامر", "الاوامر"];
     this.commands = global.client.commands;
   }

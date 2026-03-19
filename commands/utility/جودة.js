@@ -9,7 +9,7 @@ class ImageQuality {
     this.author = "Kaguya Project";
     this.cooldowns = 15;
     this.description = "تحسين جودة صورة عند الرد عليها ورفعها لجودة عالية";
-    this.role = "member";
+    this.role = "user";
     this.aliases = ["enhance", "upscale", "hd", "4k"];
   }
 

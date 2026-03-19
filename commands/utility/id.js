@@ -16,7 +16,7 @@ class ID {
     this.author = "Kaguya Project";
     this.cooldowns = 5;
     this.description = "جلب معرف الشخص أو القروب، أو عرض قائمة معلومات قروب بمعرفه";
-    this.role = "member";
+    this.role = "user";
     this.aliases = ["id", "معرف"];
   }
 

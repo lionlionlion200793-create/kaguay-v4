@@ -32,7 +32,7 @@ class Edit {
     this.author = "HUSSEIN YACOUBI";
     this.cooldowns = 10;
     this.description = "جلب فيديو ادت لشخصية من تيك توك — مثال: *ادت shadow";
-    this.role = "member";
+    this.role = "user";
     this.aliases = ["edit", "ادتات"];
     this.hidden = false;
   }
