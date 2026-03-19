@@ -162,7 +162,7 @@ class Yuko {
     this.author = "HUSSEIN YACOUBI";
     this.cooldowns = 4;
     this.description = "تحدث مع يوكو الذكاء الاصطناعي";
-    this.role = "member";
+    this.role = "user";
     this.aliases = [];
     this.hidden = false;
   }

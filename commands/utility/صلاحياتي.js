@@ -2,67 +2,98 @@ import fs from "fs-extra";
 
 const filePath = "./database/users.json";
 
+const RANK_ICONS = {
+  owner:  "👑",
+  admin:  "🛡️",
+  member: "🌟",
+  user:   "👤",
+};
+
 class MyPermissions {
   constructor() {
     this.name = "صلاحياتي";
     this.author = "Kaguya Project";
     this.cooldowns = 5;
-    this.description = "عرض صلاحياتك الخاصة";
+    this.description = "عرض صلاحياتك الخاصة داخل القروب";
     this.role = "user";
-    this.aliases = ["permsme", "صلاحياتي"];
+    this.aliases = ["permsme", "مستواي", "رتبتي"];
   }
 
   async execute({ api, event }) {
     const { threadID, messageID, senderID } = event;
 
-    const targetID = senderID;
-
-    let targetName = targetID;
+    let targetName = senderID;
     try {
-      const info = await api.getUserInfo(targetID);
-      targetName = info?.[targetID]?.name || targetID;
+      const info = await api.getUserInfo(senderID);
+      targetName = info?.[senderID]?.name || senderID;
     } catch {}
 
-    const users = JSON.parse(fs.readFileSync(filePath));
-    const user = users.find(u => String(u.uid) === String(targetID));
-
+    let users = [];
+    try { users = JSON.parse(fs.readFileSync(filePath)); } catch {}
+    const user = users.find(u => String(u.uid) === String(senderID));
     const grantedCommands = user?.data?.other?.grantedCommands || [];
 
-    const threadInfo = await api.getThreadInfo(threadID);
-    const adminIDs = (threadInfo.adminIDs || []).map(a => a.uid || a.id || a);
-    const isAdmin = adminIDs.includes(targetID);
-    const isOwner = global.client.config.ADMIN_IDS.includes(targetID);
+    let threadAdminIDs = [];
+    try {
+      const threadInfo = await api.getThreadInfo(threadID);
+      threadAdminIDs = (threadInfo.adminIDs || []).map(a => a.uid || a.id || a);
+    } catch {}
 
-    let msg = `╔══════════════════╗\n`;
-    msg += `║    🛡️ صلاحياتي    ║\n`;
-    msg += `╚══════════════════╝\n`;
-    msg += `👤 الاسم: ${targetName}\n`;
-    msg += `🆔 المعرف: ${targetID}\n`;
-    msg += `┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n`;
-    msg += `👑 مالك البوت: ${isOwner ? "✅ نعم" : "❌ لا"}\n`;
-    msg += `🔧 أدمن القروب: ${isAdmin ? "✅ نعم" : "❌ لا"}\n`;
-    msg += `┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n`;
+    const isOwner  = global.client.config.ADMIN_IDS.includes(senderID);
+    const isAdmin  = threadAdminIDs.includes(senderID);
+
+    let rankLabel, rankIcon;
+    if (isOwner) {
+      rankLabel = "مالك البوت";
+      rankIcon  = RANK_ICONS.owner;
+    } else if (isAdmin) {
+      rankLabel = "أدمن القروب";
+      rankIcon  = RANK_ICONS.admin;
+    } else if (grantedCommands.length > 0) {
+      rankLabel = "عضو (بصلاحيات خاصة)";
+      rankIcon  = RANK_ICONS.member;
+    } else {
+      rankLabel = "عضو عادي";
+      rankIcon  = RANK_ICONS.user;
+    }
+
+    let lines = [];
+    lines.push(`╔══════════════════════╗`);
+    lines.push(`║   ${rankIcon}  بطاقة الصلاحيات   ║`);
+    lines.push(`╚══════════════════════╝`);
+    lines.push(``);
+    lines.push(`👤  الاسم   :  ${targetName}`);
+    lines.push(`🔑  المعرف  :  ${senderID}`);
+    lines.push(`${rankIcon}  الرتبة   :  ${rankLabel}`);
+    lines.push(``);
+    lines.push(`─────────────────────────`);
 
     if (isOwner) {
-      msg += `🌟 تملك صلاحية جميع الأوامر كمالك بوت.`;
+      lines.push(`👑  تملك صلاحية كاملة على البوت.`);
+      lines.push(`✅  جميع الأوامر متاحة لك.`);
     } else if (isAdmin) {
-      msg += `📋 أوامرك الممنوحة خصيصاً:\n`;
+      lines.push(`🛡️  تملك صلاحيات الأدمن الافتراضية.`);
       if (grantedCommands.length > 0) {
-        msg += grantedCommands.map((c, i) => `  ${i + 1}. ${c}`).join("\n");
+        lines.push(`📋  أوامر إضافية ممنوحة لك:`);
+        grantedCommands.forEach((c, i) => lines.push(`    ${i + 1}. ${c}`));
       } else {
-        msg += `  لا توجد أوامر ممنوحة إضافية.\n`;
-        msg += `  (تملك صلاحيات الأدمن الافتراضية)`;
+        lines.push(`📋  لا توجد أوامر إضافية ممنوحة.`);
       }
     } else {
-      msg += `📋 أوامرك الممنوحة:\n`;
       if (grantedCommands.length > 0) {
-        msg += grantedCommands.map((c, i) => `  ${i + 1}. ${c}`).join("\n");
+        lines.push(`📋  أوامر ممنوحة لك بشكل خاص:`);
+        grantedCommands.forEach((c, i) => lines.push(`    ${i + 1}. ${c}`));
       } else {
-        msg += `  لا توجد أوامر ممنوحة.`;
+        lines.push(`📋  لا توجد أوامر خاصة ممنوحة.`);
+        lines.push(`    (تملك أوامر الأعضاء الافتراضية)`);
       }
     }
 
-    return api.sendMessage(msg, threadID, messageID);
+    lines.push(``);
+    lines.push(`─────────────────────────`);
+    lines.push(`🤖  بوت يوكو 𝙔𝙐𝙆𝙊`);
+
+    return api.sendMessage(lines.join("\n"), threadID, messageID);
   }
 }
 
