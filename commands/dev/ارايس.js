@@ -2,7 +2,7 @@ class CommandStatus {
   constructor() {
     this.name = "ارايس";
     this.aliases = ["status-cmds", "cmdstatus", "حالة-الاوامر"];
-    this.description = "عرض جميع الأوامر مع حالتها (مفعّل / معطّل)";
+    this.description = "عرض الأوامر حسب الفئة (اعضاء / ادمن / معطلة / مفعلة)";
     this.role = "owner";
     this.cooldowns = 5;
     this.hidden = true;
@@ -14,25 +14,64 @@ class CommandStatus {
 
     const restricted = global.client.restrictedCommands || new Set();
     const allCommands = [...global.client.commands.values()];
-
     const filter = args[0];
 
-    let enabledList = [];
-    let disabledList = [];
+    if (filter === "اعضاء" || filter === "members") {
+      const memberCmds = allCommands.filter(c =>
+        (c.role === "user" || c.role === "member") && !restricted.has(c.name)
+      );
 
-    for (const cmd of allCommands) {
-      if (restricted.has(cmd.name)) {
-        disabledList.push(cmd.name);
-      } else {
-        enabledList.push(cmd.name);
+      if (memberCmds.length === 0) {
+        return api.sendMessage("⚠️ | لا توجد أوامر متاحة للأعضاء حالياً.", threadID, messageID);
       }
+
+      const lines = memberCmds.map(c => {
+        const roleTag = c.role === "user" ? "👤" : "👥";
+        return `  ${roleTag} ${c.name} — ${c.description || ""}`;
+      }).join("\n");
+
+      return api.sendMessage(
+        `╔══════════════════╗\n` +
+        `║  👥 أوامر الأعضاء  ║\n` +
+        `╚══════════════════╝\n` +
+        `${lines}\n` +
+        `┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n` +
+        `👤 = للجميع  |  👥 = للأعضاء فقط\n` +
+        `📊 المجموع: ${memberCmds.length} أمر`,
+        threadID, messageID
+      );
+    }
+
+    if (filter === "ادمن" || filter === "admin") {
+      const adminCmds = allCommands.filter(c =>
+        c.role === "admin" && !restricted.has(c.name)
+      );
+
+      if (adminCmds.length === 0) {
+        return api.sendMessage("⚠️ | لا توجد أوامر خاصة بالأدمن حالياً.", threadID, messageID);
+      }
+
+      const lines = adminCmds.map(c =>
+        `  🛡️ ${c.name} — ${c.description || ""}`
+      ).join("\n");
+
+      return api.sendMessage(
+        `╔══════════════════╗\n` +
+        `║  🛡️ أوامر الأدمن  ║\n` +
+        `╚══════════════════╝\n` +
+        `${lines}\n` +
+        `┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n` +
+        `📊 المجموع: ${adminCmds.length} أمر`,
+        threadID, messageID
+      );
     }
 
     if (filter === "معطلة" || filter === "disabled") {
+      const disabledList = allCommands.filter(c => restricted.has(c.name));
       if (disabledList.length === 0) {
         return api.sendMessage("✅ | لا توجد أوامر معطلة حالياً.", threadID, messageID);
       }
-      const lines = disabledList.map(n => `  🚫 ${n}`).join("\n");
+      const lines = disabledList.map(c => `  🚫 ${c.name}`).join("\n");
       return api.sendMessage(
         `╔══════════════════╗\n` +
         `║  🚫 الأوامر المعطلة  ║\n` +
@@ -46,10 +85,11 @@ class CommandStatus {
     }
 
     if (filter === "مفعلة" || filter === "enabled") {
+      const enabledList = allCommands.filter(c => !restricted.has(c.name));
       if (enabledList.length === 0) {
         return api.sendMessage("⚠️ | لا توجد أوامر مفعلة حالياً.", threadID, messageID);
       }
-      const lines = enabledList.map(n => `  ✅ ${n}`).join("\n");
+      const lines = enabledList.map(c => `  ✅ ${c.name}`).join("\n");
       return api.sendMessage(
         `╔══════════════════╗\n` +
         `║  ✅ الأوامر المفعلة  ║\n` +
@@ -62,20 +102,19 @@ class CommandStatus {
       );
     }
 
-    const enabledLines = enabledList.map(n => `  ✅ ${n}`).join("\n");
-    const disabledLines = disabledList.length > 0
-      ? disabledList.map(n => `  🚫 ${n}`).join("\n")
-      : "  لا يوجد";
+    const enabledList = allCommands.filter(c => !restricted.has(c.name));
+    const disabledList = allCommands.filter(c => restricted.has(c.name));
 
     return api.sendMessage(
       `╔══════════════════╗\n` +
       `║   📋 حالة الأوامر   ║\n` +
       `╚══════════════════╝\n` +
-      `\n✅ المفعّلة (${enabledList.length}):\n${enabledLines}\n` +
-      `\n🚫 المعطّلة (${disabledList.length}):\n${disabledLines}\n` +
+      `✅ مفعّلة: ${enabledList.length}  |  🚫 معطّلة: ${disabledList.length}\n` +
       `┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n` +
-      `📌 ${prefix}فناء [أمر]  ← لتعطيل\n` +
-      `📌 ${prefix}قيام [أمر]  ← لتفعيل`,
+      `📌 ${prefix}ارايس اعضاء  ← أوامر الأعضاء\n` +
+      `📌 ${prefix}ارايس ادمن   ← أوامر الأدمن\n` +
+      `📌 ${prefix}ارايس معطلة  ← المعطّلة\n` +
+      `📌 ${prefix}ارايس مفعلة  ← المفعّلة`,
       threadID, messageID
     );
   }

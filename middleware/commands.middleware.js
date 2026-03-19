@@ -1,6 +1,8 @@
 import fs from "fs-extra";
 import { log } from "../logger/index.js";
 
+const rolesPath = "./database/commandRoles.json";
+
 /**
  * Middleware function to load commands and their aliases.
  */
@@ -90,6 +92,14 @@ export const commandMiddleware = async () => {
         }
       }
     }
+    try {
+      const roles = await fs.readJson(rolesPath);
+      for (const [cmdName, role] of Object.entries(roles)) {
+        const cmd = global.client.commands.get(cmdName);
+        if (cmd) cmd.role = role;
+      }
+    } catch (_) {}
+
   } catch (error) {
     log([
       {
