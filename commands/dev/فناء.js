@@ -7,7 +7,7 @@ class DisableCommand {
   constructor() {
     this.name = "فناء";
     this.aliases = ["تعطيل-امر", "disable-cmd", "disablecmd"];
-    this.description = "تعطيل أمر كلياً أو سحب صلاحيته من الأعضاء";
+    this.description = "تعطيل أمر أو سحب صلاحيته من رتبة معينة";
     this.role = "owner";
     this.cooldowns = 0;
     this.hidden = true;
@@ -20,6 +20,10 @@ class DisableCommand {
       );
   }
 
+  async loadRoles() {
+    try { return await fs.readJson(rolesPath); } catch { return {}; }
+  }
+
   async execute({ api, event, args }) {
     const { threadID, messageID } = event;
     const prefix = global.client?.config?.prefix || "*";
@@ -27,18 +31,20 @@ class DisableCommand {
     if (!args[0]) {
       return api.sendMessage(
         `❌ | طريقة الاستخدام:\n` +
-        `📌 ${prefix}فناء [اسم الأمر]         ← تعطيل الأمر كلياً\n` +
-        `📌 ${prefix}فناء اعضاء [اسم الأمر]   ← سحب الأمر من الأعضاء`,
+        `📌 ${prefix}فناء [أمر]           ← تعطيل الأمر كلياً\n` +
+        `📌 ${prefix}فناء اعضاء [أمر]    ← سحب الأمر من الأعضاء\n` +
+        `📌 ${prefix}فناء ادمن [أمر]     ← سحب الأمر من الأدمن`,
         threadID, messageID
       );
     }
 
-    if (args[0] === "اعضاء") {
+    if (args[0] === "اعضاء" || args[0] === "ادمن") {
+      const qualifier = args[0];
       const cmdName = args.slice(1).join(" ").trim();
 
       if (!cmdName) {
         return api.sendMessage(
-          `❌ | اكتب اسم الأمر بعد "اعضاء".\n📌 مثال: ${prefix}فناء اعضاء صلاحياتي`,
+          `❌ | اكتب اسم الأمر بعد "${qualifier}".\n📌 مثال: ${prefix}فناء ${qualifier} اخرج`,
           threadID, messageID
         );
       }
@@ -48,15 +54,14 @@ class DisableCommand {
         return api.sendMessage(`❌ | الأمر "${cmdName}" غير موجود.`, threadID, messageID);
       }
 
-      let roles = {};
-      try { roles = await fs.readJson(rolesPath); } catch (_) {}
-
+      const roles = await this.loadRoles();
       const entry = roles[command.name];
       const originalRole = entry?.originalRole || command.role;
 
-      if ((command.role === "admin" || command.role === "owner") && !entry) {
+      if (!entry) {
         return api.sendMessage(
-          `⚠️ | الأمر "${command.name}" ليس متاحاً للأعضاء أصلاً (${command.role}).`,
+          `⚠️ | الأمر "${command.name}" لم يتم تغيير دوره مسبقاً.\n` +
+          `دوره الحالي: ${command.role}`,
           threadID, messageID
         );
       }
@@ -67,13 +72,15 @@ class DisableCommand {
       try {
         await fs.outputJson(rolesPath, roles, { spaces: 2 });
       } catch (err) {
-        console.error("[فناء] خطأ في الحفظ:", err.message);
+        console.error("[فناء] خطأ:", err.message);
       }
 
+      const icon = qualifier === "اعضاء" ? "👥" : "🛡️";
+
       return api.sendMessage(
-        `🚫 | تم سحب الأمر "${command.name}" من الأعضاء!\n` +
-        `🔄 الدور الأصلي: ${originalRole}\n` +
-        `📌 لإعادة منحه: ${prefix}قيام اعضاء ${command.name}`,
+        `🚫 | تم سحب الأمر "${command.name}" من ${icon} ${qualifier === "اعضاء" ? "الأعضاء" : "الأدمن"}!\n` +
+        `🔄 الدور الأصلي المستعاد: ${originalRole}\n` +
+        `📌 لإعادة المنح: ${prefix}قيام ${qualifier} ${command.name}`,
         threadID, messageID
       );
     }
@@ -88,10 +95,7 @@ class DisableCommand {
     const restricted = global.client.restrictedCommands || new Set();
 
     if (restricted.has(command.name)) {
-      return api.sendMessage(
-        `⚠️ | الأمر "${command.name}" معطّل مسبقاً.`,
-        threadID, messageID
-      );
+      return api.sendMessage(`⚠️ | الأمر "${command.name}" معطّل مسبقاً.`, threadID, messageID);
     }
 
     restricted.add(command.name);
@@ -100,7 +104,7 @@ class DisableCommand {
     try {
       await fs.outputJson(restrictedPath, [...restricted], { spaces: 2 });
     } catch (err) {
-      console.error("[فناء] خطأ في الحفظ:", err.message);
+      console.error("[فناء] خطأ:", err.message);
     }
 
     return api.sendMessage(

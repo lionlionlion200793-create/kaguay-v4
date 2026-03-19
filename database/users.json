@@ -5889,5 +5889,120 @@
       "gender": "Nam",
       "other": {}
     }
+  },
+  {
+    "uid": "61568675213882",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "Mohamed Ayoub",
+      "firstName": "Mohamed",
+      "vanity": "mohamed.ayoub.441084",
+      "avatar": "https://graph.facebook.com/61568675213882/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/mohamed.ayoub.441084",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61557074053754",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ꕥ︱ᎯᏕᎿᎬᏒᎨᎯ ꜝ ꜝぐ愛",
+      "firstName": "ꕥ︱ᎯᏕᎿᎬᏒᎨᎯ",
+      "vanity": "ob271xeswk",
+      "avatar": "https://graph.facebook.com/61557074053754/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/ob271xeswk",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nữ",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61577695511959",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ぐ㒪ꜝꜝ ᏚᎬᏁᎥᏫᎡ",
+      "firstName": "ᏚᎬᏁᎥᏫᎡ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61577695511959/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61577695511959",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61577695511959",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ぐ㒪ꜝꜝ ᏚᎬᏁᎥᏫᎡ",
+      "firstName": "ᏚᎬᏁᎥᏫᎡ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61577695511959/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61577695511959",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "100079218043769",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "Násrê Đdînê",
+      "firstName": "Násrê",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/100079218043769/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=100079218043769",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
   }
 ]

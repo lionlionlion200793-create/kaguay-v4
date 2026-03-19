@@ -250,11 +250,14 @@ export class CommandHandler {
         const rawBody = usedPrefix ? trimmed.slice(usedPrefix.length).trim() : trimmed;
         if (!rawBody) return;
 
-        const [cmd, ...args] = rawBody.split(/\s+/);
-        const commandName = cmd.toLowerCase();
-        const exactCommand =
-          this.commands.get(commandName) ||
-          this.commands.get(this.aliases.get(commandName));
+        const parts = rawBody.split(/\s+/);
+        let exactCommand = null;
+        let args = [];
+        for (let i = parts.length; i >= 1; i--) {
+          const tryName = parts.slice(0, i).join(" ");
+          const found = this.commands.get(tryName) || this.commands.get(this.aliases.get(tryName));
+          if (found) { exactCommand = found; args = parts.slice(i); break; }
+        }
 
         if (exactCommand) {
           // تطبيق الفلتر على غير المطور الرئيسي
@@ -338,11 +341,14 @@ export class CommandHandler {
       }
 
       const rawBody = trimmed.slice(usedPrefix.length).trim();
-      const [cmd, ...args] = rawBody.split(/\s+/);
-      const commandName = cmd.toLowerCase();
-      const command =
-        this.commands.get(commandName) ||
-        this.commands.get(this.aliases.get(commandName));
+      const bodyParts = rawBody.split(/\s+/);
+      let command = null;
+      let args = [];
+      for (let i = bodyParts.length; i >= 1; i--) {
+        const tryName = bodyParts.slice(0, i).join(" ");
+        const found = this.commands.get(tryName) || this.commands.get(this.aliases.get(tryName));
+        if (found) { command = found; args = bodyParts.slice(i); break; }
+      }
 
       if (!command) return;
 
