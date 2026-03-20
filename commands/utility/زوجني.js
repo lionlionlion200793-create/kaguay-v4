@@ -20,12 +20,26 @@ const BACKGROUNDS = [
   "https://i.imgur.com/dDSh0wc.jpeg",
 ];
 
+function loveBar(pct) {
+  const filled = Math.round(pct / 10);
+  return "❤️".repeat(filled) + "🖤".repeat(10 - filled);
+}
+
+function loveComment(pct) {
+  if (pct >= 95) return "توافق مثالي، ما أحلى هذا! 🌟";
+  if (pct >= 80) return "حب قوي وتوافق رائع! 😍";
+  if (pct >= 60) return "علاقتهم واعدة 🥰";
+  if (pct >= 40) return "يمكن تنجح إذا حاولوا! 😅";
+  if (pct >= 20) return "الأمل موجود بس يحتاجون شغل 😬";
+  return "ربي يستر عليهم 😂";
+}
+
 const MESSAGES = [
-  (h, w) => `🌹 | القدر جمعهم!\n💍 الزوج: ${h}\n💎 الزوجة: ${w}\n\n✨ يا رب يكونون أسعد زوجين في القروب! 🥰`,
-  (h, w) => `💒 | عقد قران!\n🤵 العريس: ${h}\n👰 العروسة: ${w}\n\n🎊 مبروك مبروك مبروك! ألف رفا وبنين 💕`,
-  (h, w) => `💘 | الحب ضرب!\n👨‍❤️‍👩 ${h} + ${w} = قصة حب جديدة!\n\n🌙 ربي يتمم بالخير ويرزقهم السعادة 🌸`,
-  (h, w) => `🎀 | إشعار زواج!\n🧑 الزوج: ${h}\n👩 الزوجة: ${w}\n\n💫 بالتوفيق يا عرسان! ❤️‍🔥`,
-  (h, w) => `🕌 | تم عقد الزواج!\n💑 ${h} 💍 ${w}\n\n🌺 ربي يجمعهم على الخير دايماً 🌺`,
+  (h, w, p) => `🌹 | القدر جمعهم!\n💍 الزوج: ${h}\n💎 الزوجة: ${w}\n\n💘 نسبة الحب: ${p}%\n${loveBar(p)}\n${loveComment(p)}`,
+  (h, w, p) => `💒 | عقد قران!\n🤵 العريس: ${h}\n👰 العروسة: ${w}\n\n💘 نسبة التوافق: ${p}%\n${loveBar(p)}\n${loveComment(p)}`,
+  (h, w, p) => `💘 | الحب ضرب!\n👨‍❤️‍👩 ${h} + ${w}\n\n💘 نسبة الحب: ${p}%\n${loveBar(p)}\n${loveComment(p)}`,
+  (h, w, p) => `🎀 | إشعار زواج!\n🧑 الزوج: ${h}\n👩 الزوجة: ${w}\n\n💘 نسبة الحب: ${p}%\n${loveBar(p)}\n${loveComment(p)}`,
+  (h, w, p) => `🕌 | تم عقد الزواج!\n💑 ${h} 💍 ${w}\n\n💘 نسبة التوافق: ${p}%\n${loveBar(p)}\n${loveComment(p)}`,
 ];
 
 function getConfig() {
@@ -78,13 +92,13 @@ async function getBackground() {
     }
   }
   return await sharp({
-    create: { width: 1000, height: 460, channels: 4, background: { r: 30, g: 20, b: 40, alpha: 1 } },
+    create: { width: 1000, height: 500, channels: 4, background: { r: 30, g: 20, b: 40, alpha: 1 } },
   }).png().toBuffer();
 }
 
-async function buildCard(husbandID, wifeID, husbandName, wifeName) {
+async function buildCard(husbandID, wifeID, husbandName, wifeName, lovePct) {
   const CARD_W = 1000;
-  const CARD_H = 460;
+  const CARD_H = 500;
 
   const [husbandAvatar, wifeAvatar, bgBuf] = await Promise.all([
     getCircularAvatar(husbandID),
@@ -139,16 +153,36 @@ async function buildCard(husbandID, wifeID, husbandName, wifeName) {
     </svg>`);
 
   const HEART_LEFT = Math.floor(CARD_W / 2) - 60;
-  const HEART_TOP  = Math.floor((CARD_H - 120) / 2) - 10;
+  const HEART_TOP  = Math.floor((CARD_H - 120) / 2) - 30;
+
+  const BAR_W      = 400;
+  const BAR_H      = 34;
+  const BAR_FILL   = Math.round((lovePct / 100) * BAR_W);
+  const BAR_LEFT   = Math.floor((CARD_W - BAR_W) / 2);
+  const BAR_TOP    = CARD_H - 72;
+
+  const lovePctColor = lovePct >= 80 ? "#ff4d6d" : lovePct >= 50 ? "#ff9f43" : "#a29bfe";
+
+  const loveBarSVG = Buffer.from(`
+    <svg width="${BAR_W}" height="${BAR_H}">
+      <rect x="0" y="0" width="${BAR_W}" height="${BAR_H}" rx="17" ry="17" fill="#00000066"/>
+      <rect x="0" y="0" width="${BAR_FILL}" height="${BAR_H}" rx="17" ry="17" fill="${lovePctColor}"/>
+      <text x="${BAR_W / 2}" y="23" font-size="18" font-family="Arial" font-weight="bold"
+        fill="white" text-anchor="middle" paint-order="stroke"
+        stroke="#00000099" stroke-width="2">
+        ❤ ${lovePct}%
+      </text>
+    </svg>`);
 
   return await sharp(bg)
     .composite([
-      { input: overlay,      top: 0,         left: 0                     },
-      { input: husbandAvatar, top: AVATAR_TOP, left: HUSBAND_LEFT         },
-      { input: wifeAvatar,    top: AVATAR_TOP, left: WIFE_LEFT            },
-      { input: heartSVG,      top: HEART_TOP,  left: HEART_LEFT           },
-      { input: hNameSVG,      top: NAME_TOP,   left: HUSBAND_LEFT - 55    },
-      { input: wNameSVG,      top: NAME_TOP,   left: WIFE_LEFT    - 55    },
+      { input: overlay,       top: 0,          left: 0                   },
+      { input: husbandAvatar, top: AVATAR_TOP,  left: HUSBAND_LEFT        },
+      { input: wifeAvatar,    top: AVATAR_TOP,  left: WIFE_LEFT           },
+      { input: heartSVG,      top: HEART_TOP,   left: HEART_LEFT          },
+      { input: hNameSVG,      top: NAME_TOP,    left: HUSBAND_LEFT - 55   },
+      { input: wNameSVG,      top: NAME_TOP,    left: WIFE_LEFT    - 55   },
+      { input: loveBarSVG,    top: BAR_TOP,     left: BAR_LEFT            },
     ])
     .png()
     .toBuffer();
@@ -203,9 +237,11 @@ class Zawejni {
       wifeName    = infos[wifeID]?.name    || wifeName;
     } catch {}
 
+    const lovePct = Math.floor(Math.random() * 101);
+
     let cardBuffer;
     try {
-      cardBuffer = await buildCard(husbandID, wifeID, husbandName, wifeName);
+      cardBuffer = await buildCard(husbandID, wifeID, husbandName, wifeName, lovePct);
     } catch (err) {
       console.error("[زوجني] خطأ في الصورة:", err.message);
       api.setMessageReaction("❌", messageID, () => {}, true);
@@ -215,7 +251,7 @@ class Zawejni {
     const tmpPath = path.join(os.tmpdir(), `zawaj_${Date.now()}.png`);
     fs.writeFileSync(tmpPath, cardBuffer);
 
-    const msg = pick(MESSAGES)(husbandName, wifeName);
+    const msg = pick(MESSAGES)(husbandName, wifeName, lovePct);
 
     try {
       api.setMessageReaction("💕", messageID, () => {}, true);
