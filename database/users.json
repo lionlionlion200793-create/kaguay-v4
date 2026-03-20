@@ -6562,5 +6562,101 @@
       "gender": "Nữ",
       "other": {}
     }
+  },
+  {
+    "uid": "61582152608125",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "X-xtra Ha-kay",
+      "firstName": "X-xtra",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61582152608125/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61582152608125",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61570089591725",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "冬ꜝ R'IK.STA.R くあ",
+      "firstName": "冬ꜝ R'IK.STA.R",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61570089591725/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61570089591725",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {
+        "grantedCommands": [
+          "ادت"
+        ]
+      }
+    }
+  },
+  {
+    "uid": "61579385401017",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "عمرو ۦٰ۪۫ۦٰ۪۫ۦٰ۪۫",
+      "firstName": "عمرو",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61579385401017/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "user",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61579385401017",
+      "isFriend": false,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
+  },
+  {
+    "uid": "61586953757871",
+    "data": {
+      "money": 0,
+      "exp": 0,
+      "level": 0,
+      "banned": {
+        "status": false,
+        "reason": "",
+        "time": 0
+      },
+      "name": "ᏃᎯᏦᎯ ᏒᏆᎯ",
+      "firstName": "ᏃᎯᏦᎯ",
+      "vanity": "",
+      "avatar": "https://graph.facebook.com/61586953757871/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662",
+      "type": "friend",
+      "profileUrl": "https://www.facebook.com/profile.php?id=61586953757871",
+      "isFriend": true,
+      "isBirthday": false,
+      "gender": "Nam",
+      "other": {}
+    }
   }
 ]
