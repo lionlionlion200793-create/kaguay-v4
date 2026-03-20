@@ -49,7 +49,7 @@ async function askYuko(messages, retries = 2) {
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       const res = await axios.post(
-        "https://text.pollinations.ai/",
+        "https://text.pollinations.ai/openai",
         {
           messages,
           model: "openai-large",
