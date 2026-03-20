@@ -282,7 +282,8 @@
       "enabled": true,
       "restrict": {
         "modsOnly": false
-      }
+      },
+      "aiRestricted": true
     }
   },
   {
