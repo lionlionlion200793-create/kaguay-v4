@@ -4,33 +4,37 @@ import fs from "fs-extra";
 import path from "path";
 import os from "os";
 
-const CONFIG_PATH = "./database/weddingConfig.json";
-const PROFILE_TOKEN = "6628568379|c1e620fa708a1d5696fb991c1bde5662";
-const CIRCLE_SIZE = 190;
+const CONFIG_PATH    = "./database/weddingConfig.json";
+const PROFILE_TOKEN  = "6628568379|c1e620fa708a1d5696fb991c1bde5662";
 
-const BACKGROUNDS = [
-  "https://i.imgur.com/1A2b3C4.jpg",
-  "https://i.pinimg.com/originals/3f/0a/5c/3f0a5c7b8e2c1d4f6a9b2e3c5d7f8a1b.jpg",
-  "https://i.imgur.com/QnNGMaH.jpeg",
-  "https://i.imgur.com/MnAwD8U.jpg",
-  "https://i.imgur.com/V5L9dPi.jpeg",
-  "https://i.ibb.co/rvft0WP/923823d1a27d17d3319c4db6c0efb60c.jpg",
-  "https://i.imgur.com/OYzHKNE.jpeg",
-  "https://i.imgur.com/UucSRWJ.jpeg",
-  "https://i.imgur.com/dDSh0wc.jpeg",
+// ── أبعاد الكارد ──────────────────────────────────────────────────────────────
+const CARD_W = 960;
+const CARD_H = 480;
+
+// ── مواضع الوجوه على قالب الأنمي (بالنسبة للكارد 960x480) ────────────────────
+// الشخصية اليسرى (الولد):  مركز الوجه
+const LEFT_FACE  = { cx: 210, cy: 145, r: 105 };
+// الشخصية اليمنى (البنت): مركز الوجه
+const RIGHT_FACE = { cx: 748, cy: 145, r: 105 };
+
+// ── قوالب الأنمي المتاحة (بوي + قيرل) ────────────────────────────────────────
+const ANIME_TEMPLATES = [
+  "./cache/anime_pair_1.jpg",
+  "./cache/anime_pair_2.jpg",
 ];
 
-function loveBar(pct) {
-  const filled = Math.round(pct / 10);
-  return "❤️".repeat(filled) + "🖤".repeat(10 - filled);
+// ── رسائل ────────────────────────────────────────────────────────────────────
+function loveBar(p) {
+  const f = Math.round(p / 10);
+  return "❤️".repeat(f) + "🖤".repeat(10 - f);
 }
 
-function loveComment(pct) {
-  if (pct >= 95) return "توافق مثالي، ما أحلى هذا! 🌟";
-  if (pct >= 80) return "حب قوي وتوافق رائع! 😍";
-  if (pct >= 60) return "علاقتهم واعدة 🥰";
-  if (pct >= 40) return "يمكن تنجح إذا حاولوا! 😅";
-  if (pct >= 20) return "الأمل موجود بس يحتاجون شغل 😬";
+function loveComment(p) {
+  if (p >= 95) return "توافق مثالي، ما أحلى هذا! 🌟";
+  if (p >= 80) return "حب قوي وتوافق رائع! 😍";
+  if (p >= 60) return "علاقتهم واعدة 🥰";
+  if (p >= 40) return "يمكن تنجح إذا حاولوا! 😅";
+  if (p >= 20) return "الأمل موجود بس يحتاجون شغل 😬";
   return "ربي يستر عليهم 😂";
 }
 
@@ -42,173 +46,132 @@ const MESSAGES = [
   (h, w, p) => `🕌 | تم عقد الزواج!\n💑 ${h} 💍 ${w}\n\n💘 نسبة التوافق: ${p}%\n${loveBar(p)}\n${loveComment(p)}`,
 ];
 
+// ── helpers ───────────────────────────────────────────────────────────────────
 function getConfig() {
-  try {
-    return JSON.parse(fs.readFileSync(CONFIG_PATH, "utf-8"));
-  } catch {
-    return { cooldown: 120 };
-  }
+  try { return JSON.parse(fs.readFileSync(CONFIG_PATH, "utf-8")); }
+  catch { return { cooldown: 120 }; }
 }
+function saveConfig(d) { fs.writeFileSync(CONFIG_PATH, JSON.stringify(d, null, 2)); }
+function pick(arr)     { return arr[Math.floor(Math.random() * arr.length)]; }
 
-function saveConfig(data) {
-  fs.writeFileSync(CONFIG_PATH, JSON.stringify(data, null, 2));
-}
-
-function pick(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
-
-async function fetchBuffer(url) {
-  const res = await axios.get(url, {
-    responseType: "arraybuffer",
-    timeout: 15000,
-    headers: { "User-Agent": "Mozilla/5.0" },
-  });
-  return Buffer.from(res.data);
-}
-
-async function getCircularAvatar(userID) {
+// بناء صورة دائرية من ID المستخدم
+async function circularAvatar(userID, size) {
   const url = `https://graph.facebook.com/${userID}/picture?width=512&height=512&access_token=${PROFILE_TOKEN}`;
-  const buf = await fetchBuffer(url);
-  const mask = Buffer.from(
-    `<svg><circle cx="${CIRCLE_SIZE / 2}" cy="${CIRCLE_SIZE / 2}" r="${CIRCLE_SIZE / 2}" /></svg>`
-  );
-  return await sharp(buf)
-    .resize(CIRCLE_SIZE, CIRCLE_SIZE, { fit: "cover" })
+  const res  = await axios.get(url, { responseType: "arraybuffer", timeout: 15000, headers: { "User-Agent": "Mozilla/5.0" } });
+  const mask = Buffer.from(`<svg><circle cx="${size/2}" cy="${size/2}" r="${size/2}"/></svg>`);
+  return sharp(Buffer.from(res.data))
+    .resize(size, size, { fit: "cover" })
     .composite([{ input: mask, blend: "dest-in" }])
     .png()
     .toBuffer();
 }
 
-async function getBackground() {
-  const urls = [...BACKGROUNDS];
-  while (urls.length > 0) {
-    const idx = Math.floor(Math.random() * urls.length);
-    const url = urls.splice(idx, 1)[0];
-    try {
-      return await fetchBuffer(url);
-    } catch {
-      continue;
-    }
-  }
-  return await sharp({
-    create: { width: 1000, height: 500, channels: 4, background: { r: 30, g: 20, b: 40, alpha: 1 } },
-  }).png().toBuffer();
-}
-
+// ── بناء الكارد ───────────────────────────────────────────────────────────────
 async function buildCard(husbandID, wifeID, husbandName, wifeName, lovePct) {
-  const CARD_W = 1000;
-  const CARD_H = 500;
+  const template = pick(ANIME_TEMPLATES);
 
-  const [husbandAvatar, wifeAvatar, bgBuf] = await Promise.all([
-    getCircularAvatar(husbandID),
-    getCircularAvatar(wifeID),
-    getBackground(),
-  ]);
-
-  const bg = await sharp(bgBuf)
+  // 1. قالب الأنمي كخلفية
+  const bg = await sharp(template)
     .resize(CARD_W, CARD_H, { fit: "cover", position: "centre" })
     .toBuffer();
 
-  const overlay = Buffer.from(`
-    <svg width="${CARD_W}" height="${CARD_H}">
-      <defs>
-        <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%"   stop-color="#000000" stop-opacity="0.55"/>
-          <stop offset="45%"  stop-color="#000000" stop-opacity="0.15"/>
-          <stop offset="55%"  stop-color="#000000" stop-opacity="0.15"/>
-          <stop offset="100%" stop-color="#000000" stop-opacity="0.55"/>
-        </linearGradient>
-      </defs>
-      <rect width="${CARD_W}" height="${CARD_H}" fill="url(#g)"/>
+  // 2. صور الوجوه الدائرية
+  const [husbandAvatar, wifeAvatar] = await Promise.all([
+    circularAvatar(husbandID, LEFT_FACE.r * 2),
+    circularAvatar(wifeID,    RIGHT_FACE.r * 2),
+  ]);
+
+  // حدود دائرة الزوج
+  const husbandLeft = LEFT_FACE.cx - LEFT_FACE.r;
+  const husbandTop  = LEFT_FACE.cy - LEFT_FACE.r;
+
+  // حدود دائرة الزوجة
+  const wifeLeft = RIGHT_FACE.cx - RIGHT_FACE.r;
+  const wifeTop  = RIGHT_FACE.cy - RIGHT_FACE.r;
+
+  // 3. حلقة بيضاء خلف كل وجه (كإطار)
+  const ringH = Buffer.from(`
+    <svg width="${LEFT_FACE.r*2+12}" height="${LEFT_FACE.r*2+12}">
+      <circle cx="${LEFT_FACE.r+6}" cy="${LEFT_FACE.r+6}" r="${LEFT_FACE.r+5}"
+        fill="none" stroke="white" stroke-width="5" opacity="0.85"/>
+    </svg>`);
+  const ringW = Buffer.from(`
+    <svg width="${RIGHT_FACE.r*2+12}" height="${RIGHT_FACE.r*2+12}">
+      <circle cx="${RIGHT_FACE.r+6}" cy="${RIGHT_FACE.r+6}" r="${RIGHT_FACE.r+5}"
+        fill="none" stroke="white" stroke-width="5" opacity="0.85"/>
     </svg>`);
 
-  const AVATAR_TOP  = Math.floor((CARD_H - CIRCLE_SIZE) / 2) - 20;
-  const HUSBAND_LEFT = 90;
-  const WIFE_LEFT    = CARD_W - CIRCLE_SIZE - 90;
-  const NAME_TOP     = AVATAR_TOP + CIRCLE_SIZE + 14;
-  const FS           = 32;
+  // 4. اسم الزوج (يسار) والزوجة (يمين)
+  const FS = 28;
+  function nameSVG(name) {
+    const safe = name.slice(0, 14).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+    return Buffer.from(`
+      <svg width="260" height="50">
+        <text x="130" y="37" font-size="${FS}" font-family="Arial" font-weight="bold"
+          fill="white" text-anchor="middle" paint-order="stroke"
+          stroke="#111" stroke-width="4" stroke-linejoin="round">${safe}</text>
+      </svg>`);
+  }
 
-  const hNameSVG = Buffer.from(`
-    <svg width="300" height="56">
-      <text x="150" y="42" font-size="${FS}" font-family="Arial" font-weight="bold"
-        fill="white" text-anchor="middle"
-        stroke="#1a1a2e" stroke-width="4" stroke-linejoin="round" paint-order="stroke">
-        ${husbandName.slice(0, 13)}
-      </text>
-    </svg>`);
+  const NAME_Y  = LEFT_FACE.cy + LEFT_FACE.r + 18;
+  const hNameLeft = husbandLeft - 20;
+  const wNameLeft = wifeLeft    - 20;
 
-  const wNameSVG = Buffer.from(`
-    <svg width="300" height="56">
-      <text x="150" y="42" font-size="${FS}" font-family="Arial" font-weight="bold"
-        fill="white" text-anchor="middle"
-        stroke="#1a1a2e" stroke-width="4" stroke-linejoin="round" paint-order="stroke">
-        ${wifeName.slice(0, 13)}
-      </text>
-    </svg>`);
-
-  const heartSVG = Buffer.from(`
-    <svg width="120" height="120" viewBox="0 0 120 120">
-      <text x="60" y="95" font-size="85" text-anchor="middle">💕</text>
-    </svg>`);
-
-  const HEART_LEFT = Math.floor(CARD_W / 2) - 60;
-  const HEART_TOP  = Math.floor((CARD_H - 120) / 2) - 30;
-
-  const BAR_W      = 400;
-  const BAR_H      = 34;
-  const BAR_FILL   = Math.round((lovePct / 100) * BAR_W);
-  const BAR_LEFT   = Math.floor((CARD_W - BAR_W) / 2);
-  const BAR_TOP    = CARD_H - 72;
-
-  const lovePctColor = lovePct >= 80 ? "#ff4d6d" : lovePct >= 50 ? "#ff9f43" : "#a29bfe";
-
-  const loveBarSVG = Buffer.from(`
+  // 5. شريط نسبة الحب
+  const BAR_W  = 380;
+  const BAR_H  = 36;
+  const fill   = Math.round((lovePct / 100) * BAR_W);
+  const barClr = lovePct >= 80 ? "#ff4d6d" : lovePct >= 50 ? "#ff9f43" : "#a29bfe";
+  const barSVG = Buffer.from(`
     <svg width="${BAR_W}" height="${BAR_H}">
-      <rect x="0" y="0" width="${BAR_W}" height="${BAR_H}" rx="17" ry="17" fill="#00000066"/>
-      <rect x="0" y="0" width="${BAR_FILL}" height="${BAR_H}" rx="17" ry="17" fill="${lovePctColor}"/>
-      <text x="${BAR_W / 2}" y="23" font-size="18" font-family="Arial" font-weight="bold"
+      <rect width="${BAR_W}" height="${BAR_H}" rx="18" fill="#00000077"/>
+      <rect width="${fill}"  height="${BAR_H}" rx="18" fill="${barClr}"/>
+      <text x="${BAR_W/2}" y="25" font-size="17" font-family="Arial" font-weight="bold"
         fill="white" text-anchor="middle" paint-order="stroke"
-        stroke="#00000099" stroke-width="2">
-        ❤ ${lovePct}%
-      </text>
+        stroke="#00000099" stroke-width="2">❤ ${lovePct}%</text>
     </svg>`);
 
-  return await sharp(bg)
+  const BAR_LEFT = Math.floor((CARD_W - BAR_W) / 2);
+  const BAR_TOP  = CARD_H - 60;
+
+  // ── تركيب الكل ──
+  return sharp(bg)
     .composite([
-      { input: overlay,       top: 0,          left: 0                   },
-      { input: husbandAvatar, top: AVATAR_TOP,  left: HUSBAND_LEFT        },
-      { input: wifeAvatar,    top: AVATAR_TOP,  left: WIFE_LEFT           },
-      { input: heartSVG,      top: HEART_TOP,   left: HEART_LEFT          },
-      { input: hNameSVG,      top: NAME_TOP,    left: HUSBAND_LEFT - 55   },
-      { input: wNameSVG,      top: NAME_TOP,    left: WIFE_LEFT    - 55   },
-      { input: loveBarSVG,    top: BAR_TOP,     left: BAR_LEFT            },
+      // حلقات إطار
+      { input: ringH, top: husbandTop - 6, left: husbandLeft - 6 },
+      { input: ringW, top: wifeTop    - 6, left: wifeLeft    - 6 },
+      // صور الوجوه
+      { input: husbandAvatar, top: husbandTop, left: husbandLeft },
+      { input: wifeAvatar,    top: wifeTop,    left: wifeLeft    },
+      // أسماء
+      { input: nameSVG(husbandName), top: NAME_Y, left: hNameLeft },
+      { input: nameSVG(wifeName),    top: NAME_Y, left: wNameLeft  },
+      // شريط الحب
+      { input: barSVG, top: BAR_TOP, left: BAR_LEFT },
     ])
     .png()
     .toBuffer();
 }
 
+// ── الكلاس ────────────────────────────────────────────────────────────────────
 class Zawejni {
   constructor() {
-    this.name = "زوجني";
-    this.author = "HUSSEIN YACOUBI";
-    this.description = "يختار زوجاً وزوجة عشوائيين من القروب ويرسل صورة الزوجين";
-    this.role = "user";
-    this.aliases = ["marry", "زواج"];
-    this.hidden = false;
-    this._updateCooldown();
-  }
-
-  _updateCooldown() {
-    this.cooldowns = getConfig().cooldown ?? 120;
+    this.name        = "زوجني";
+    this.author      = "HUSSEIN YACOUBI";
+    this.description = "يزوجك مع شخص عشوائي من القروب بصورة أنمي مع نسبة الحب";
+    this.role        = "user";
+    this.aliases     = ["marry", "زواج"];
+    this.hidden      = false;
+    this.cooldowns   = getConfig().cooldown ?? 120;
   }
 
   async execute({ api, event }) {
-    this._updateCooldown();
-    const { threadID, messageID } = event;
+    this.cooldowns = getConfig().cooldown ?? 120;
+    const { threadID, messageID, senderID } = event;
 
     api.setMessageReaction("💍", messageID, () => {}, true);
 
+    // جلب أعضاء القروب
     let threadInfo;
     try {
       threadInfo = await api.getThreadInfo(threadID);
@@ -217,31 +180,39 @@ class Zawejni {
       return api.sendMessage("❌ | تعذّر جلب معلومات المجموعة.", threadID, messageID);
     }
 
-    const botID = api.getCurrentUserID();
-    const pool  = (threadInfo.participantIDs || []).filter(id => id !== botID);
+    const botID  = api.getCurrentUserID();
+    const others = (threadInfo.participantIDs || []).filter(
+      id => id !== senderID && id !== botID
+    );
 
-    if (pool.length < 2) {
+    if (others.length === 0) {
       api.setMessageReaction("❌", messageID, () => {}, true);
-      return api.sendMessage("❌ | ما في أعضاء كافيين في القروب للتزويج!", threadID, messageID);
+      return api.sendMessage("❌ | ما في أحد ثاني في القروب يصلح يكون زوج/زوجة!", threadID, messageID);
     }
 
-    const shuffled  = [...pool].sort(() => Math.random() - 0.5);
-    const husbandID = shuffled[0];
-    const wifeID    = shuffled[1];
+    // الشريك عشوائي من بقية الأعضاء
+    const partnerID = others[Math.floor(Math.random() * others.length)];
 
-    let husbandName = "الزوج";
-    let wifeName    = "الزوجة";
+    // تعيين عشوائي: من هو الزوج ومن هي الزوجة
+    const [husbandID, wifeID] = Math.random() < 0.5
+      ? [senderID, partnerID]
+      : [partnerID, senderID];
+
+    // جلب الأسماء
+    let husbandName = "الزوج", wifeName = "الزوجة";
     try {
       const infos = await api.getUserInfo([husbandID, wifeID]);
-      husbandName = infos[husbandID]?.name || husbandName;
-      wifeName    = infos[wifeID]?.name    || wifeName;
+      husbandName  = infos[husbandID]?.name || husbandName;
+      wifeName     = infos[wifeID]?.name    || wifeName;
     } catch {}
 
+    // توليد نسبة الحب
     const lovePct = Math.floor(Math.random() * 101);
 
-    let cardBuffer;
+    // بناء الصورة
+    let card;
     try {
-      cardBuffer = await buildCard(husbandID, wifeID, husbandName, wifeName, lovePct);
+      card = await buildCard(husbandID, wifeID, husbandName, wifeName, lovePct);
     } catch (err) {
       console.error("[زوجني] خطأ في الصورة:", err.message);
       api.setMessageReaction("❌", messageID, () => {}, true);
@@ -249,7 +220,7 @@ class Zawejni {
     }
 
     const tmpPath = path.join(os.tmpdir(), `zawaj_${Date.now()}.png`);
-    fs.writeFileSync(tmpPath, cardBuffer);
+    fs.writeFileSync(tmpPath, card);
 
     const msg = pick(MESSAGES)(husbandName, wifeName, lovePct);
 
@@ -257,8 +228,7 @@ class Zawejni {
       api.setMessageReaction("💕", messageID, () => {}, true);
       await api.sendMessage(
         { body: msg, attachment: fs.createReadStream(tmpPath) },
-        threadID,
-        messageID
+        threadID, messageID
       );
     } finally {
       fs.remove(tmpPath).catch(() => {});
